@@ -160,7 +160,8 @@ td .who{display:flex; align-items:center; gap:8px}
 .c-upd{display:flex; align-items:center; justify-content:space-between; gap:6px; font-size:11px; color:var(--muted)}
 .notebtn{border:1px solid transparent; background:none; color:var(--muted); cursor:pointer; border-radius:5px; padding:3px 5px; font-size:11px}
 .notebtn:hover{border-color:var(--line-2); color:var(--accent)}
-.notebtn.has{color:var(--accent)}
+.notebtn.has{color:var(--accent); background:var(--accent-soft); border-color:color-mix(in srgb, var(--accent) 30%, var(--line))}
+.notebtn[aria-expanded="true"]{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
 .noterow{grid-column:1/-1; display:flex; gap:8px; align-items:center; padding-top:2px}
 .noterow textarea{flex:1; resize:vertical; min-height:70px; max-height:240px; overflow-y:auto; line-height:1.5; background:var(--surface-2); border:1px solid var(--line-2); border-radius:var(--r); padding:7px 9px; font-size:12.5px}
 .row.ro .hit,.row.ro .un,.row.ro .tgl,.row.ro select,.row.ro textarea{pointer-events:none; opacity:.72}
@@ -553,6 +554,7 @@ function renderRep(){
           '<option value="rank">Sort: priority rank</option><option value="name">Sort: name</option>' +
           '<option value="calls">Sort: most called</option><option value="recent">Sort: recently updated</option>' +
         '</select>' +
+        '<button class="btn" id="notesBtn" type="button"></button>' +
       '</div>' +
       '<div class="listhead"><span>#</span><span>Lead</span><span>Log a call attempt</span><span>Calls</span><span>Outreach</span><span>Responded?</span><span>Updated</span></div>' +
       '<div class="list" id="list"></div>' +
@@ -577,6 +579,12 @@ function renderRep(){
   } else {
     banner.innerHTML = "";
   }
+
+  var withNotes = list.filter(function(l){ return (l.notes||"").trim(); }).length;
+  var anyOpen = list.some(function(l){ return openNotes.has(l.id); });
+  var nbtn = document.getElementById("notesBtn");
+  nbtn.textContent = anyOpen ? "Hide notes" : "Show notes" + (withNotes ? " (" + withNotes + ")" : "");
+  nbtn.disabled = !withNotes && !anyOpen;
 
   var chips = [["all","All "+total.length],["todo","Not called yet"],["called","Called"],["answered","Answered"],["responded","Responded"],["HOT","HOT"],["Distress","Distress"]];
   document.getElementById("fchips").innerHTML = chips.map(function(c){
@@ -689,8 +697,11 @@ function syncRow(l){
   r.upd.title = workedAt(l) ? (new Date(l.updatedAt).toLocaleString() + (l.updatedBy?" · "+l.updatedBy:"")) : "";
   r.notebtn.className = "notebtn" + (l.notes ? " has" : "");
   if(r.notes !== document.activeElement) r.notes.value = l.notes || "";
-  r.note.hidden = !(openNotes.has(l.id) || l.notes);
-  if(!r.note.hidden && r.notes !== document.activeElement) fitNote(r.notes);
+  var open = openNotes.has(l.id), first = (l.notes||"").split("\n")[0];
+  r.notebtn.setAttribute("aria-expanded", String(open));
+  r.notebtn.title = l.notes ? (open ? "Hide note" : "Show note — " + first.slice(0,70)) : "Add a note";
+  r.note.hidden = !open;
+  if(open && r.notes !== document.activeElement) fitNote(r.notes);
 }
 
 function exportScope(){
@@ -851,6 +862,16 @@ var repView = document.getElementById("repView");
 repView.addEventListener("click", function(e){
   var chip = e.target.closest("[data-chip]");
   if(chip){ filter.chip = chip.dataset.chip; renderRep(); return; }
+  if(e.target.id === "notesBtn"){
+    var vis = visibleLeads();
+    var shut = vis.some(function(l){ return openNotes.has(l.id); });
+    vis.forEach(function(l){
+      if(shut) openNotes.delete(l.id);
+      else if((l.notes||"").trim()) openNotes.add(l.id);
+    });
+    renderRep();
+    return;
+  }
   if(e.target.id === "bulkBtn"){ bulkAdd(); return; }
   var act = e.target.closest("[data-act]");
   if(!act) return;
@@ -860,9 +881,9 @@ repView.addEventListener("click", function(e){
   var a = act.dataset.act;
   if(a === "note"){
     if(openNotes.has(id)) openNotes.delete(id); else openNotes.add(id);
+    syncRow(l);
     var r = rowRefs.get(id);
-    r.note.hidden = !(openNotes.has(id) || l.notes);
-    if(!r.note.hidden){ fitNote(r.notes); r.notes.focus(); }
+    if(!r.note.hidden) r.notes.focus();
     return;
   }
   if(!canEdit(l)){
