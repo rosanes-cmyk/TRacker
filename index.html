@@ -11,6 +11,8 @@
   --hot:#e09a61; --hot-soft:#33241a;
   --distress:#8fb0e0; --distress-soft:#1b2738;
   --good:#62c28c; --good-soft:#152e21;
+  /* funnel ramp: one hue, monotone lightness, not-called -> responded */
+  --step1:#2f6660; --step2:#3d8f84; --step3:#52bdad; --step4:#aee4db;
   --warn:#d6a94a; --crit:#e0796c; --crit-soft:#33201d;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 28px -18px rgba(0,0,0,.9);
   --r:8px;
@@ -71,15 +73,64 @@ main{padding-block:20px 56px}
 .sec-head{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:12px}
 .sec-head h2{font-size:19px}
 .sec-head .sub{color:var(--muted); font-size:12.5px}
-.kpis{display:grid; grid-template-columns:repeat(5,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; margin-bottom:28px}
-.kpi{background:var(--surface); padding:12px 14px; display:flex; flex-direction:column; gap:3px}
-.kpi .k{font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:600}
-.kpi .v{font-family:var(--mono); font-size:24px; font-weight:600; letter-spacing:-.02em; line-height:1.1}
-.kpi .f{font-size:11.5px; color:var(--muted)}
-.kpi.lead{background:var(--accent-soft)}
-.kpi.lead .v{color:var(--accent)}
-@media (max-width:940px){ .kpis{grid-template-columns:repeat(3,1fr)} }
-@media (max-width:560px){ .kpis{grid-template-columns:repeat(2,1fr)} }
+.sec-head .btn{margin-left:auto}
+
+/* headline: where the whole file stands */
+.cover{border:1px solid var(--line); border-radius:var(--r); background:var(--surface); padding:16px 18px 18px; margin-bottom:10px}
+.cover-top{display:flex; align-items:flex-end; gap:20px; flex-wrap:wrap; margin-bottom:16px}
+.hero{display:flex; flex-direction:column; gap:1px; margin-right:auto}
+.hero .k{font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:600}
+.hero .n{font-size:54px; line-height:1.02; font-weight:600; letter-spacing:-.035em; font-variant-numeric:proportional-nums}
+.hero .f{font-size:13px; color:var(--ink-2); margin-top:3px}
+.attn{display:flex; gap:7px; flex-wrap:wrap; justify-content:flex-end; padding-bottom:3px}
+.note{display:inline-flex; align-items:center; gap:7px; font-size:12.5px; font-weight:500; padding:6px 12px; border-radius:100px; border:1px solid var(--line-2); background:var(--surface-2); color:var(--ink-2)}
+.note .g{font-size:10px; line-height:1}
+.note.warn{color:var(--warn); border-color:color-mix(in srgb, var(--warn) 38%, var(--line))}
+.note.bad{color:var(--crit); border-color:color-mix(in srgb, var(--crit) 38%, var(--line)); background:var(--crit-soft)}
+.note.ok{color:var(--good); border-color:color-mix(in srgb, var(--good) 35%, var(--line)); background:var(--good-soft)}
+
+.bar{display:flex; gap:2px; height:28px; border-radius:7px; overflow:hidden; margin-bottom:12px}
+.bar i{display:block; height:100%}
+.legend{display:flex; gap:9px 24px; flex-wrap:wrap}
+.lg{display:flex; align-items:center; gap:8px; font-size:12.5px}
+.lg .sw{width:11px; height:11px; border-radius:3px; flex:0 0 auto}
+.lg .v{font-family:var(--mono); font-weight:600; font-variant-numeric:tabular-nums}
+.lg .t{color:var(--muted)}
+
+.tiles{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; margin-bottom:30px}
+.tile{background:var(--surface); padding:13px 16px; display:flex; flex-direction:column; gap:2px}
+.tile .k{font-size:10.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:600}
+.tile .v{font-size:27px; font-weight:600; letter-spacing:-.025em; line-height:1.15; font-variant-numeric:proportional-nums}
+.tile .f{font-size:12px; color:var(--muted)}
+
+.reps{border:1px solid var(--line); border-radius:var(--r); background:var(--surface); overflow:hidden; margin-bottom:30px}
+.reptable{width:100%; min-width:0; border-collapse:collapse}
+.reptable th{position:static; padding:8px 14px; border-bottom:0}
+.reptable td{padding:11px 14px; border-bottom:0; border-top:1px solid var(--line)}
+.reptable th.cov,.reptable td.cov{text-align:left; width:42%}
+.reptable tr.total td{background:var(--surface-2); font-weight:600}
+.reptable .rep{font-weight:600}
+.cov-in{display:flex; align-items:center; gap:11px}
+.track{flex:1; min-width:54px; height:8px; border-radius:100px; overflow:hidden; background:color-mix(in srgb, var(--step1) 60%, var(--surface))}
+.track i{display:block; height:100%; border-radius:100px; background:var(--step3)}
+.covpct{font-family:var(--mono); font-size:12.5px; font-weight:600; font-variant-numeric:tabular-nums; width:38px; text-align:right}
+.ago{display:inline-flex; align-items:center; gap:7px; font-size:12px; color:var(--muted)}
+.ago .dot{width:7px; height:7px; border-radius:50%; background:currentColor; flex:0 0 auto}
+.ago.ok{color:var(--good)}
+.ago.warn{color:var(--warn)}
+.ago.bad{color:var(--crit)}
+
+@media (max-width:880px){ .tiles{grid-template-columns:repeat(2,1fr)} }
+@media (max-width:680px){
+  .hero .n{font-size:44px}
+  .attn{justify-content:flex-start}
+  .reptable th.col-calls,.reptable td.col-calls,.reptable th.col-ans,.reptable td.col-ans{display:none}
+  /* no room for a bar this narrow — the number carries it, and the table may scroll */
+  .reps{overflow-x:auto}
+  .reptable{min-width:340px}
+  .track{display:none}
+  .covpct{width:auto; text-align:left}
+}
 
 .tablewrap{overflow-x:auto; border:1px solid var(--line); border-radius:var(--r); background:var(--surface); margin-bottom:28px}
 table{border-collapse:collapse; width:100%; min-width:860px}
@@ -117,8 +168,8 @@ td .who{display:flex; align-items:center; gap:8px}
 .listhead{display:grid; grid-template-columns:var(--cols); gap:10px; align-items:center; padding:7px 12px; background:var(--surface-2); font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); font-weight:600}
 .listhead span:nth-child(n+3){text-align:center}
 .listhead span:nth-child(2){text-align:left}
-.row{--cols:34px minmax(160px,1.5fr) 376px 56px 124px 128px 92px; display:grid; grid-template-columns:var(--cols); gap:10px; align-items:center; padding:8px 12px; background:var(--surface); scroll-margin-top:120px}
-.listhead{--cols:34px minmax(160px,1.5fr) 376px 56px 124px 128px 92px}
+.row{--cols:34px minmax(140px,1.5fr) 376px 56px 158px 128px 92px; display:grid; grid-template-columns:var(--cols); gap:10px; align-items:center; padding:8px 12px; background:var(--surface); scroll-margin-top:120px}
+.listhead{--cols:34px minmax(140px,1.5fr) 376px 56px 158px 128px 92px}
 .row:hover{background:var(--surface-2)}
 .row.flash{animation:flash 1.6s ease}
 @keyframes flash{0%,40%{background:var(--accent-soft)}100%{background:var(--surface)}}
@@ -151,10 +202,13 @@ td .who{display:flex; align-items:center; gap:8px}
 .c-calls .n{font-family:var(--mono); font-size:19px; font-weight:600}
 .c-calls .n.zero{color:var(--muted); font-weight:400}
 .c-calls .lab{display:block; font-size:9.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--muted)}
-.flags{display:flex; gap:5px; justify-content:center}
+.flags{display:flex; gap:4px; justify-content:center}
 .tgl{border:1px solid var(--line-2); background:var(--surface); border-radius:var(--r); padding:6px 9px; font-size:11.5px; font-weight:600; color:var(--muted); cursor:pointer}
 .tgl:hover{border-color:var(--accent); color:var(--accent)}
 .tgl[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+.tgl.ind{cursor:default; border-style:dashed}
+.tgl.ind:hover{border-color:var(--line-2); color:var(--muted)}
+.tgl.ind.on{border-style:solid; border-color:color-mix(in srgb, var(--accent) 45%, var(--line)); background:var(--accent-soft); color:var(--accent)}
 .c-resp select{width:100%; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r); padding:6px 6px; font-size:12px; font-weight:600}
 .c-resp select.yes{border-color:color-mix(in srgb, var(--good) 50%, var(--line)); background:var(--good-soft); color:var(--good)}
 .c-upd{display:flex; align-items:center; justify-content:space-between; gap:6px; font-size:11px; color:var(--muted)}
@@ -184,7 +238,7 @@ dialog::backdrop{background:rgba(8,16,15,.5)}
 .foot{margin-top:32px; padding-top:14px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; display:flex; gap:14px; flex-wrap:wrap; justify-content:space-between}
 
 @media (max-width:1120px){
-  .row,.listhead{--cols:30px minmax(120px,1.4fr) 318px 46px 104px 110px}
+  .row,.listhead{--cols:30px minmax(120px,1.4fr) 318px 46px 140px 110px}
   .listhead span:nth-child(7),.c-upd{display:none}
 }
 @media (max-width:960px){
@@ -253,7 +307,10 @@ var REP_ORDER = ["Era","Barbie","David","Diego"];
 var RESP = [["no","No"],["text","Yes – text"],["email","Yes – email"],["both","Yes – both"]];
 var RESP_LABEL = {no:"No", text:"Yes – text", email:"Yes – email", both:"Yes – both"};
 var COUNTERS = [["answered","Answered"],["vmLeft","VM left"],["noVm","No VM"]];
-var STALE_MS = 36*60*60*1000;
+var STALE_MS = 36*60*60*1000, QUIET_MS = 12*60*60*1000;
+/* the four states a lead can be in, most worked first — one hue, light to dark */
+var STEPS = [["responded","Responded","var(--step4)"],["called","Called","var(--step3)"],
+             ["touched","Texted or emailed","var(--step2)"],["toCall","Not called yet","var(--step1)"]];
 
 var db = null, downloads = null;
 var raw = new Map();          // id -> server doc
@@ -265,6 +322,7 @@ var view = "dash";
 var me = lsGet("thb.me") || "";
 var filter = { q:"", chip:"all", sort:"rank" };
 var gq = "";
+var showCols = false;
 var listDirty = false, openNotes = new Set();
 
 /* ---------------- storage helpers ---------------- */
@@ -425,60 +483,146 @@ function renderMe(){
 }
 
 /* ---------------- rendering: dashboard ---------------- */
-function renderDash(){
-  var host = document.getElementById("dashView");
-  if(!leads.length){
-    host.innerHTML = '<div class="empty"><b>No leads loaded yet.</b><br>Open a rep tab and paste their list to get started.</div>';
-    return;
-  }
-  var all = stats(leads), reps = repsPresent();
-  var kpis = [
-    ["Assigned", all.assigned, reps.length+" reps", 0],
-    ["Contacted", all.contacted, pct(all.contacted, all.assigned)+" of file", 1],
-    ["Outbound calls", all.calls, "attempts logged", 0],
-    ["Answered", all.answered, pct(all.answered, all.calls)+" of calls", 0],
-    ["VM left", all.vmLeft, pct(all.vmLeft, all.calls)+" of calls", 0],
-    ["No answer / no VM", all.noVm, pct(all.noVm, all.calls)+" of calls", 0],
-    ["Texts sent", all.texts, pct(all.texts, all.assigned)+" of file", 0],
-    ["Emails sent", all.emails, pct(all.emails, all.assigned)+" of file", 0],
-    ["Responded", all.responded, "any channel", 0],
-    ["Response rate", (all.rate*100).toFixed(1)+"%", "responded ÷ contacted", 1]
-  ];
-  var html = '<div class="sec-head"><h2>Today across the floor</h2><span class="sub">Live — every counter below updates as reps log calls.</span></div>';
-  html += '<div class="kpis">' + kpis.map(function(k){
-    return '<div class="kpi'+(k[3]?" lead":"")+'"><span class="k">'+esc(k[0])+'</span><span class="v num">'+esc(String(k[1]))+'</span><span class="f">'+esc(k[2])+'</span></div>';
-  }).join("") + '</div>';
-
-  html += '<div class="sec-head"><h2>By rep</h2><span class="sub">Who is working the list and who is behind.</span></div>';
-  html += '<div class="tablewrap"><table><thead><tr>' +
+function splitByStatus(list){
+  var c = {responded:0, called:0, touched:0, toCall:0};
+  list.forEach(function(l){
+    var k = statusOf(l)[1];
+    if(k === "responded") c.responded++;
+    else if(k === "called") c.called++;
+    else if(k === "touched") c.touched++;
+    else c.toCall++;
+  });
+  return c;
+}
+function agoClass(last){
+  if(!last) return "bad";
+  var d = Date.now() - new Date(last).getTime();
+  return d > STALE_MS ? "bad" : (d > QUIET_MS ? "warn" : "ok");
+}
+function repRow(label, s, sp, n, isMe, isTotal){
+  var worked = n - sp.toCall, p = n ? Math.round(100*worked/n) : 0;
+  return '<tr'+(isTotal?' class="total"':'')+'>'+
+    '<td><span class="rep">'+esc(label)+'</span>'+(isMe?' <span class="st called">you</span>':'')+'</td>'+
+    '<td class="cov"><span class="cov-in"><span class="track"><i style="width:'+p+'%"></i></span>'+
+      '<span class="covpct">'+p+'%</span></span></td>'+
+    '<td class="col-calls num">'+fmtN(s.calls)+'</td>'+
+    '<td class="col-ans num">'+fmtN(s.answered)+'</td>'+
+    '<td class="num">'+fmtN(s.responded)+'</td>'+
+    '<td><span class="ago '+agoClass(s.last)+'"><span class="dot" aria-hidden="true"></span>'+
+      esc(s.last ? ago(s.last) : "never")+'</span></td></tr>';
+}
+function fullTable(rows, all){
+  var html = '<div class="tablewrap"><table><thead><tr>' +
     ["Rep","Assigned","Contacted","Calls","Answered","VM left","No VM","Texts","Emails","Responded","Resp. rate","Last activity"]
       .map(function(h){ return "<th>"+h+"</th>"; }).join("") + '</tr></thead><tbody>';
-  reps.forEach(function(r){
-    var s = stats(leads.filter(function(l){ return l.owner===r; }));
-    var stale = s.last ? (Date.now() - new Date(s.last).getTime() > STALE_MS) : true;
+  rows.forEach(function(x){
+    var s = x.s;
     html += '<tr>' +
-      '<td class="name"><span class="who">'+esc(r)+(me===r?' <span class="st called">you</span>':'')+'</span></td>'+
+      '<td class="name"><span class="who">'+esc(x.rep)+(me===x.rep?' <span class="st called">you</span>':'')+'</span></td>'+
       '<td class="num">'+s.assigned+'</td>'+
       '<td class="num">'+s.contacted+'<span class="meter"><i style="width:'+(s.assigned? Math.round(100*s.contacted/s.assigned):0)+'%"></i></span></td>'+
       '<td class="num">'+s.calls+'</td><td class="num">'+s.answered+'</td><td class="num">'+s.vmLeft+'</td>'+
       '<td class="num">'+s.noVm+'</td><td class="num">'+s.texts+'</td><td class="num">'+s.emails+'</td>'+
       '<td class="num">'+s.responded+'</td><td class="num">'+(s.rate*100).toFixed(1)+'%</td>'+
-      '<td class="'+(stale?"stale":"")+'">'+esc(s.last ? ago(s.last) : "never")+'</td></tr>';
+      '<td class="'+(agoClass(s.last)==="bad"?"stale":"")+'">'+esc(s.last ? ago(s.last) : "never")+'</td></tr>';
   });
   html += '<tr class="total"><td>All reps</td><td class="num">'+all.assigned+'</td><td class="num">'+all.contacted+'</td>'+
     '<td class="num">'+all.calls+'</td><td class="num">'+all.answered+'</td><td class="num">'+all.vmLeft+'</td>'+
     '<td class="num">'+all.noVm+'</td><td class="num">'+all.texts+'</td><td class="num">'+all.emails+'</td>'+
     '<td class="num">'+all.responded+'</td><td class="num">'+(all.rate*100).toFixed(1)+'%</td>'+
     '<td>'+esc(all.last ? ago(all.last) : "never")+'</td></tr>';
-  html += '</tbody></table></div>';
+  return html + '</tbody></table></div>';
+}
+function renderDash(){
+  var host = document.getElementById("dashView");
+  if(!leads.length){
+    host.innerHTML = '<div class="empty"><b>No leads loaded yet.</b><br>Open a rep tab and paste their list to get started.</div>';
+    return;
+  }
+  // the 60s refresh must not yank the cursor out of the search box
+  var box = document.getElementById("gq");
+  var caret = (box && document.activeElement === box) ? box.selectionStart : -1;
 
-  html += '<div class="sec-head"><h2>Find a lead</h2><span class="sub">Searches all '+all.assigned+' leads across every rep.</span></div>';
+  var all = stats(leads), reps = repsPresent(), split = splitByStatus(leads);
+  var worked = all.assigned - split.toCall;
+  var rows = reps.map(function(r){
+    var list = leads.filter(function(l){ return l.owner === r; });
+    return {rep:r, s:stats(list), sp:splitByStatus(list), n:list.length};
+  });
+
+  var html = '<div class="sec-head"><h2>Where the '+fmtN(all.assigned)+' leads stand</h2>'+
+    '<span class="sub">Live — every number updates as reps log calls.</span></div>';
+
+  /* ---- headline: one figure, one bar, what needs attention ---- */
+  var notes = [], behind = rows.filter(function(x){ return agoClass(x.s.last) === "bad"; });
+  if(behind.length){
+    var who = behind.map(function(x){ return x.rep; });
+    notes.push(["bad","▲", who.join(", ") + (who.length>1 ? " have" : " has") + " logged nothing in a day"]);
+  }
+  if(split.toCall) notes.push([behind.length ? "" : "warn", "◆", fmtN(split.toCall)+" still to call"]);
+  if(all.responded) notes.push(["ok","✓", fmtN(all.responded)+" responded — follow up first"]);
+
+  html += '<section class="cover"><div class="cover-top">'+
+    '<div class="hero"><span class="k">Of the file worked</span>'+
+      '<span class="n">'+pct(worked, all.assigned)+'</span>'+
+      '<span class="f">'+fmtN(worked)+' of '+fmtN(all.assigned)+' leads have activity logged · '+
+        fmtN(all.contacted)+' have had a dial</span></div>'+
+    (notes.length ? '<div class="attn">'+notes.slice(0,3).map(function(n){
+        return '<span class="note '+n[0]+'"><span class="g" aria-hidden="true">'+n[1]+'</span>'+esc(n[2])+'</span>';
+      }).join("")+'</div>' : '')+
+    '</div>';
+
+  var segs = STEPS.map(function(s){ return {key:s[0], label:s[1], color:s[2], n:split[s[0]]}; });
+  html += '<div class="bar" role="img" aria-label="'+esc(fmtN(all.assigned)+" leads: "+
+      segs.map(function(s){ return fmtN(s.n)+" "+s.label.toLowerCase(); }).join(", "))+'">'+
+    segs.filter(function(s){ return s.n > 0; }).map(function(s){
+      return '<i style="width:'+(100*s.n/all.assigned).toFixed(2)+'%; background:'+s.color+'" title="'+
+        esc(s.label+" — "+fmtN(s.n)+" leads ("+pct(s.n, all.assigned)+")")+'"></i>';
+    }).join("")+'</div>'+
+    '<div class="legend">'+segs.map(function(s){
+      return '<span class="lg"><span class="sw" style="background:'+s.color+'"></span>'+
+        '<span class="v">'+fmtN(s.n)+'</span><span class="t">'+esc(s.label)+' · '+pct(s.n, all.assigned)+'</span></span>';
+    }).join("")+'</div></section>';
+
+  /* ---- the four numbers under it ---- */
+  var tiles = [
+    ["Calls logged", fmtN(all.calls), "dial attempts, every rep"],
+    ["Answered", fmtN(all.answered), all.calls ? pct(all.answered, all.calls)+" of dials" : "no dials logged yet"],
+    ["Responses", fmtN(all.responded), "came back by text or email"],
+    ["Response rate", (all.rate*100).toFixed(1)+"%", "of the "+fmtN(all.contacted)+" leads called"]
+  ];
+  html += '<div class="tiles">'+tiles.map(function(t){
+    return '<div class="tile"><span class="k">'+esc(t[0])+'</span><span class="v">'+esc(t[1])+
+      '</span><span class="f">'+esc(t[2])+'</span></div>';
+  }).join("")+'</div>';
+
+  /* ---- rep by rep ---- */
+  html += '<div class="sec-head"><h2>Rep by rep</h2>'+
+    '<span class="sub">Coverage is the share of that rep’s list with any activity logged.</span>'+
+    '<button class="btn" id="colsBtn" type="button">'+(showCols ? "Hide extra columns" : "Show every column")+'</button></div>';
+  if(showCols){
+    html += fullTable(rows, all);
+  } else {
+    html += '<div class="reps"><table class="reptable"><thead><tr>'+
+      '<th>Rep</th><th class="cov">Coverage</th><th class="col-calls">Calls</th>'+
+      '<th class="col-ans">Answered</th><th>Responses</th><th>Last activity</th></tr></thead><tbody>'+
+      rows.map(function(x){ return repRow(x.rep, x.s, x.sp, x.n, me === x.rep, false); }).join("")+
+      repRow("All reps", all, split, all.assigned, false, true)+
+      '</tbody></table></div>';
+  }
+
+  /* ---- find a lead ---- */
+  html += '<div class="sec-head"><h2>Find a lead</h2><span class="sub">Searches all '+fmtN(all.assigned)+' leads across every rep.</span></div>';
   html += '<div class="finder"><div class="search"><span class="ico">⌕</span>' +
     '<input id="gq" type="search" placeholder="Name, phone, or REI contact ID" value="'+esc(gq)+'" autocomplete="off"></div>' +
     '<button class="btn" id="rollupBtn" type="button">Export rollup</button></div>';
   html += '<div id="gres"></div>';
   host.innerHTML = html;
   renderResults();
+  if(caret >= 0){
+    var el = document.getElementById("gq");
+    if(el){ el.focus(); try { el.setSelectionRange(caret, caret); } catch(e){} }
+  }
 }
 function renderResults(){
   var host = document.getElementById("gres");
@@ -645,6 +789,7 @@ function buildRow(l, editable){
     }).join("") + '</div>' +
     '<div class="c-calls"><span class="n num" data-f="calls">0</span><span class="lab">calls</span></div>' +
     '<div class="flags">'+
+      '<span class="tgl ind" data-f="callflag">Call</span>'+
       '<button class="tgl" type="button" data-act="toggle" data-k="textSent" aria-pressed="false">Text</button>'+
       '<button class="tgl" type="button" data-act="toggle" data-k="emailSent" aria-pressed="false">Email</button></div>' +
     '<div class="c-resp"><select data-act="resp" aria-label="Lead responded?">'+
@@ -659,10 +804,12 @@ function buildRow(l, editable){
     calls: row.querySelector('[data-f="calls"]'),
     upd: row.querySelector('[data-f="upd"]'),
     sel: row.querySelector("select"),
-    tgl: row.querySelectorAll(".tgl"),
+    tglText: row.querySelector('[data-k="textSent"]'),
+    tglEmail: row.querySelector('[data-k="emailSent"]'),
     note: row.querySelector(".noterow"),
     notes: row.querySelector('[data-act="notes"]'),
-    notebtn: row.querySelector('[data-act="note"]')
+    notebtn: row.querySelector('[data-act="note"]'),
+    callf: row.querySelector('[data-f="callflag"]')
   };
   COUNTERS.forEach(function(c){
     refs[c[0]] = row.querySelector('[data-f="'+c[0]+'"]');
@@ -689,8 +836,12 @@ function syncRow(l){
   });
   r.calls.textContent = l.calls||0;
   r.calls.className = "n num" + (l.calls?"":" zero");
-  r.tgl[0].setAttribute("aria-pressed", String(!!l.textSent));
-  r.tgl[1].setAttribute("aria-pressed", String(!!l.emailSent));
+  r.callf.className = "tgl ind" + (l.calls ? " on" : "");
+  r.callf.title = l.calls
+    ? l.calls + (l.calls === 1 ? " call logged" : " calls logged") + " — set by the buttons on the left"
+    : "No call logged yet — use Answered / VM left / No VM";
+  r.tglText.setAttribute("aria-pressed", String(!!l.textSent));
+  r.tglEmail.setAttribute("aria-pressed", String(!!l.emailSent));
   if(r.sel !== document.activeElement) r.sel.value = l.responded || "no";
   r.sel.className = (l.responded && l.responded!=="no") ? "yes" : "";
   r.upd.textContent = workedAt(l) ? ago(workedAt(l)) : "—";
@@ -734,6 +885,7 @@ function render(){
 function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g, function(c){
   return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
 function pct(a,b){ return b ? Math.round(100*a/b)+"%" : "0%"; }
+function fmtN(n){ return Number(n||0).toLocaleString("en-US"); }
 function fmtPhone(p){
   var d = String(p||"").replace(/[^0-9]/g,"");
   if(d.length===11 && d[0]==="1") d = d.slice(1);
@@ -847,6 +999,7 @@ document.getElementById("dashView").addEventListener("click", function(e){
   if(e.target.id === "rollupBtn"){
     offerFile("thb-rollup-"+today()+".csv", rollupCsv(), "Rollup export"); return;
   }
+  if(e.target.id === "colsBtn"){ showCols = !showCols; renderDash(); return; }
   var g = e.target.closest("[data-goto]");
   if(g){
     view = g.dataset.rep;
