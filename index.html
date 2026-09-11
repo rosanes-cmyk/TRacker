@@ -312,6 +312,11 @@ function canOpen(rep){
   if(!me) return false;             // nobody picked yet: dashboard only
   return rep === me;                // a rep sees their own board and no other
 }
+function hasWork(l){
+  return l.calls > 0 || l.textSent || l.emailSent ||
+         (l.responded && l.responded !== "no") || !!(l.notes||"").trim();
+}
+function workedAt(l){ return hasWork(l) ? (l.updatedAt||"") : ""; }
 function statusOf(l){
   if(l.responded && l.responded!=="no") return ["Responded","responded"];
   if(l.calls>0) return ["Called","called"];
@@ -326,7 +331,8 @@ function stats(list){
     if(l.textSent) s.texts++;
     if(l.emailSent) s.emails++;
     if(l.responded && l.responded!=="no") s.responded++;
-    if(l.updatedAt && l.updatedAt > s.last) s.last = l.updatedAt;
+    var w = workedAt(l);
+    if(w && w > s.last) s.last = w;
   });
   s.rate = s.contacted ? s.responded/s.contacted : 0;
   return s;
@@ -490,7 +496,7 @@ function renderResults(){
         '<span class="num">'+l.calls+' calls · '+l.answered+' ans · '+l.vmLeft+' vm · '+l.noVm+' no-vm</span>'+
         (l.textSent?'<span>text ✓</span>':'')+(l.emailSent?'<span>email ✓</span>':'')+
         '<span>'+esc(RESP_LABEL[l.responded]||"No")+'</span>'+
-        '<span>'+esc(l.updatedAt?ago(l.updatedAt):"never touched")+'</span>'+
+        '<span>'+esc(workedAt(l)?ago(workedAt(l)):"never worked")+'</span>'+
       '</span>'+
       (canOpen(l.owner)
         ? '<button class="btn" data-goto="'+esc(l.id)+'" data-rep="'+esc(l.owner)+'" type="button">Open</button>'
@@ -678,8 +684,8 @@ function syncRow(l){
   r.tgl[1].setAttribute("aria-pressed", String(!!l.emailSent));
   if(r.sel !== document.activeElement) r.sel.value = l.responded || "no";
   r.sel.className = (l.responded && l.responded!=="no") ? "yes" : "";
-  r.upd.textContent = l.updatedAt ? ago(l.updatedAt) : "—";
-  r.upd.title = l.updatedAt ? (new Date(l.updatedAt).toLocaleString() + (l.updatedBy?" · "+l.updatedBy:"")) : "";
+  r.upd.textContent = workedAt(l) ? ago(workedAt(l)) : "—";
+  r.upd.title = workedAt(l) ? (new Date(l.updatedAt).toLocaleString() + (l.updatedBy?" · "+l.updatedBy:"")) : "";
   r.notebtn.className = "notebtn" + (l.notes ? " has" : "");
   if(r.notes !== document.activeElement) r.notes.value = l.notes || "";
   r.note.hidden = !(openNotes.has(l.id) || l.notes);
