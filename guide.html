@@ -1,0 +1,412 @@
+<title>Lead Tracker Handbook</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* the handbook wears the tracker's own colours, so the two read as one system */
+:root{
+  color-scheme: dark;
+  --paper:#0b1312; --surface:#141e1d; --surface-2:#182423; --raised:#1b2726;
+  --ink:#e7eeec; --ink-2:#c3d0cd; --muted:#8d9d9a;
+  --line:#243331; --line-2:#33433f;
+  --accent:#45b7a8; --accent-2:#6fcabd; --accent-ink:#06211e; --accent-soft:#123430;
+  --hot:#e09a61; --hot-soft:#33241a;
+  --good:#62c28c; --good-soft:#152e21;
+  --warn:#d6a94a; --crit:#e0796c; --crit-soft:#33201d;
+  --r:8px;
+  --sans:"IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --cond:"IBM Plex Sans Condensed", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+*{box-sizing:border-box}
+[hidden]{display:none !important}
+body{background:var(--paper); color:var(--ink); font-family:var(--sans); font-size:16px; line-height:1.6}
+h1,h2,h3{margin:0; font-family:var(--cond); font-weight:700; text-wrap:balance; letter-spacing:-.01em}
+p{margin:0}
+a{color:var(--accent); text-underline-offset:3px}
+.num{font-family:var(--mono); font-variant-numeric:tabular-nums}
+:focus-visible{outline:2px solid var(--accent); outline-offset:2px; border-radius:4px}
+
+.wrap{max-width:760px; margin:0 auto; padding-inline:16px}
+
+/* ---------- opening ---------- */
+.top{border-bottom:1px solid var(--line); background:var(--surface)}
+.top-in{padding-block:34px 30px; display:flex; flex-direction:column; gap:14px}
+.eyebrow{display:flex; align-items:center; gap:10px; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--muted); font-weight:600}
+.mark{font-family:var(--cond); font-weight:700; font-size:12px; letter-spacing:.06em; color:var(--accent-ink); background:var(--accent); padding:4px 7px; border-radius:5px; letter-spacing:.05em}
+h1{font-size:40px; line-height:1.08}
+.lede{font-size:17.5px; color:var(--ink-2); max-width:60ch}
+
+.linkcard{display:flex; flex-direction:column; gap:9px; border:1px solid color-mix(in srgb, var(--accent) 40%, var(--line)); background:var(--accent-soft); border-radius:var(--r); padding:15px 17px; margin-top:6px}
+.linkcard .k{font-size:11.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--accent); font-weight:700}
+.linkcard a{font-family:var(--mono); font-size:13.5px; overflow-wrap:anywhere; font-weight:500}
+.linkcard .why{font-size:14px; color:var(--ink-2)}
+
+/* ---------- contents ---------- */
+.toc{margin:30px 0 0; border:1px solid var(--line); border-radius:var(--r); background:var(--surface); padding:16px 18px}
+.toc h2{font-size:12px; letter-spacing:.09em; text-transform:uppercase; color:var(--muted); margin-bottom:10px}
+.toc ol{margin:0; padding-left:20px; display:grid; grid-template-columns:repeat(2,1fr); gap:5px 24px; font-size:14.5px}
+.toc a{text-decoration:none; color:var(--ink-2)}
+.toc a:hover{color:var(--accent); text-decoration:underline}
+
+/* ---------- sections ---------- */
+section{padding-block:40px; border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.shead{display:flex; align-items:baseline; gap:12px; margin-bottom:8px}
+.snum{font-family:var(--mono); font-size:13px; font-weight:600; color:var(--accent); flex:0 0 auto; padding-top:2px}
+h2{font-size:26px}
+.sub{color:var(--muted); font-size:15px; margin-bottom:20px; margin-left:33px}
+.body{margin-left:33px; display:flex; flex-direction:column; gap:16px}
+.body p{max-width:62ch}
+h3{font-size:17px; margin-top:6px}
+strong{color:var(--ink); font-weight:600}
+.k{color:var(--accent); font-weight:600}
+
+/* a lift-out for the one thing in a section that must land */
+.key{border-left:3px solid var(--accent); background:var(--surface); padding:12px 16px; border-radius:0 var(--r) var(--r) 0}
+.key.warn{border-left-color:var(--warn)}
+.key.good{border-left-color:var(--good)}
+.key p{font-size:15px}
+
+ul.plain{margin:0; padding-left:20px; display:flex; flex-direction:column; gap:7px}
+ul.plain li{max-width:60ch}
+ol.steps{margin:0; padding-left:20px; display:flex; flex-direction:column; gap:9px; font-size:15.5px}
+ol.steps li{max-width:60ch; padding-left:3px}
+
+/* ---------- little replicas of the real controls ---------- */
+.demo{background:var(--surface); border:1px solid var(--line); border-radius:var(--r); padding:15px 16px; display:flex; flex-direction:column; gap:11px}
+.demo .cap{font-size:12.5px; color:var(--muted)}
+.demorow{display:flex; gap:7px; align-items:center; flex-wrap:wrap}
+.whoami{display:inline-flex; align-items:center; gap:8px; font-size:12.5px; color:var(--muted); background:var(--surface-2); border:1px solid var(--line); border-radius:var(--r); padding:5px 10px}
+.whoami b{color:var(--ink); font-size:13.5px}
+.tabstrip{display:flex; gap:2px; flex-wrap:wrap; border-bottom:1px solid var(--line); padding-bottom:0}
+.tb{font-family:var(--cond); font-size:15px; font-weight:600; color:var(--muted); padding:8px 12px; border-bottom:2px solid transparent; display:flex; align-items:center; gap:6px}
+.tb.on{color:var(--ink); border-bottom-color:var(--accent)}
+.tb .cnt{font-family:var(--mono); font-size:11px; font-weight:500}
+.tb .you{font-size:9.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--accent); background:var(--accent-soft); padding:2px 5px; border-radius:4px}
+.ctr{display:inline-flex; align-items:stretch; border:1px solid var(--line-2); border-radius:var(--r); overflow:hidden; background:var(--surface-2)}
+.ctr .hit{display:flex; align-items:center; gap:8px; padding:6px 8px; font-size:11.5px; font-weight:600; color:var(--ink-2)}
+.ctr .hit .n{font-family:var(--mono); font-size:14px; color:var(--ink)}
+.ctr .hit .n.zero{color:var(--muted)}
+.ctr .un{border-left:1px solid var(--line); background:var(--surface); color:var(--muted); padding:0 6px; display:flex; align-items:center; font-size:13px}
+.ctr.on{border-color:color-mix(in srgb, var(--accent) 45%, var(--line))}
+.pill{border:1px solid var(--line-2); background:var(--surface-2); border-radius:var(--r); padding:6px 10px; font-size:11.5px; font-weight:600; color:var(--muted)}
+.pill.lit{border-style:solid; border-color:color-mix(in srgb, var(--accent) 45%, var(--line)); background:var(--accent-soft); color:var(--accent)}
+.pill.dash{border-style:dashed}
+.pill.on{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+.selbox{border:1px solid var(--line-2); background:var(--surface-2); border-radius:var(--r); padding:6px 11px; font-size:12px; font-weight:600; color:var(--ink-2); display:inline-flex; align-items:center; gap:14px}
+.selbox.yes{border-color:color-mix(in srgb, var(--good) 50%, var(--line)); background:var(--good-soft); color:var(--good)}
+.selbox .car{color:var(--muted); font-size:10px}
+.chipdemo{display:inline-flex; align-items:center; gap:7px; font-size:12px; font-weight:600; padding:5px 10px; border-radius:100px; border:1px solid color-mix(in srgb, var(--good) 35%, var(--line)); background:var(--good-soft); color:var(--good)}
+.chipdemo .dot{width:7px; height:7px; border-radius:50%; background:currentColor}
+.chipdemo.bad{color:var(--crit); background:var(--crit-soft); border-color:color-mix(in srgb, var(--crit) 35%, var(--line))}
+.btn{background:var(--surface-2); border:1px solid var(--line-2); border-radius:var(--r); padding:6px 11px; font-weight:600; font-size:12.5px; color:var(--ink-2)}
+
+/* ---------- who sees what ---------- */
+.two{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+.card{border:1px solid var(--line); border-radius:var(--r); background:var(--surface); padding:16px; display:flex; flex-direction:column; gap:10px}
+.card .who{font-family:var(--cond); font-size:18px; font-weight:700}
+.card .role{font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); font-weight:600}
+.card ul{margin:0; padding-left:18px; font-size:14.5px; display:flex; flex-direction:column; gap:6px; color:var(--ink-2)}
+.card.rep{border-color:color-mix(in srgb, var(--accent) 35%, var(--line))}
+.card.ops{border-color:color-mix(in srgb, var(--hot) 35%, var(--line))}
+.card.ops .role{color:var(--hot)}
+
+/* ---------- numbers explained ---------- */
+.defs{border:1px solid var(--line); border-radius:var(--r); background:var(--surface); overflow:hidden}
+.def{display:grid; grid-template-columns:160px 1fr; gap:16px; padding:12px 16px; border-top:1px solid var(--line); font-size:14.5px}
+.def:first-child{border-top:0}
+.def dt{font-weight:600}
+.def dd{margin:0; color:var(--ink-2)}
+.def dd em{font-style:normal; color:var(--muted)}
+
+/* ---------- faq ---------- */
+details{border:1px solid var(--line); border-radius:var(--r); background:var(--surface); padding:0 16px}
+details+details{margin-top:8px}
+summary{cursor:pointer; padding:13px 0; font-weight:600; font-size:15.5px; list-style:none; display:flex; align-items:center; gap:10px}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"+"; font-family:var(--mono); color:var(--accent); font-weight:600; flex:0 0 auto}
+details[open] summary::before{content:"–"}
+details .ans{padding:0 0 14px 22px; color:var(--ink-2); font-size:15px; display:flex; flex-direction:column; gap:10px}
+details .ans p{max-width:58ch}
+
+.foot{border-top:1px solid var(--line); padding-block:24px 44px; color:var(--muted); font-size:13.5px; display:flex; flex-direction:column; gap:6px}
+
+@media (max-width:620px){
+  body{font-size:15.5px}
+  h1{font-size:31px}
+  h2{font-size:22px}
+  .toc ol{grid-template-columns:1fr}
+  .two{grid-template-columns:1fr}
+  .def{grid-template-columns:1fr; gap:3px}
+  .sub,.body{margin-left:0}
+  .shead{gap:9px}
+}
+@media (prefers-reduced-motion:reduce){ *{animation-duration:.001ms !important; transition-duration:.001ms !important} }
+</style>
+
+<header class="top"><div class="wrap top-in">
+  <div class="eyebrow"><span class="mark">THB</span> Acquisitions · How to use the tracker</div>
+  <h1>Lead Tracker Handbook</h1>
+  <p class="lede">Everything you need to work your leads and read the numbers. No training needed — if you can use a phone, you can use this.</p>
+  <div class="linkcard">
+    <span class="k">The tracker</span>
+    <a href="https://claude.ai/code/artifact/0cf8866b-19ab-4283-8979-d9a5c6bb0bfa">claude.ai/code/artifact/0cf8866b-19ab-4283-8979-d9a5c6bb0bfa</a>
+    <span class="why">One address for the whole team — reps and Cherry alike. Bookmark it. What you see is decided by the name you pick inside, not by a different link.</span>
+  </div>
+</div></header>
+
+<div class="wrap">
+
+  <nav class="toc">
+    <h2>What's in here</h2>
+    <ol>
+      <li><a href="#start">Start here: pick your name</a></li>
+      <li><a href="#who">Cherry's view vs. yours</a></li>
+      <li><a href="#log">Logging a call</a></li>
+      <li><a href="#outreach">Text, email and the Call light</a></li>
+      <li><a href="#responded">When a lead comes back</a></li>
+      <li><a href="#notes">Notes on a lead</a></li>
+      <li><a href="#find">Finding one lead fast</a></li>
+      <li><a href="#dash">Reading the dashboard</a></li>
+      <li><a href="#export">Getting the data out</a></li>
+      <li><a href="#trouble">If something looks wrong</a></li>
+    </ol>
+  </nav>
+
+  <section id="start">
+    <div class="shead"><span class="snum">01</span><h2>Start here: pick your name</h2></div>
+    <p class="sub">Ten seconds, once per device. Nothing works until you do it.</p>
+    <div class="body">
+      <p>Open the link. At the top right you'll see a small box that says <span class="k">Logging as</span>. Click it and choose yourself from the list.</p>
+      <div class="demo">
+        <div class="demorow">
+          <span class="whoami">Logging as <b>Era ▾</b></span>
+          <span class="chipdemo"><span class="dot"></span>Live</span>
+        </div>
+        <span class="cap">Top right of the tracker. The green <strong>Live</strong> dot means your work is saving for everyone.</span>
+      </div>
+      <ul class="plain">
+        <li><strong>Reps</strong> — pick your own first name: Era, Barbie, David or Diego.</li>
+        <li><strong>Cherry and anyone in ops</strong> — pick <strong>Cherry / ops (view only)</strong>, the last item on the list.</li>
+      </ul>
+      <div class="key">
+        <p>The tracker remembers your choice on that device, so you only do this once on your own phone or laptop. On a borrowed computer, check the name at the top before you start clicking.</p>
+      </div>
+      <p>Until you pick a name, everything is read-only — you can look, but the buttons won't do anything. That's on purpose, so nobody logs calls under the wrong name by accident.</p>
+    </div>
+  </section>
+
+  <section id="who">
+    <div class="shead"><span class="snum">02</span><h2>Cherry's view vs. yours</h2></div>
+    <p class="sub">Same link for everybody. The name you pick decides what appears.</p>
+    <div class="body">
+      <p>This is the part people ask about most, so here it is plainly: <strong>there is only one link.</strong> Cherry does not get a different address, and neither does anyone else. The tracker simply shows you a different set of tabs depending on who you said you were.</p>
+      <div class="two">
+        <div class="card rep">
+          <span class="role">If you picked a rep name</span>
+          <span class="who">Era, Barbie, David, Diego</span>
+          <ul>
+            <li>You see <strong>Dashboard</strong> and <strong>your own tab</strong> — nothing else.</li>
+            <li>The other three reps' tabs are not on your screen at all.</li>
+            <li>You can log calls, texts, emails and notes on your own 100 leads.</li>
+            <li>Your CSV export gives you your 100 leads.</li>
+          </ul>
+        </div>
+        <div class="card ops">
+          <span class="role">If you picked Cherry / ops</span>
+          <span class="who">Cherry and ops</span>
+          <ul>
+            <li>You see <strong>Dashboard</strong> and <strong>all four</strong> rep tabs.</li>
+            <li>Every list is readable, and none of it is editable — logging is left to the reps.</li>
+            <li>You get the full rollup and can search all 400 leads.</li>
+            <li>Your CSV export gives you all 400 leads.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="demo">
+        <div class="tabstrip">
+          <span class="tb">Dashboard</span>
+          <span class="tb on">Era <span class="cnt">100</span> <span class="you">you</span></span>
+        </div>
+        <span class="cap">What <strong>Era</strong> sees — two tabs, and hers is marked.</span>
+        <div class="tabstrip" style="margin-top:6px">
+          <span class="tb on">Dashboard</span>
+          <span class="tb">Era <span class="cnt">100</span></span>
+          <span class="tb">Barbie <span class="cnt">100</span></span>
+          <span class="tb">David <span class="cnt">100</span></span>
+          <span class="tb">Diego <span class="cnt">100</span></span>
+        </div>
+        <span class="cap">What <strong>Cherry</strong> sees — the whole floor, read-only.</span>
+      </div>
+      <div class="key warn">
+        <p><strong>One honest note.</strong> The tracker takes your word for who you are — there's no password. Anyone could pick a different name from that list. It's built to stop mistakes, not to stop someone who means it. So pick your own name, and if you ever need real logins, that's a conversation with Cherry.</p>
+      </div>
+      <p>Everyone sees the dashboard, including the rep-by-rep table. That's on purpose — it's the floor's scoreboard.</p>
+    </div>
+  </section>
+
+  <section id="log">
+    <div class="shead"><span class="snum">03</span><h2>Logging a call</h2></div>
+    <p class="sub">One click per dial. Never type a number.</p>
+    <div class="body">
+      <p>Every lead on your board has three buttons under <strong>Log a call attempt</strong>. When you hang up, click the one that matches what happened:</p>
+      <div class="demo">
+        <div class="demorow">
+          <span class="ctr on"><span class="hit">Answered <span class="n">2</span></span><span class="un">−</span></span>
+          <span class="ctr"><span class="hit">VM left <span class="n zero">0</span></span><span class="un">−</span></span>
+          <span class="ctr"><span class="hit">No VM <span class="n zero">0</span></span><span class="un">−</span></span>
+        </div>
+        <span class="cap">This lead has been dialled twice and picked up both times.</span>
+      </div>
+      <ul class="plain">
+        <li><strong>Answered</strong> — they picked up.</li>
+        <li><strong>VM left</strong> — no answer, you left a voicemail.</li>
+        <li><strong>No VM</strong> — no answer, no voicemail.</li>
+      </ul>
+      <div class="key good">
+        <p>Each of those three clicks counts as <strong>one dial</strong>. You don't click anything extra — the <strong>Calls</strong> total next to them adds itself up. Call the same lead five times and the numbers just keep climbing.</p>
+      </div>
+      <h3>Clicked the wrong one?</h3>
+      <p>Every button has a small <strong>−</strong> on its right. One click takes that outcome back down by one, and removes the dial along with it. No harm done.</p>
+      <h3>Why numbers and not a tick box</h3>
+      <p>Because you call leads more than once. A tick box could only ever say "called at some point". The numbers tell Cherry you dialled this lead four times and got one pickup — which is the difference between a lead that's cold and one nobody has really worked.</p>
+    </div>
+  </section>
+
+  <section id="outreach">
+    <div class="shead"><span class="snum">04</span><h2>Text, email and the Call light</h2></div>
+    <p class="sub">Three pills under <strong>Outreach</strong>. You tick two of them.</p>
+    <div class="body">
+      <div class="demo">
+        <div class="demorow">
+          <span class="pill lit">Call</span>
+          <span class="pill on">Text</span>
+          <span class="pill">Email</span>
+        </div>
+        <span class="cap">Dialled, texted, not yet emailed.</span>
+      </div>
+      <ul class="plain">
+        <li><strong>Text</strong> and <strong>Email</strong> — click to turn on when the outreach has gone out. Click again to turn off.</li>
+        <li><strong>Call</strong> — you don't click this one. It lights up on its own the moment you log any dial, and goes dark if you undo them all. It's there so you can see all three channels at a glance.</li>
+      </ul>
+      <div class="demo">
+        <div class="demorow">
+          <span class="pill dash">Call</span>
+          <span class="pill">Text</span>
+          <span class="pill">Email</span>
+        </div>
+        <span class="cap">A lead nobody has touched yet. Call has a dashed outline because it isn't a button.</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="responded">
+    <div class="shead"><span class="snum">05</span><h2>When a lead comes back</h2></div>
+    <p class="sub">The <strong>Responded?</strong> dropdown — the most valuable click on the page.</p>
+    <div class="body">
+      <p>If a lead gets back to you in any way, set this. It's what drives the response rates Cherry watches, and it's how you find your warm leads again later.</p>
+      <div class="demo">
+        <div class="demorow"><span class="selbox yes">Yes – call back <span class="car">▾</span></span></div>
+        <span class="cap">Set, it turns green, so worked leads stand out as you scroll.</span>
+      </div>
+      <div class="defs">
+        <dl class="def"><dt>No</dt><dd>Nothing back yet. Where every lead starts.</dd></dl>
+        <dl class="def"><dt>Yes – call back</dt><dd>They rang <em>you</em>, or picked up and actually engaged. <em>Use this instead of clicking Answered when they called you — Answered would add a dial you never made.</em></dd></dl>
+        <dl class="def"><dt>Yes – text</dt><dd>They texted back.</dd></dl>
+        <dl class="def"><dt>Yes – email</dt><dd>They emailed back.</dd></dl>
+        <dl class="def"><dt>Yes – text &amp; email</dt><dd>Both of those. Pick this rather than choosing one, so both channels get the credit.</dd></dl>
+      </div>
+    </div>
+  </section>
+
+  <section id="notes">
+    <div class="shead"><span class="snum">06</span><h2>Notes on a lead</h2></div>
+    <p class="sub">Paste a whole call summary if you want to. There's no length limit.</p>
+    <div class="body">
+      <ol class="steps">
+        <li>Click the small <strong>✎</strong> pencil at the right end of the lead's row. A box opens.</li>
+        <li>Type or paste. It saves as you go — there's no save button.</li>
+        <li>Click the pencil again to put it away.</li>
+      </ol>
+      <p>A pencil with a <span class="k">teal box</span> around it means that lead already has a note. Hover it and you'll see the first line without opening anything.</p>
+      <div class="key">
+        <p>Got a lot of notes and want your list back? The <strong>Show notes</strong> button above the list opens every note at once, and turns into <strong>Hide notes</strong> to close them all. The number next to it tells you how many leads on screen have one.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="find">
+    <div class="shead"><span class="snum">07</span><h2>Finding one lead fast</h2></div>
+    <div class="body">
+      <p>There are two searches, and they do different jobs.</p>
+      <ul class="plain">
+        <li><strong>On your own board</strong> — the box that says <em>Find a lead in this list</em>. Searches your 100 by name, phone number or REI contact ID.</li>
+        <li><strong>On the dashboard</strong> — <em>Find a lead</em> searches all 400 across every rep. Useful before you dial a number you half-recognise: if it's on someone else's list, it tells you whose.</li>
+      </ul>
+      <p>You can also narrow your board without typing. The round buttons — <strong>Not called yet</strong>, <strong>Called</strong>, <strong>Answered</strong>, <strong>Responded</strong>, <strong>HOT</strong>, <strong>Distress</strong> — filter it instantly. <strong>Not called yet</strong> first thing in the morning is the fastest way to find your next dial.</p>
+    </div>
+  </section>
+
+  <section id="dash">
+    <div class="shead"><span class="snum">08</span><h2>Reading the dashboard</h2></div>
+    <p class="sub">Everybody can see it. Here's what each part is telling you.</p>
+    <div class="body">
+      <div class="defs">
+        <dl class="def"><dt>The big percentage</dt><dd>How much of the 400-lead file has any activity logged against it at all.</dd></dl>
+        <dl class="def"><dt>The coloured bar</dt><dd>All 400 leads split into four groups — not called yet, texted or emailed, called, responded. Light means further along. You want the light end growing.</dd></dl>
+        <dl class="def"><dt>Response by channel</dt><dd>Of the leads you <em>called</em>, how many picked up. Of the leads you <em>texted</em>, how many wrote back. Same for email. Each one is measured only against the leads that channel was actually used on, so you can tell which method is worth the time.</dd></dl>
+        <dl class="def"><dt>Rep by rep · Coverage</dt><dd>The share of that rep's 100 with any activity logged. This is the "is everyone working their list" number.</dd></dl>
+        <dl class="def"><dt>Last activity</dt><dd>When that rep last logged real work. Green is recent, amber is getting quiet, red means nothing in over a day. It counts logged work only — opening the page doesn't reset it.</dd></dl>
+        <dl class="def"><dt>Show every column</dt><dd>Swaps the summary table for the full one: calls, answered, voicemails, texts, emails and every response rate, rep by rep.</dd></dl>
+      </div>
+      <p>Everything is live. When a rep logs a call, these numbers move within seconds — no refresh, no waiting for a report.</p>
+    </div>
+  </section>
+
+  <section id="export">
+    <div class="shead"><span class="snum">09</span><h2>Getting the data out</h2></div>
+    <p class="sub">For a spreadsheet, a meeting, or your own records.</p>
+    <div class="body">
+      <div class="demo">
+        <div class="demorow"><span class="btn">Export Era (CSV)</span><span class="btn">Export all (CSV)</span><span class="btn">Export rollup</span></div>
+        <span class="cap">The button names itself after whatever you're allowed to export.</span>
+      </div>
+      <ul class="plain">
+        <li>The <strong>Export</strong> button at the top right saves a spreadsheet file — every lead with its name, phone, REI link, all the counts, notes and who last touched it.</li>
+        <li>A rep gets their own 100. Cherry gets all 400.</li>
+        <li><strong>Export rollup</strong> at the bottom of the dashboard saves the summary instead — one row per rep, with every rate.</li>
+      </ul>
+      <p>The file opens in Excel, Numbers or Google Sheets. Your browser will ask you to confirm the download first.</p>
+    </div>
+  </section>
+
+  <section id="trouble">
+    <div class="shead"><span class="snum">10</span><h2>If something looks wrong</h2></div>
+    <div class="body">
+      <details open><summary>My clicks aren't doing anything</summary>
+        <div class="ans"><p>Check the name at the top right. If it says <em>Choose…</em>, pick yourself first. If it says another rep's name, switch to yours — you can only edit your own leads.</p></div>
+      </details>
+      <details><summary>It says "On this device only" in red</summary>
+        <div class="ans"><p>The tracker has lost touch with the shared database, and your changes are only being kept in that browser. Reload the page. If it stays red, tell Cherry before you carry on logging — otherwise the work won't reach anyone else.</p>
+        <div class="demorow"><span class="chipdemo bad"><span class="dot"></span>On this device only</span></div></div>
+      </details>
+      <details><summary>Another rep's tab has disappeared</summary>
+        <div class="ans"><p>That's how it's meant to be. Reps only see their own list. If you're Cherry and need all four, pick <strong>Cherry / ops (view only)</strong> from the name box.</p></div>
+      </details>
+      <details><summary>A rep shows "never" under Last activity but they've been on the page</summary>
+        <div class="ans"><p>That column counts logged work — a call, a text, an email, a response or a note. Opening the tracker, or clicking something and undoing it, doesn't count. "Never" means nothing has actually been logged yet.</p></div>
+      </details>
+      <details><summary>I logged a call by mistake</summary>
+        <div class="ans"><p>Click the small <strong>−</strong> next to whichever outcome you hit. It removes the outcome and the dial together.</p></div>
+      </details>
+      <details><summary>Can I use this on my phone?</summary>
+        <div class="ans"><p>Yes. Open the same link in your phone's browser and the rows stack into cards sized for your thumb. Pick your name once and it remembers. Tapping a lead's phone number starts the call.</p></div>
+      </details>
+    </div>
+  </section>
+
+  <div class="foot">
+    <span>Twin Home Buyer · Acquisitions — Lead Tracker Handbook</span>
+    <span>Questions about the numbers go to Cherry. Anything broken on the page, say so and it gets fixed.</span>
+  </div>
+</div>

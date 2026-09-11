@@ -3,7 +3,8 @@
 A live acquisitions tracker for the 400 leads assigned 09.11.26, split 100 each
 across Era, Barbie, David, and Diego. Built from `lead-tracker-spec-for-jonathan.docx`.
 
-**Live artifact:** https://claude.ai/code/artifact/0cf8866b-19ab-4283-8979-d9a5c6bb0bfa
+**Live tracker:** https://claude.ai/code/artifact/0cf8866b-19ab-4283-8979-d9a5c6bb0bfa
+**User handbook:** https://claude.ai/code/artifact/6a9471fd-92ef-4959-abfe-2e990b63da69
 
 ## What's here
 
@@ -12,6 +13,7 @@ across Era, Barbie, David, and Diego. Built from `lead-tracker-spec-for-jonathan
 | `index.html` | The whole app — one page, no build step. This is what gets published. |
 | `data/400_Leads_assigned_2026-09-11.csv` | The assignment export from REI BlackBook, as received. |
 | `scripts/build_seed.py` | Turns that CSV into one JSON document per lead for loading into the database. |
+| `guide.html` | The plain-language handbook for reps and ops. Published as its own artifact, separate from the tracker. |
 
 ## How it's stored
 
