@@ -162,7 +162,7 @@ td .who{display:flex; align-items:center; gap:8px}
 .notebtn:hover{border-color:var(--line-2); color:var(--accent)}
 .notebtn.has{color:var(--accent)}
 .noterow{grid-column:1/-1; display:flex; gap:8px; align-items:center; padding-top:2px}
-.noterow textarea{flex:1; resize:vertical; min-height:34px; background:var(--surface-2); border:1px solid var(--line-2); border-radius:var(--r); padding:7px 9px; font-size:12.5px}
+.noterow textarea{flex:1; resize:vertical; min-height:70px; max-height:240px; overflow-y:auto; line-height:1.5; background:var(--surface-2); border:1px solid var(--line-2); border-radius:var(--r); padding:7px 9px; font-size:12.5px}
 .row.ro .hit,.row.ro .un,.row.ro .tgl,.row.ro select,.row.ro textarea{pointer-events:none; opacity:.72}
 
 .addbox{border:1px solid var(--line); border-radius:var(--r); background:var(--surface); padding:14px; margin-top:14px}
@@ -616,6 +616,7 @@ function renderList(list, editable){
   list.forEach(function(l){ frag.appendChild(buildRow(l, editable)); });
   host.innerHTML = "";
   host.appendChild(frag);
+  list.forEach(function(l){ var r = rowRefs.get(l.id); if(r && !r.note.hidden) fitNote(r.notes); });
 }
 function buildRow(l, editable){
   var row = document.createElement("div");
@@ -689,6 +690,7 @@ function syncRow(l){
   r.notebtn.className = "notebtn" + (l.notes ? " has" : "");
   if(r.notes !== document.activeElement) r.notes.value = l.notes || "";
   r.note.hidden = !(openNotes.has(l.id) || l.notes);
+  if(!r.note.hidden && r.notes !== document.activeElement) fitNote(r.notes);
 }
 
 function exportScope(){
@@ -736,6 +738,13 @@ function ago(iso){
   if(s<86400) return Math.floor(s/3600)+"h ago";
   if(s<604800) return Math.floor(s/86400)+"d ago";
   return new Date(iso).toLocaleDateString();
+}
+var NOTE_MIN = 70, NOTE_MAX = 240;   // ~3 lines floor, ~12 lines before it scrolls
+function fitNote(el){
+  // scrollHeight only means anything once the box is laid out
+  if(!el || !el.isConnected || el.offsetParent === null) return;
+  el.style.height = "auto";
+  el.style.height = Math.max(NOTE_MIN, Math.min(el.scrollHeight + 2, NOTE_MAX)) + "px";
 }
 function toast(msg, bad){
   var wrap = document.getElementById("toast");
@@ -853,7 +862,7 @@ repView.addEventListener("click", function(e){
     if(openNotes.has(id)) openNotes.delete(id); else openNotes.add(id);
     var r = rowRefs.get(id);
     r.note.hidden = !(openNotes.has(id) || l.notes);
-    if(!r.note.hidden) r.notes.focus();
+    if(!r.note.hidden){ fitNote(r.notes); r.notes.focus(); }
     return;
   }
   if(!canEdit(l)){
@@ -877,6 +886,7 @@ repView.addEventListener("input", function(e){
   var act = e.target.closest('[data-act="notes"]'); if(!act) return;
   var row = act.closest(".row"); if(!row) return;
   var l = byId(row.dataset.id); if(!l || !canEdit(l)) return;
+  fitNote(act);
   edit(row.dataset.id, {notes: act.value}, true);
 });
 repView.addEventListener("focusout", function(){
