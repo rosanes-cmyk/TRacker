@@ -3,34 +3,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+Condensed:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
 <style>
 :root{
-  --paper:#eceff0; --surface:#ffffff; --surface-2:#f5f8f8; --raised:#ffffff;
-  --ink:#111b1a; --ink-2:#374544; --muted:#6a7876;
-  --line:#d5dcda; --line-2:#bfc9c7;
-  --accent:#0d6b62; --accent-2:#0a534c; --accent-ink:#ffffff; --accent-soft:#dcebe9;
-  --hot:#a8501c; --hot-soft:#f6e7da;
-  --distress:#3c5c86; --distress-soft:#e0e8f3;
-  --good:#276f4a; --good-soft:#dcefe3;
-  --warn:#8a6510; --crit:#a33a30; --crit-soft:#f7e2df;
-  --shadow:0 1px 2px rgba(17,27,26,.05), 0 10px 26px -16px rgba(17,27,26,.35);
-  --r:8px;
-  --sans:"IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  --cond:"IBM Plex Sans Condensed", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
-  --mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
-}
-@media (prefers-color-scheme: dark){
-  :root:not([data-theme="light"]){
-    --paper:#0b1312; --surface:#141e1d; --surface-2:#182423; --raised:#1b2726;
-    --ink:#e7eeec; --ink-2:#c3d0cd; --muted:#8d9d9a;
-    --line:#243331; --line-2:#33433f;
-    --accent:#45b7a8; --accent-2:#6fcabd; --accent-ink:#06211e; --accent-soft:#123430;
-    --hot:#e09a61; --hot-soft:#33241a;
-    --distress:#8fb0e0; --distress-soft:#1b2738;
-    --good:#62c28c; --good-soft:#152e21;
-    --warn:#d6a94a; --crit:#e0796c; --crit-soft:#33201d;
-    --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 28px -18px rgba(0,0,0,.9);
-  }
-}
-:root[data-theme="dark"]{
+  color-scheme: dark;
   --paper:#0b1312; --surface:#141e1d; --surface-2:#182423; --raised:#1b2726;
   --ink:#e7eeec; --ink-2:#c3d0cd; --muted:#8d9d9a;
   --line:#243331; --line-2:#33433f;
@@ -40,6 +13,10 @@
   --good:#62c28c; --good-soft:#152e21;
   --warn:#d6a94a; --crit:#e0796c; --crit-soft:#33201d;
   --shadow:0 1px 2px rgba(0,0,0,.4), 0 12px 28px -18px rgba(0,0,0,.9);
+  --r:8px;
+  --sans:"IBM Plex Sans", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  --cond:"IBM Plex Sans Condensed", "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 
 *{box-sizing:border-box}
@@ -195,16 +172,16 @@ dialog::backdrop{background:rgba(8,16,15,.5)}
 .dlg textarea{width:100%; height:240px; font-family:var(--mono); font-size:11.5px; background:var(--surface-2); border:1px solid var(--line-2); border-radius:var(--r); padding:9px}
 .dlg .acts{display:flex; gap:8px; justify-content:flex-end; margin-top:12px}
 #toast{position:fixed; left:50%; bottom:20px; transform:translateX(-50%); z-index:80; display:flex; flex-direction:column; gap:6px; align-items:center; pointer-events:none}
-.toast{background:var(--ink); color:var(--paper); padding:9px 14px; border-radius:100px; font-size:13px; font-weight:500; box-shadow:var(--shadow)}
-.toast.bad{background:var(--crit); color:#fff}
+.toast{background:var(--raised); color:var(--ink); border:1px solid var(--line-2); padding:9px 14px; border-radius:100px; font-size:13px; font-weight:500; box-shadow:var(--shadow)}
+.toast.bad{background:var(--crit-soft); color:var(--crit); border-color:var(--crit)}
 
 .foot{margin-top:32px; padding-top:14px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; display:flex; gap:14px; flex-wrap:wrap; justify-content:space-between}
 
-@media (max-width:1080px){
-  .row,.listhead{--cols:30px minmax(140px,1.4fr) 340px 52px 112px 116px}
+@media (max-width:1120px){
+  .row,.listhead{--cols:30px minmax(120px,1.4fr) 318px 46px 104px 110px}
   .listhead span:nth-child(7),.c-upd{display:none}
 }
-@media (max-width:860px){
+@media (max-width:960px){
   .listhead{display:none}
   .row{--cols:1fr; grid-template-columns:1fr; gap:9px; padding:12px}
   .c-rank{text-align:left; grid-row:1}
