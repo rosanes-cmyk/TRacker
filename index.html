@@ -120,6 +120,13 @@ main{padding-block:20px 56px}
 .ago.warn{color:var(--warn)}
 .ago.bad{color:var(--crit)}
 
+.chans{border:1px solid var(--line); border-radius:var(--r); background:var(--surface); overflow:hidden; margin-bottom:30px}
+.chan{display:grid; grid-template-columns:62px minmax(70px,1fr) 46px minmax(160px,1.35fr); gap:14px; align-items:center; padding:12px 16px; border-top:1px solid var(--line)}
+.chan:first-child{border-top:0}
+.chan .cl{font-weight:600}
+.chan .cp{font-family:var(--mono); font-size:12.5px; font-weight:600; font-variant-numeric:tabular-nums; text-align:right}
+.chan .cf{font-size:12.5px; color:var(--muted)}
+
 @media (max-width:880px){ .tiles{grid-template-columns:repeat(2,1fr)} }
 @media (max-width:680px){
   .hero .n{font-size:44px}
@@ -130,6 +137,8 @@ main{padding-block:20px 56px}
   .reptable{min-width:340px}
   .track{display:none}
   .covpct{width:auto; text-align:left}
+  .chan{grid-template-columns:56px 1fr 46px; row-gap:5px}
+  .chan .cf{grid-column:1/-1}
 }
 
 .tablewrap{overflow-x:auto; border:1px solid var(--line); border-radius:var(--r); background:var(--surface); margin-bottom:28px}
@@ -383,9 +392,13 @@ function statusOf(l){
   return ["To call",""];
 }
 function stats(list){
-  var s = {assigned:list.length, contacted:0, calls:0, answered:0, vmLeft:0, noVm:0, texts:0, emails:0, responded:0, last:""};
+  var s = {assigned:list.length, contacted:0, calls:0, answered:0, vmLeft:0, noVm:0, texts:0, emails:0, responded:0,
+           picked:0, textBack:0, emailBack:0, last:""};
   list.forEach(function(l){
     if(l.calls>0) s.contacted++;
+    if(l.answered>0) s.picked++;
+    if(l.responded === "text"  || l.responded === "both") s.textBack++;
+    if(l.responded === "email" || l.responded === "both") s.emailBack++;
     s.calls+=l.calls; s.answered+=l.answered; s.vmLeft+=l.vmLeft; s.noVm+=l.noVm;
     if(l.textSent) s.texts++;
     if(l.emailSent) s.emails++;
@@ -394,6 +407,10 @@ function stats(list){
     if(w && w > s.last) s.last = w;
   });
   s.rate = s.contacted ? s.responded/s.contacted : 0;
+  // one rate per channel, each against the leads that channel was actually used on
+  s.callRate  = s.contacted ? s.picked/s.contacted : 0;
+  s.textRate  = s.texts  ? s.textBack/s.texts   : 0;
+  s.emailRate = s.emails ? s.emailBack/s.emails : 0;
   return s;
 }
 
@@ -511,9 +528,11 @@ function repRow(label, s, sp, n, isMe, isTotal){
     '<td><span class="ago '+agoClass(s.last)+'"><span class="dot" aria-hidden="true"></span>'+
       esc(s.last ? ago(s.last) : "never")+'</span></td></tr>';
 }
+function rateCell(got, sent){ return sent ? (100*got/sent).toFixed(1)+"%" : "—"; }
 function fullTable(rows, all){
   var html = '<div class="tablewrap"><table><thead><tr>' +
-    ["Rep","Assigned","Contacted","Calls","Answered","VM left","No VM","Texts","Emails","Responded","Resp. rate","Last activity"]
+    ["Rep","Assigned","Contacted","Calls","Answered","VM left","No VM","Texts","Emails","Responded","Resp. rate",
+     "Call resp.","Text resp.","Email resp.","Last activity"]
       .map(function(h){ return "<th>"+h+"</th>"; }).join("") + '</tr></thead><tbody>';
   rows.forEach(function(x){
     var s = x.s;
@@ -524,12 +543,18 @@ function fullTable(rows, all){
       '<td class="num">'+s.calls+'</td><td class="num">'+s.answered+'</td><td class="num">'+s.vmLeft+'</td>'+
       '<td class="num">'+s.noVm+'</td><td class="num">'+s.texts+'</td><td class="num">'+s.emails+'</td>'+
       '<td class="num">'+s.responded+'</td><td class="num">'+(s.rate*100).toFixed(1)+'%</td>'+
+      '<td class="num">'+rateCell(s.picked, s.contacted)+'</td>'+
+      '<td class="num">'+rateCell(s.textBack, s.texts)+'</td>'+
+      '<td class="num">'+rateCell(s.emailBack, s.emails)+'</td>'+
       '<td class="'+(agoClass(s.last)==="bad"?"stale":"")+'">'+esc(s.last ? ago(s.last) : "never")+'</td></tr>';
   });
   html += '<tr class="total"><td>All reps</td><td class="num">'+all.assigned+'</td><td class="num">'+all.contacted+'</td>'+
     '<td class="num">'+all.calls+'</td><td class="num">'+all.answered+'</td><td class="num">'+all.vmLeft+'</td>'+
     '<td class="num">'+all.noVm+'</td><td class="num">'+all.texts+'</td><td class="num">'+all.emails+'</td>'+
     '<td class="num">'+all.responded+'</td><td class="num">'+(all.rate*100).toFixed(1)+'%</td>'+
+    '<td class="num">'+rateCell(all.picked, all.contacted)+'</td>'+
+    '<td class="num">'+rateCell(all.textBack, all.texts)+'</td>'+
+    '<td class="num">'+rateCell(all.emailBack, all.emails)+'</td>'+
     '<td>'+esc(all.last ? ago(all.last) : "never")+'</td></tr>';
   return html + '</tbody></table></div>';
 }
@@ -595,6 +620,27 @@ function renderDash(){
     return '<div class="tile"><span class="k">'+esc(t[0])+'</span><span class="v">'+esc(t[1])+
       '</span><span class="f">'+esc(t[2])+'</span></div>';
   }).join("")+'</div>';
+
+  /* ---- what each channel brings back ---- */
+  var chans = [
+    ["Call",  all.picked,    all.contacted, "leads called picked up",   "no dials logged yet"],
+    ["Text",  all.textBack,  all.texts,     "leads texted replied",   "no texts sent yet"],
+    ["Email", all.emailBack, all.emails,    "leads emailed replied",  "no emails sent yet"]
+  ];
+  html += '<div class="sec-head"><h2>Response by channel</h2>'+
+    '<span class="sub">How often each way of reaching out gets something back.</span></div>';
+  html += '<div class="chans">' + chans.map(function(c){
+    var got = c[1], sent = c[2];
+    // a reply logged without its send ticked would otherwise read as a bar past full
+    var over = sent && got > sent;
+    return '<div class="chan"><span class="cl">'+esc(c[0])+'</span>'+
+      '<span class="track"><i style="width:'+(sent ? Math.min(100, Math.round(100*got/sent)) : 0)+'%"></i></span>'+
+      '<span class="cp">'+(sent ? pct(got, sent) : "—")+'</span>'+
+      '<span class="cf">'+(sent
+        ? (over ? fmtN(got)+' replies logged against only '+fmtN(sent)+' sends — some sends were never ticked'
+                : fmtN(got)+' of '+fmtN(sent)+' '+c[3])
+        : esc(c[4]))+'</span></div>';
+  }).join("") + '</div>';
 
   /* ---- rep by rep ---- */
   html += '<div class="sec-head"><h2>Rep by rep</h2>'+
@@ -934,11 +980,16 @@ function leadsCsv(list){
   return head.join(",")+"\n"+rows.join("\n")+"\n";
 }
 function rollupCsv(){
-  var head = ["Rep","Assigned","Contacted","Outbound_Calls","Answered","VM_Left","No_Answer_No_VM","Texts_Sent","Emails_Sent","Responded","Response_Rate","Last_Activity"];
+  var head = ["Rep","Assigned","Contacted","Outbound_Calls","Answered","VM_Left","No_Answer_No_VM","Texts_Sent","Emails_Sent","Responded","Response_Rate",
+    "Leads_Picked_Up","Call_Response_Rate","Replied_By_Text","Text_Response_Rate","Replied_By_Email","Email_Response_Rate","Last_Activity"];
   var rows = repsPresent().concat(["All reps"]).map(function(r){
     var s = stats(r==="All reps" ? leads : leads.filter(function(l){ return l.owner===r; }));
     return [r,s.assigned,s.contacted,s.calls,s.answered,s.vmLeft,s.noVm,s.texts,s.emails,s.responded,
-      (s.rate*100).toFixed(1)+"%", s.last||"never"].map(csvCell).join(",");
+      (s.rate*100).toFixed(1)+"%",
+      s.picked, rateCell(s.picked, s.contacted),
+      s.textBack, rateCell(s.textBack, s.texts),
+      s.emailBack, rateCell(s.emailBack, s.emails),
+      s.last||"never"].map(csvCell).join(",");
   });
   return head.join(",")+"\n"+rows.join("\n")+"\n";
 }
