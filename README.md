@@ -51,10 +51,23 @@ which is the faster path for a handful of leads.
 ## Access
 
 The page is organization-internal — every viewer is a signed-in member of the
-Twin Home Buyer workspace. Inside it, the rep gate is a **soft gate**: you pick
-your name, and the page then makes every other rep's list read-only for you. It
-stops the accidental edits that the shared spreadsheet allowed, which is the
-problem the spec set out to solve. It is not authentication: anyone who can open
-the page can pick a different name and edit that rep's list. Real per-rep edit
-locks need per-rep accounts, which is the open question flagged for Cherry in
+Twin Home Buyer workspace. Inside it, who sees which board follows one rule
+(`canOpen` in `index.html`):
+
+| Logged in as | Boards | CSV export |
+| --- | --- | --- |
+| A rep | Dashboard + their own board only; the other three tabs are not rendered | Their own 100 leads |
+| Cherry / ops | Dashboard + all four boards, read-only | All 400 leads |
+| Nobody yet | Dashboard only | Disabled |
+
+The dashboard rollup and the name search still span all 400 leads for everyone,
+since the point of the search is to find a lead without knowing whose list it is
+on. A lead that belongs to someone else shows its status but offers no way to
+open it.
+
+This is a **soft gate**, not authentication: anyone who can open the page can
+pick a different name from the dropdown and get that rep's board. It stops the
+accidental cross-editing the shared spreadsheet allowed, which is the problem
+the spec set out to solve, but it does not stop someone who means to. Real
+per-rep locks need per-rep accounts — the open question flagged for Cherry in
 §6 of the spec.

@@ -60,6 +60,7 @@ option:disabled{color:var(--muted)}
 .tab[aria-selected="true"]{color:var(--ink); border-bottom-color:var(--accent)}
 .tab .mine{font-size:10px; letter-spacing:.07em; text-transform:uppercase; color:var(--accent); background:var(--accent-soft); padding:2px 5px; border-radius:4px}
 .tab .cnt{font-family:var(--mono); font-size:11px; color:var(--muted); font-weight:500}
+.tabnote{align-self:center; padding-left:10px; font-size:12px; color:var(--muted)}
 
 main{padding-block:20px 56px}
 .banner{display:flex; gap:10px; align-items:flex-start; padding:10px 13px; border-radius:var(--r); border:1px solid var(--line); background:var(--surface); font-size:13px; color:var(--ink-2); margin-bottom:16px}
@@ -101,6 +102,7 @@ td .who{display:flex; align-items:center; gap:8px}
 .results{display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--r); overflow:hidden}
 .res{display:flex; align-items:center; gap:12px; padding:10px 13px; background:var(--surface); flex-wrap:wrap}
 .res .rn{font-weight:600; flex:1 1 190px}
+.res .onlist{font-size:12px; color:var(--muted); white-space:nowrap}
 .res .rmeta{display:flex; gap:8px; align-items:center; flex-wrap:wrap; font-size:12px; color:var(--muted)}
 .empty{padding:26px 16px; text-align:center; color:var(--muted); background:var(--surface); border:1px dashed var(--line-2); border-radius:var(--r)}
 
@@ -305,6 +307,11 @@ function repsPresent(){
   [...s].sort().forEach(function(r){ if(out.indexOf(r)<0) out.push(r); });
   return out.length ? out : REP_ORDER.slice();
 }
+function canOpen(rep){
+  if(me === "admin") return true;   // Cherry / ops reads every board
+  if(!me) return false;             // nobody picked yet: dashboard only
+  return rep === me;                // a rep sees their own board and no other
+}
 function statusOf(l){
   if(l.responded && l.responded!=="no") return ["Responded","responded"];
   if(l.calls>0) return ["Called","called"];
@@ -391,11 +398,12 @@ function renderTabs(){
   var tabs = document.getElementById("tabs");
   var reps = repsPresent();
   var html = '<button class="tab" role="tab" data-v="dash" aria-selected="'+(view==="dash")+'">Dashboard</button>';
-  reps.forEach(function(r){
+  reps.filter(canOpen).forEach(function(r){
     var n = leads.filter(function(l){ return l.owner===r; }).length;
     html += '<button class="tab" role="tab" data-v="'+esc(r)+'" aria-selected="'+(view===r)+'">'+esc(r)+
             '<span class="cnt">'+n+'</span>'+(me===r?'<span class="mine">you</span>':'')+'</button>';
   });
+  if(!me) html += '<span class="tabnote">Pick your name to open your list</span>';
   tabs.innerHTML = html;
 }
 function renderMe(){
@@ -484,7 +492,9 @@ function renderResults(){
         '<span>'+esc(RESP_LABEL[l.responded]||"No")+'</span>'+
         '<span>'+esc(l.updatedAt?ago(l.updatedAt):"never touched")+'</span>'+
       '</span>'+
-      '<button class="btn" data-goto="'+esc(l.id)+'" data-rep="'+esc(l.owner)+'" type="button">Open</button></div>';
+      (canOpen(l.owner)
+        ? '<button class="btn" data-goto="'+esc(l.id)+'" data-rep="'+esc(l.owner)+'" type="button">Open</button>'
+        : '<span class="onlist">on '+esc(l.owner)+'\u2019s list</span>')+'</div>';
   }).join("") + '</div>';
 }
 function matches(l,q){
@@ -675,8 +685,18 @@ function syncRow(l){
   r.note.hidden = !(openNotes.has(l.id) || l.notes);
 }
 
+function exportScope(){
+  if(view !== "dash")  return {list: leads.filter(function(l){ return l.owner===view; }),
+                               who: view.toLowerCase(), label: "Export " + view + " (CSV)"};
+  if(me === "admin")   return {list: leads, who: "all-reps", label: "Export all (CSV)"};
+  if(me)               return {list: leads.filter(function(l){ return l.owner===me; }),
+                               who: me.toLowerCase(), label: "Export " + me + " (CSV)"};
+  return {list: [], who: "", label: "Export CSV"};
+}
+
 /* ---------------- render switch ---------------- */
 function render(){
+  if(view !== "dash" && !canOpen(view)) view = "dash";
   renderMe();
   renderTabs();
   var dash = document.getElementById("dashView"), rep = document.getElementById("repView");
@@ -685,7 +705,9 @@ function render(){
   document.getElementById("footLeft").textContent =
     leads.length + " leads · " + repsPresent().length + " reps" + (leads.length ? " · assigned " + (leads[0].assignedDate||"—") : "");
   var btn = document.getElementById("exportBtn");
-  btn.textContent = view === "dash" ? "Export all (CSV)" : "Export " + view + " (CSV)";
+  var scope = exportScope();
+  btn.textContent = scope.label;
+  btn.disabled = !scope.list.length;
   setSync();
 }
 
@@ -775,14 +797,15 @@ document.getElementById("me").addEventListener("change", function(e){
   me = e.target.value === "__admin" ? "admin" : e.target.value;
   lsSet("thb.me", me);
   document.getElementById("repView").dataset.rep = "";
+  if(me && me !== "admin") view = me;
+  else if(!canOpen(view)) view = "dash";
   render();
   if(me && me !== "admin") toast("Logging as " + me + " — you can edit " + me + "’s list");
 });
 document.getElementById("exportBtn").addEventListener("click", function(){
-  var list = view === "dash" ? leads : leads.filter(function(l){ return l.owner===view; });
-  if(!list.length){ toast("Nothing to export yet", true); return; }
-  var who = view === "dash" ? "all-reps" : view.toLowerCase();
-  offerFile("thb-leads-"+who+"-"+today()+".csv", leadsCsv(list), "Lead export");
+  var scope = exportScope();
+  if(!scope.list.length){ toast("Pick your name up top to export your list", true); return; }
+  offerFile("thb-leads-"+scope.who+"-"+today()+".csv", leadsCsv(scope.list), "Lead export");
 });
 document.getElementById("copyBtn").addEventListener("click", function(){
   var ta = document.getElementById("copyText");
