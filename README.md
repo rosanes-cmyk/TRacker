@@ -29,7 +29,7 @@ so roughly eleven more assignment rounds fit before old rounds need archiving.
 | `calls` | number | Cumulative dial attempts. |
 | `answered`, `vmLeft`, `noVm` | number | Cumulative outcomes; they sum to `calls`. |
 | `textSent`, `emailSent` | boolean | Outreach checkboxes. |
-| `responded` | `no` \| `text` \| `email` \| `both` | Response channel. |
+| `responded` | `no` \| `call` \| `text` \| `email` \| `both` | Which channel the lead came back on. `call` is a callback or an engaged pickup; `both` means text and email, the value the field carried before `call` existed. |
 | `notes` | string | Free text per lead. |
 | `updatedAt`, `updatedBy` | string | ISO timestamp and rep name of the last edit. |
 

@@ -177,8 +177,8 @@ td .who{display:flex; align-items:center; gap:8px}
 .listhead{display:grid; grid-template-columns:var(--cols); gap:10px; align-items:center; padding:7px 12px; background:var(--surface-2); font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); font-weight:600}
 .listhead span:nth-child(n+3){text-align:center}
 .listhead span:nth-child(2){text-align:left}
-.row{--cols:34px minmax(140px,1.5fr) 376px 56px 158px 128px 92px; display:grid; grid-template-columns:var(--cols); gap:10px; align-items:center; padding:8px 12px; background:var(--surface); scroll-margin-top:120px}
-.listhead{--cols:34px minmax(140px,1.5fr) 376px 56px 158px 128px 92px}
+.row{--cols:34px minmax(126px,1.5fr) 376px 56px 158px 184px 92px; display:grid; grid-template-columns:var(--cols); gap:10px; align-items:center; padding:8px 12px; background:var(--surface); scroll-margin-top:120px}
+.listhead{--cols:34px minmax(126px,1.5fr) 376px 56px 158px 184px 92px}
 .row:hover{background:var(--surface-2)}
 .row.flash{animation:flash 1.6s ease}
 @keyframes flash{0%,40%{background:var(--accent-soft)}100%{background:var(--surface)}}
@@ -218,7 +218,7 @@ td .who{display:flex; align-items:center; gap:8px}
 .tgl.ind{cursor:default; border-style:dashed}
 .tgl.ind:hover{border-color:var(--line-2); color:var(--muted)}
 .tgl.ind.on{border-style:solid; border-color:color-mix(in srgb, var(--accent) 45%, var(--line)); background:var(--accent-soft); color:var(--accent)}
-.c-resp select{width:100%; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r); padding:6px 6px; font-size:12px; font-weight:600}
+.c-resp select{width:100%; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r); padding:6px 6px; font-size:11.5px; font-weight:600}
 .c-resp select.yes{border-color:color-mix(in srgb, var(--good) 50%, var(--line)); background:var(--good-soft); color:var(--good)}
 .c-upd{display:flex; align-items:center; justify-content:space-between; gap:6px; font-size:11px; color:var(--muted)}
 .notebtn{border:1px solid transparent; background:none; color:var(--muted); cursor:pointer; border-radius:5px; padding:3px 5px; font-size:11px}
@@ -246,8 +246,8 @@ dialog::backdrop{background:rgba(8,16,15,.5)}
 
 .foot{margin-top:32px; padding-top:14px; border-top:1px solid var(--line); color:var(--muted); font-size:12px; display:flex; gap:14px; flex-wrap:wrap; justify-content:space-between}
 
-@media (max-width:1120px){
-  .row,.listhead{--cols:30px minmax(120px,1.4fr) 318px 46px 140px 110px}
+@media (max-width:1160px){
+  .row,.listhead{--cols:30px minmax(118px,1.4fr) 318px 46px 140px 180px}
   .listhead span:nth-child(7),.c-upd{display:none}
 }
 @media (max-width:960px){
@@ -313,8 +313,10 @@ dialog::backdrop{background:rgba(8,16,15,.5)}
 "use strict";
 
 var REP_ORDER = ["Era","Barbie","David","Diego"];
-var RESP = [["no","No"],["text","Yes – text"],["email","Yes – email"],["both","Yes – both"]];
-var RESP_LABEL = {no:"No", text:"Yes – text", email:"Yes – email", both:"Yes – both"};
+var RESP = [["no","No"],["call","Yes – call back"],["text","Yes – text"],["email","Yes – email"],
+            ["both","Yes – text & email"]];
+var RESP_LABEL = {no:"No", call:"Yes – call back", text:"Yes – text", email:"Yes – email",
+                  both:"Yes – text & email"};
 var COUNTERS = [["answered","Answered"],["vmLeft","VM left"],["noVm","No VM"]];
 var STALE_MS = 36*60*60*1000, QUIET_MS = 12*60*60*1000;
 /* the four states a lead can be in, most worked first — one hue, light to dark */
@@ -393,10 +395,11 @@ function statusOf(l){
 }
 function stats(list){
   var s = {assigned:list.length, contacted:0, calls:0, answered:0, vmLeft:0, noVm:0, texts:0, emails:0, responded:0,
-           picked:0, textBack:0, emailBack:0, last:""};
+           phoned:0, picked:0, textBack:0, emailBack:0, last:""};
   list.forEach(function(l){
     if(l.calls>0) s.contacted++;
-    if(l.answered>0) s.picked++;
+    if(l.calls>0 || l.responded === "call") s.phoned++;
+    if(l.answered>0 || l.responded === "call") s.picked++;
     if(l.responded === "text"  || l.responded === "both") s.textBack++;
     if(l.responded === "email" || l.responded === "both") s.emailBack++;
     s.calls+=l.calls; s.answered+=l.answered; s.vmLeft+=l.vmLeft; s.noVm+=l.noVm;
@@ -408,7 +411,7 @@ function stats(list){
   });
   s.rate = s.contacted ? s.responded/s.contacted : 0;
   // one rate per channel, each against the leads that channel was actually used on
-  s.callRate  = s.contacted ? s.picked/s.contacted : 0;
+  s.callRate  = s.phoned ? s.picked/s.phoned : 0;
   s.textRate  = s.texts  ? s.textBack/s.texts   : 0;
   s.emailRate = s.emails ? s.emailBack/s.emails : 0;
   return s;
@@ -543,7 +546,7 @@ function fullTable(rows, all){
       '<td class="num">'+s.calls+'</td><td class="num">'+s.answered+'</td><td class="num">'+s.vmLeft+'</td>'+
       '<td class="num">'+s.noVm+'</td><td class="num">'+s.texts+'</td><td class="num">'+s.emails+'</td>'+
       '<td class="num">'+s.responded+'</td><td class="num">'+(s.rate*100).toFixed(1)+'%</td>'+
-      '<td class="num">'+rateCell(s.picked, s.contacted)+'</td>'+
+      '<td class="num">'+rateCell(s.picked, s.phoned)+'</td>'+
       '<td class="num">'+rateCell(s.textBack, s.texts)+'</td>'+
       '<td class="num">'+rateCell(s.emailBack, s.emails)+'</td>'+
       '<td class="'+(agoClass(s.last)==="bad"?"stale":"")+'">'+esc(s.last ? ago(s.last) : "never")+'</td></tr>';
@@ -552,7 +555,7 @@ function fullTable(rows, all){
     '<td class="num">'+all.calls+'</td><td class="num">'+all.answered+'</td><td class="num">'+all.vmLeft+'</td>'+
     '<td class="num">'+all.noVm+'</td><td class="num">'+all.texts+'</td><td class="num">'+all.emails+'</td>'+
     '<td class="num">'+all.responded+'</td><td class="num">'+(all.rate*100).toFixed(1)+'%</td>'+
-    '<td class="num">'+rateCell(all.picked, all.contacted)+'</td>'+
+    '<td class="num">'+rateCell(all.picked, all.phoned)+'</td>'+
     '<td class="num">'+rateCell(all.textBack, all.texts)+'</td>'+
     '<td class="num">'+rateCell(all.emailBack, all.emails)+'</td>'+
     '<td>'+esc(all.last ? ago(all.last) : "never")+'</td></tr>';
@@ -623,7 +626,7 @@ function renderDash(){
 
   /* ---- what each channel brings back ---- */
   var chans = [
-    ["Call",  all.picked,    all.contacted, "leads called picked up",   "no dials logged yet"],
+    ["Call",  all.picked,    all.phoned,    "leads phoned picked up or called back", "no dials logged yet"],
     ["Text",  all.textBack,  all.texts,     "leads texted replied",   "no texts sent yet"],
     ["Email", all.emailBack, all.emails,    "leads emailed replied",  "no emails sent yet"]
   ];
@@ -981,12 +984,12 @@ function leadsCsv(list){
 }
 function rollupCsv(){
   var head = ["Rep","Assigned","Contacted","Outbound_Calls","Answered","VM_Left","No_Answer_No_VM","Texts_Sent","Emails_Sent","Responded","Response_Rate",
-    "Leads_Picked_Up","Call_Response_Rate","Replied_By_Text","Text_Response_Rate","Replied_By_Email","Email_Response_Rate","Last_Activity"];
+    "Leads_Phoned","Answered_Or_Called_Back","Call_Response_Rate","Replied_By_Text","Text_Response_Rate","Replied_By_Email","Email_Response_Rate","Last_Activity"];
   var rows = repsPresent().concat(["All reps"]).map(function(r){
     var s = stats(r==="All reps" ? leads : leads.filter(function(l){ return l.owner===r; }));
     return [r,s.assigned,s.contacted,s.calls,s.answered,s.vmLeft,s.noVm,s.texts,s.emails,s.responded,
       (s.rate*100).toFixed(1)+"%",
-      s.picked, rateCell(s.picked, s.contacted),
+      s.phoned, s.picked, rateCell(s.picked, s.phoned),
       s.textBack, rateCell(s.textBack, s.texts),
       s.emailBack, rateCell(s.emailBack, s.emails),
       s.last||"never"].map(csvCell).join(",");
