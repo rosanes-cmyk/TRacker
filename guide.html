@@ -334,7 +334,7 @@ details .ans p{max-width:58ch}
         <div class="demorow">
           <span class="schip on">Working</span><span class="schip">Wrong number</span><span class="schip">Invalid / disconnected</span>
           <span class="schip">Opted out</span><span class="schip">Do not call</span><span class="schip">Not the owner</span>
-          <span class="schip">Out of buy box area</span>
+          <span class="schip">Out of buy box area</span><span class="schip">Skipped for now</span>
         </div>
         <span class="cap">Every lead starts on <strong>Working</strong>. Pick another and it leaves your call list.</span>
       </div>
@@ -360,8 +360,21 @@ details .ans p{max-width:58ch}
       </div>
       <h3>What it does to your numbers</h3>
       <p>A parked lead drops out of your list and out of every rate, so it stops counting against you. If 12 of your 100 turn out to be bad numbers, your board says <strong>88 to work · 12 parked</strong> and your percentages are measured against the 88 you can actually reach. Cherry sees the parked count too, so nobody mistakes a dud number for a rep not calling.</p>
+      <h3>Coming back to it later</h3>
+      <ul class="plain">
+        <li><strong>Skipped for now</strong> — you're not calling this one yet. Not a wrong number, not a dead lead, just not now.</li>
+      </ul>
+      <p>Skipping asks you <strong>why</strong>, and won't go through until you answer — one line is enough. "Asked me to call back Friday", "bad time, kids in the background", "needs a Spanish speaker". Type it and press Enter.</p>
+      <div class="demo">
+        <div class="demorow"><span class="schip on">Skipped for now</span></div>
+        <span class="cap">The reason shows on the lead and how long it has sat there — "· Asked me to call back Friday · skipped 2d ago".</span>
+      </div>
+      <div class="key warn">
+        <p><strong>A skip is a promise to come back.</strong> It leaves your call list but it still counts as one of your leads, so skipping doesn't make your numbers look better — it just moves the lead. Cherry sees the count and how long each has been sitting. Use the <strong>Skipped</strong> chip to work through them.</p>
+      </div>
+
       <h3>Putting one back</h3>
-      <p>Parked leads aren't lost — click the <strong>Needs new number</strong>, <strong>Closed</strong> or <strong>Out of buy box</strong> chip above your list to see them. Each one carries a <strong>↺ Put back on the call list</strong> button. One click and it's back where it was, with everything you'd logged on it still there.</p>
+      <p>Parked leads aren't lost — click the <strong>Needs new number</strong>, <strong>Closed</strong>, <strong>Out of buy box</strong> or <strong>Skipped</strong> chip above your list to see them. Each one carries a <strong>↺ Put back on the call list</strong> button. One click and it's back where it was, with everything you'd logged on it still there.</p>
       <div class="demo">
         <div class="demorow"><span class="btn">↺ Put back on the call list</span></div>
         <span class="cap">Only shows on a parked lead. You can also open the pencil and click <strong>Working</strong>.</span>
@@ -424,6 +437,7 @@ details .ans p{max-width:58ch}
         <dl class="def"><dt>Response by channel</dt><dd>Of the leads you <em>called</em>, how many picked up. Of the leads you <em>texted</em>, how many wrote back. Same for email. Each one is measured only against the leads that channel was actually used on, so you can tell which method is worth the time.</dd></dl>
         <dl class="def"><dt>Parked</dt><dd>Leads taken off the call list — bad numbers, opt-outs, wrong owner. They show as their own slice on the bar and come out of every rate, so a file full of dud numbers doesn't read as reps not working.</dd></dl>
         <dl class="def"><dt>Out of buy box</dt><dd>Leads you reached that fall outside the area we buy in. Counted apart from bad numbers, because the rep did the work — these still count as contacted.</dd></dl>
+        <dl class="def"><dt>Skipped</dt><dd>Leads a rep set aside with a reason, meaning to come back. Counted apart from the dead ones — this is work deferred, not work finished, and it still counts as that rep's lead.</dd></dl>
         <dl class="def"><dt>Rep by rep · Coverage</dt><dd>The share of that rep's 100 with any activity logged. This is the "is everyone working their list" number.</dd></dl>
         <dl class="def"><dt>Last activity</dt><dd>When that rep last logged real work. Green is recent, amber is getting quiet, red means nothing in over a day. It counts logged work only — opening the page doesn't reset it.</dd></dl>
         <dl class="def"><dt>Show every column</dt><dd>Swaps the summary table for the full one: calls, answered, voicemails, texts, emails and every response rate, rep by rep.</dd></dl>
@@ -465,6 +479,9 @@ details .ans p{max-width:58ch}
       </details>
       <details><summary>A rep shows "never" under Last activity but they've been on the page</summary>
         <div class="ans"><p>That column counts logged work — a call, a text, an email, a response or a note. Opening the tracker, or clicking something and undoing it, doesn't count. "Never" means nothing has actually been logged yet.</p></div>
+      </details>
+      <details><summary>I don't want to call this one right now</summary>
+        <div class="ans"><p>Open the pencil and pick <strong>Skipped for now</strong>. It asks why — answer it and press Enter. The lead leaves your list and waits under the <strong>Skipped</strong> chip until you come back to it. Use this instead of just scrolling past, so nothing gets quietly forgotten.</p></div>
       </details>
       <details><summary>The voicemail was full — which button?</summary>
         <div class="ans"><p><strong>VM full</strong>, the fourth one. Use <strong>No VM</strong> only when you chose not to leave a message.</p></div>
