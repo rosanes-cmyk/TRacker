@@ -197,8 +197,8 @@ td .who{display:flex; align-items:center; gap:8px}
 .st.responded{color:var(--good); border-color:color-mix(in srgb, var(--good) 35%, var(--line)); background:var(--good-soft)}
 .st.touched{color:var(--warn); border-color:color-mix(in srgb, var(--warn) 35%, var(--line))}
 
-.log{display:grid; grid-template-columns:repeat(3,1fr); gap:6px; min-width:0}
-.ctr{display:flex; align-items:stretch; min-width:0; border:1px solid var(--line-2); border-radius:var(--r); overflow:hidden; background:var(--surface)}
+.log{display:flex; gap:5px; min-width:0}
+.ctr{flex:1 1 auto; display:flex; align-items:stretch; min-width:0; border:1px solid var(--line-2); border-radius:var(--r); overflow:hidden; background:var(--surface)}
 .ctr .hit{flex:1; display:flex; align-items:center; justify-content:space-between; gap:6px; padding:6px 4px 6px 8px; background:none; border:0; cursor:pointer; font-size:11.5px; font-weight:600; color:var(--ink-2); min-width:0}
 .ctr .hit:hover{background:var(--accent-soft); color:var(--accent)}
 .ctr .hit .lbl{overflow:hidden; text-overflow:ellipsis; white-space:nowrap}
@@ -225,9 +225,17 @@ td .who{display:flex; align-items:center; gap:8px}
 .notebtn:hover{border-color:var(--line-2); color:var(--accent)}
 .notebtn.has{color:var(--accent); background:var(--accent-soft); border-color:color-mix(in srgb, var(--accent) 30%, var(--line))}
 .notebtn[aria-expanded="true"]{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
-.noterow{grid-column:1/-1; display:flex; gap:8px; align-items:center; padding-top:2px}
+.noterow{grid-column:1/-1; display:flex; flex-direction:column; gap:8px; align-items:stretch; padding-top:4px}
+.statusrow{display:flex; gap:6px; align-items:center; flex-wrap:wrap}
+.statusrow .slab{font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); font-weight:600; margin-right:2px}
+.schip{border:1px solid var(--line-2); background:var(--surface-2); border-radius:100px; padding:4px 11px; font-size:12px; font-weight:600; color:var(--ink-2); cursor:pointer}
+.schip:hover{border-color:var(--accent); color:var(--accent)}
+.schip[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+.schip.dead[aria-pressed="true"]{background:var(--crit-soft); border-color:var(--crit); color:var(--crit)}
+.st.dead{color:var(--crit); border-color:color-mix(in srgb, var(--crit) 45%, var(--line)); background:var(--crit-soft)}
+.row.dead .c-lead .nm,.row.dead .c-rank{opacity:.7}
 .noterow textarea{flex:1; resize:vertical; min-height:70px; max-height:240px; overflow-y:auto; line-height:1.5; background:var(--surface-2); border:1px solid var(--line-2); border-radius:var(--r); padding:7px 9px; font-size:12.5px}
-.row.ro .hit,.row.ro .un,.row.ro .tgl,.row.ro select,.row.ro textarea{pointer-events:none; opacity:.72}
+.row.ro .hit,.row.ro .un,.row.ro .tgl,.row.ro .schip,.row.ro select,.row.ro textarea{pointer-events:none; opacity:.72}
 
 .addbox{border:1px solid var(--line); border-radius:var(--r); background:var(--surface); padding:14px; margin-top:14px}
 .addbox textarea{width:100%; min-height:86px; background:var(--surface-2); border:1px solid var(--line-2); border-radius:var(--r); padding:9px; font-family:var(--mono); font-size:12.5px}
@@ -254,7 +262,7 @@ dialog::backdrop{background:rgba(8,16,15,.5)}
   .listhead{display:none}
   .row{--cols:1fr; grid-template-columns:1fr; gap:9px; padding:12px}
   .c-rank{text-align:left; grid-row:1}
-  .log{grid-template-columns:repeat(3,1fr)}
+  .log{flex-wrap:wrap}
   .c-calls{display:flex; align-items:baseline; gap:6px; text-align:left}
   .c-calls .lab{display:inline}
   .flags{justify-content:flex-start}
@@ -317,11 +325,25 @@ var RESP = [["no","No"],["call","Yes – call back"],["text","Yes – text"],["e
             ["both","Yes – text & email"]];
 var RESP_LABEL = {no:"No", call:"Yes – call back", text:"Yes – text", email:"Yes – email",
                   both:"Yes – text & email"};
-var COUNTERS = [["answered","Answered"],["vmLeft","VM left"],["noVm","No VM"]];
+var COUNTERS = [["answered","Answered"],["vmLeft","VM left"],["noVm","No VM"],["vmFull","VM full"]];
+/* why a dial went nowhere, split by what it means for the lead:
+   "number" — the lead is still live, the phone is not, so it wants skip tracing
+   "closed" — stop contacting this lead                                        */
+var LEAD_STATUS = [
+  ["",            "Working",              ""      ],
+  ["wrongNumber", "Wrong number",         "number"],
+  ["invalid",     "Invalid / disconnected","number"],
+  ["optedOut",    "Opted out",            "closed"],
+  ["doNotCall",   "Do not call",          "closed"],
+  ["notOwner",    "Not the owner",        "closed"]
+];
+var STATUS_LABEL = {}, STATUS_BUCKET = {};
+LEAD_STATUS.forEach(function(x){ STATUS_LABEL[x[0]] = x[1]; STATUS_BUCKET[x[0]] = x[2]; });
 var STALE_MS = 36*60*60*1000, QUIET_MS = 12*60*60*1000;
 /* the four states a lead can be in, most worked first — one hue, light to dark */
 var STEPS = [["responded","Responded","var(--step4)"],["called","Called","var(--step3)"],
-             ["touched","Texted or emailed","var(--step2)"],["toCall","Not called yet","var(--step1)"]];
+             ["touched","Texted or emailed","var(--step2)"],["toCall","Not called yet","var(--step1)"],
+             ["dead","Parked — bad number or closed","var(--line-2)"]];
 
 var db = null, downloads = null;
 var raw = new Map();          // id -> server doc
@@ -356,7 +378,8 @@ function blank(l){
     id:l.id, owner:l.owner||"", ownerId:l.ownerId||"", rank:+l.rank||0,
     name:l.name||"", phone:l.phone||"", bucket:l.bucket||"", reiLink:l.reiLink||"",
     task:l.task||"", assignedDate:l.assignedDate||"",
-    calls:+l.calls||0, answered:+l.answered||0, vmLeft:+l.vmLeft||0, noVm:+l.noVm||0,
+    calls:+l.calls||0, answered:+l.answered||0, vmLeft:+l.vmLeft||0, noVm:+l.noVm||0, vmFull:+l.vmFull||0,
+    leadStatus:l.leadStatus||"",
     textSent:!!l.textSent, emailSent:!!l.emailSent, responded:l.responded||"no",
     notes:l.notes||"", updatedAt:l.updatedAt||"", updatedBy:l.updatedBy||""
   };
@@ -382,33 +405,41 @@ function canOpen(rep){
   if(!me) return false;             // nobody picked yet: dashboard only
   return rep === me;                // a rep sees their own board and no other
 }
+function bucketOf(l){ return STATUS_BUCKET[l.leadStatus] || ""; }
+function isLive(l){ return !bucketOf(l); }
 function hasWork(l){
-  return l.calls > 0 || l.textSent || l.emailSent ||
+  return l.calls > 0 || l.textSent || l.emailSent || !!l.leadStatus ||
          (l.responded && l.responded !== "no") || !!(l.notes||"").trim();
 }
 function workedAt(l){ return hasWork(l) ? (l.updatedAt||"") : ""; }
 function statusOf(l){
+  if(l.leadStatus) return [STATUS_LABEL[l.leadStatus] || l.leadStatus, "dead"];
   if(l.responded && l.responded!=="no") return ["Responded","responded"];
   if(l.calls>0) return ["Called","called"];
   if(l.textSent||l.emailSent) return ["Touched","touched"];
   return ["To call",""];
 }
 function stats(list){
-  var s = {assigned:list.length, contacted:0, calls:0, answered:0, vmLeft:0, noVm:0, texts:0, emails:0, responded:0,
-           phoned:0, picked:0, textBack:0, emailBack:0, last:""};
+  var s = {assigned:list.length, contacted:0, calls:0, answered:0, vmLeft:0, noVm:0, vmFull:0, texts:0, emails:0, responded:0,
+           phoned:0, picked:0, textBack:0, emailBack:0, needsNumber:0, closed:0, last:""};
   list.forEach(function(l){
-    if(l.calls>0) s.contacted++;
-    if(l.calls>0 || l.responded === "call") s.phoned++;
-    if(l.answered>0 || l.responded === "call") s.picked++;
-    if(l.responded === "text"  || l.responded === "both") s.textBack++;
-    if(l.responded === "email" || l.responded === "both") s.emailBack++;
-    s.calls+=l.calls; s.answered+=l.answered; s.vmLeft+=l.vmLeft; s.noVm+=l.noVm;
-    if(l.textSent) s.texts++;
-    if(l.emailSent) s.emails++;
-    if(l.responded && l.responded!=="no") s.responded++;
+    var bucket = bucketOf(l), live = !bucket;
+    if(bucket === "number") s.needsNumber++;
+    else if(bucket === "closed") s.closed++;
+    if(live && l.calls>0) s.contacted++;
+    if(live && (l.calls>0 || l.responded === "call")) s.phoned++;
+    if(live && (l.answered>0 || l.responded === "call")) s.picked++;
+    if(live && (l.responded === "text"  || l.responded === "both")) s.textBack++;
+    if(live && (l.responded === "email" || l.responded === "both")) s.emailBack++;
+    s.calls+=l.calls; s.answered+=l.answered; s.vmLeft+=l.vmLeft; s.noVm+=l.noVm; s.vmFull+=l.vmFull||0;
+    if(live && l.textSent) s.texts++;
+    if(live && l.emailSent) s.emails++;
+    if(live && l.responded && l.responded!=="no") s.responded++;
     var w = workedAt(l);
     if(w && w > s.last) s.last = w;
   });
+  s.unworkable = s.needsNumber + s.closed;
+  s.live = s.assigned - s.unworkable;
   s.rate = s.contacted ? s.responded/s.contacted : 0;
   // one rate per channel, each against the leads that channel was actually used on
   s.callRate  = s.phoned ? s.picked/s.phoned : 0;
@@ -504,10 +535,11 @@ function renderMe(){
 
 /* ---------------- rendering: dashboard ---------------- */
 function splitByStatus(list){
-  var c = {responded:0, called:0, touched:0, toCall:0};
+  var c = {responded:0, called:0, touched:0, toCall:0, dead:0};
   list.forEach(function(l){
     var k = statusOf(l)[1];
-    if(k === "responded") c.responded++;
+    if(k === "dead") c.dead++;
+    else if(k === "responded") c.responded++;
     else if(k === "called") c.called++;
     else if(k === "touched") c.touched++;
     else c.toCall++;
@@ -520,7 +552,7 @@ function agoClass(last){
   return d > STALE_MS ? "bad" : (d > QUIET_MS ? "warn" : "ok");
 }
 function repRow(label, s, sp, n, isMe, isTotal){
-  var worked = n - sp.toCall, p = n ? Math.round(100*worked/n) : 0;
+  var live = n - sp.dead, worked = live - sp.toCall, p = live ? Math.round(100*worked/live) : 0;
   return '<tr'+(isTotal?' class="total"':'')+'>'+
     '<td><span class="rep">'+esc(label)+'</span>'+(isMe?' <span class="st called">you</span>':'')+'</td>'+
     '<td class="cov"><span class="cov-in"><span class="track"><i style="width:'+p+'%"></i></span>'+
@@ -535,7 +567,7 @@ function rateCell(got, sent){ return sent ? (100*got/sent).toFixed(1)+"%" : "—
 function fullTable(rows, all){
   var html = '<div class="tablewrap"><table><thead><tr>' +
     ["Rep","Assigned","Contacted","Calls","Answered","VM left","No VM","Texts","Emails","Responded","Resp. rate",
-     "Call resp.","Text resp.","Email resp.","Last activity"]
+     "Call resp.","Text resp.","Email resp.","VM full","Needs number","Closed","Last activity"]
       .map(function(h){ return "<th>"+h+"</th>"; }).join("") + '</tr></thead><tbody>';
   rows.forEach(function(x){
     var s = x.s;
@@ -549,6 +581,7 @@ function fullTable(rows, all){
       '<td class="num">'+rateCell(s.picked, s.phoned)+'</td>'+
       '<td class="num">'+rateCell(s.textBack, s.texts)+'</td>'+
       '<td class="num">'+rateCell(s.emailBack, s.emails)+'</td>'+
+      '<td class="num">'+s.vmFull+'</td><td class="num">'+s.needsNumber+'</td><td class="num">'+s.closed+'</td>'+
       '<td class="'+(agoClass(s.last)==="bad"?"stale":"")+'">'+esc(s.last ? ago(s.last) : "never")+'</td></tr>';
   });
   html += '<tr class="total"><td>All reps</td><td class="num">'+all.assigned+'</td><td class="num">'+all.contacted+'</td>'+
@@ -558,6 +591,7 @@ function fullTable(rows, all){
     '<td class="num">'+rateCell(all.picked, all.phoned)+'</td>'+
     '<td class="num">'+rateCell(all.textBack, all.texts)+'</td>'+
     '<td class="num">'+rateCell(all.emailBack, all.emails)+'</td>'+
+    '<td class="num">'+all.vmFull+'</td><td class="num">'+all.needsNumber+'</td><td class="num">'+all.closed+'</td>'+
     '<td>'+esc(all.last ? ago(all.last) : "never")+'</td></tr>';
   return html + '</tbody></table></div>';
 }
@@ -572,7 +606,7 @@ function renderDash(){
   var caret = (box && document.activeElement === box) ? box.selectionStart : -1;
 
   var all = stats(leads), reps = repsPresent(), split = splitByStatus(leads);
-  var worked = all.assigned - split.toCall;
+  var worked = all.live - split.toCall;
   var rows = reps.map(function(r){
     var list = leads.filter(function(l){ return l.owner === r; });
     return {rep:r, s:stats(list), sp:splitByStatus(list), n:list.length};
@@ -588,13 +622,16 @@ function renderDash(){
     notes.push(["bad","▲", who.join(", ") + (who.length>1 ? " have" : " has") + " logged nothing in a day"]);
   }
   if(split.toCall) notes.push([behind.length ? "" : "warn", "◆", fmtN(split.toCall)+" still to call"]);
+  if(all.needsNumber) notes.push(["", "⊘", fmtN(all.needsNumber)+" need a new number"]);
   if(all.responded) notes.push(["ok","✓", fmtN(all.responded)+" responded — follow up first"]);
 
   html += '<section class="cover"><div class="cover-top">'+
     '<div class="hero"><span class="k">Of the file worked</span>'+
       '<span class="n">'+pct(worked, all.assigned)+'</span>'+
-      '<span class="f">'+fmtN(worked)+' of '+fmtN(all.assigned)+' leads have activity logged · '+
-        fmtN(all.contacted)+' have had a dial</span></div>'+
+      '<span class="f">'+fmtN(worked)+' of '+fmtN(all.live)+' workable leads have activity logged · '+
+        fmtN(all.contacted)+' have had a dial'+
+        (all.unworkable ? ' · '+fmtN(all.unworkable)+' parked of '+fmtN(all.assigned)+' assigned' : '')+
+        '</span></div>'+
     (notes.length ? '<div class="attn">'+notes.slice(0,3).map(function(n){
         return '<span class="note '+n[0]+'"><span class="g" aria-hidden="true">'+n[1]+'</span>'+esc(n[2])+'</span>';
       }).join("")+'</div>' : '')+
@@ -709,6 +746,8 @@ function visibleLeads(){
   var list = leads.filter(function(l){ return l.owner === view; });
   list = list.filter(function(l){
     if(q && !matches(l,q)) return false;
+    // a parked lead only shows under its own filter, never in the working list
+    if(filter.chip !== "number" && filter.chip !== "closed" && !isLive(l)) return false;
     switch(filter.chip){
       case "todo": return l.calls === 0;
       case "called": return l.calls > 0;
@@ -716,6 +755,8 @@ function visibleLeads(){
       case "responded": return l.responded && l.responded !== "no";
       case "HOT": return l.bucket === "HOT";
       case "Distress": return l.bucket === "Distress";
+      case "number": return bucketOf(l) === "number";
+      case "closed": return bucketOf(l) === "closed";
       default: return true;
     }
   });
@@ -759,7 +800,8 @@ function renderRep(){
 
   document.getElementById("repTitle").textContent = view + "’s leads";
   document.getElementById("repSub").textContent =
-    s.assigned + " assigned · " + s.contacted + " contacted · " + s.calls + " calls logged · " +
+    s.live + " to work" + (s.unworkable ? " · " + s.unworkable + " parked" : "") +
+    " · " + s.contacted + " contacted · " + s.calls + " calls logged · " +
     s.responded + " responded · last activity " + (s.last ? ago(s.last) : "never");
 
   var banner = document.getElementById("repBanner");
@@ -779,7 +821,10 @@ function renderRep(){
   nbtn.textContent = anyOpen ? "Hide notes" : "Show notes" + (withNotes ? " (" + withNotes + ")" : "");
   nbtn.disabled = !withNotes && !anyOpen;
 
-  var chips = [["all","All "+total.length],["todo","Not called yet"],["called","Called"],["answered","Answered"],["responded","Responded"],["HOT","HOT"],["Distress","Distress"]];
+  var chips = [["all","All "+s.live],["todo","Not called yet"],["called","Called"],["answered","Answered"],
+               ["responded","Responded"],["HOT","HOT"],["Distress","Distress"]];
+  if(s.needsNumber) chips.push(["number","Needs new number ("+s.needsNumber+")"]);
+  if(s.closed)      chips.push(["closed","Closed ("+s.closed+")"]);
   document.getElementById("fchips").innerHTML = chips.map(function(c){
     return '<button class="fchip" type="button" data-chip="'+c[0]+'" aria-pressed="'+(filter.chip===c[0])+'">'+esc(c[1])+'</button>';
   }).join("");
@@ -793,6 +838,7 @@ function renderRep(){
     : "";
 
   renderList(list, mine);
+  syncExportBtn();
 }
 function renderList(list, editable){
   var host = document.getElementById("list");
@@ -843,8 +889,13 @@ function buildRow(l, editable){
       '<button class="tgl" type="button" data-act="toggle" data-k="emailSent" aria-pressed="false">Email</button></div>' +
     '<div class="c-resp"><select data-act="resp" aria-label="Lead responded?">'+
       RESP.map(function(r){ return '<option value="'+r[0]+'">'+esc(r[1])+'</option>'; }).join("")+'</select></div>' +
-    '<div class="c-upd"><time data-f="upd">—</time><button class="notebtn" type="button" data-act="note" title="Notes">✎</button></div>' +
-    '<div class="noterow" hidden><textarea data-act="notes" placeholder="Notes for this lead"></textarea></div>';
+    '<div class="c-upd"><time data-f="upd">—</time><button class="notebtn" type="button" data-act="note" title="Notes &amp; lead status">✎</button></div>' +
+    '<div class="noterow" hidden>'+
+      '<div class="statusrow"><span class="slab">Lead status</span>'+
+        LEAD_STATUS.map(function(x){
+          return '<button class="schip'+(x[2]?' dead':'')+'" type="button" data-act="status" data-s="'+x[0]+'" aria-pressed="false">'+esc(x[1])+'</button>';
+        }).join("")+'</div>'+
+      '<textarea data-act="notes" placeholder="Notes for this lead"></textarea></div>';
   var refs = {
     el: row,
     nm: row.querySelector(".nm"),
@@ -858,6 +909,7 @@ function buildRow(l, editable){
     note: row.querySelector(".noterow"),
     notes: row.querySelector('[data-act="notes"]'),
     notebtn: row.querySelector('[data-act="note"]'),
+    schips: row.querySelectorAll('[data-act="status"]'),
     callf: row.querySelector('[data-f="callflag"]')
   };
   COUNTERS.forEach(function(c){
@@ -895,7 +947,11 @@ function syncRow(l){
   r.sel.className = (l.responded && l.responded!=="no") ? "yes" : "";
   r.upd.textContent = workedAt(l) ? ago(workedAt(l)) : "—";
   r.upd.title = workedAt(l) ? (new Date(l.updatedAt).toLocaleString() + (l.updatedBy?" · "+l.updatedBy:"")) : "";
-  r.notebtn.className = "notebtn" + (l.notes ? " has" : "");
+  r.el.classList.toggle("dead", !isLive(l));
+  for(var i=0;i<r.schips.length;i++){
+    r.schips[i].setAttribute("aria-pressed", String(r.schips[i].dataset.s === (l.leadStatus||"")));
+  }
+  r.notebtn.className = "notebtn" + (l.notes || l.leadStatus ? " has" : "");
   if(r.notes !== document.activeElement) r.notes.value = l.notes || "";
   var open = openNotes.has(l.id), first = (l.notes||"").split("\n")[0];
   r.notebtn.setAttribute("aria-expanded", String(open));
@@ -905,12 +961,23 @@ function syncRow(l){
 }
 
 function exportScope(){
-  if(view !== "dash")  return {list: leads.filter(function(l){ return l.owner===view; }),
-                               who: view.toLowerCase(), label: "Export " + view + " (CSV)"};
+  if(view !== "dash"){
+    var narrowed = filter.chip !== "all" || filter.q.trim();
+    if(narrowed) return {list: visibleLeads(), who: view.toLowerCase()+"-"+filter.chip,
+                         label: "Export these " + visibleLeads().length + " (CSV)"};
+    return {list: leads.filter(function(l){ return l.owner===view; }),
+            who: view.toLowerCase(), label: "Export " + view + " (CSV)"};
+  }
   if(me === "admin")   return {list: leads, who: "all-reps", label: "Export all (CSV)"};
   if(me)               return {list: leads.filter(function(l){ return l.owner===me; }),
                                who: me.toLowerCase(), label: "Export " + me + " (CSV)"};
   return {list: [], who: "", label: "Export CSV"};
+}
+
+function syncExportBtn(){
+  var btn = document.getElementById("exportBtn"), scope = exportScope();
+  btn.textContent = scope.label;
+  btn.disabled = !scope.list.length;
 }
 
 /* ---------------- render switch ---------------- */
@@ -923,10 +990,7 @@ function render(){
   else { dash.hidden = true; rep.hidden = false; renderRep(); }
   document.getElementById("footLeft").textContent =
     leads.length + " leads · " + repsPresent().length + " reps" + (leads.length ? " · assigned " + (leads[0].assignedDate||"—") : "");
-  var btn = document.getElementById("exportBtn");
-  var scope = exportScope();
-  btn.textContent = scope.label;
-  btn.disabled = !scope.list.length;
+  syncExportBtn();
   setSync();
 }
 
@@ -974,20 +1038,20 @@ function csvCell(v){
 }
 function leadsCsv(list){
   var head = ["Owner","Owner_ID","Rank","Name","Phone","Bucket","Contact_ID","REI_Link","Status",
-    "Outbound_Calls","Answered","VM_Left","No_Answer_No_VM","Text_Sent","Email_Sent","Responded","Notes","Assigned_Date","Last_Updated","Updated_By"];
+    "Outbound_Calls","Answered","VM_Left","No_Answer_No_VM","VM_Full","Text_Sent","Email_Sent","Responded","Lead_Status","Notes","Assigned_Date","Last_Updated","Updated_By"];
   var rows = list.map(function(l){
     return [l.owner,l.ownerId,l.rank,l.name,l.phone,l.bucket,l.id,l.reiLink,statusOf(l)[0],
-      l.calls,l.answered,l.vmLeft,l.noVm,l.textSent?"Yes":"No",l.emailSent?"Yes":"No",
-      RESP_LABEL[l.responded]||"No",l.notes,l.assignedDate,l.updatedAt,l.updatedBy].map(csvCell).join(",");
+      l.calls,l.answered,l.vmLeft,l.noVm,l.vmFull,l.textSent?"Yes":"No",l.emailSent?"Yes":"No",
+      RESP_LABEL[l.responded]||"No",STATUS_LABEL[l.leadStatus]||"Working",l.notes,l.assignedDate,l.updatedAt,l.updatedBy].map(csvCell).join(",");
   });
   return head.join(",")+"\n"+rows.join("\n")+"\n";
 }
 function rollupCsv(){
-  var head = ["Rep","Assigned","Contacted","Outbound_Calls","Answered","VM_Left","No_Answer_No_VM","Texts_Sent","Emails_Sent","Responded","Response_Rate",
+  var head = ["Rep","Assigned","Workable","Needs_New_Number","Closed","Contacted","Outbound_Calls","Answered","VM_Left","No_Answer_No_VM","Texts_Sent","Emails_Sent","Responded","Response_Rate",
     "Leads_Phoned","Answered_Or_Called_Back","Call_Response_Rate","Replied_By_Text","Text_Response_Rate","Replied_By_Email","Email_Response_Rate","Last_Activity"];
   var rows = repsPresent().concat(["All reps"]).map(function(r){
     var s = stats(r==="All reps" ? leads : leads.filter(function(l){ return l.owner===r; }));
-    return [r,s.assigned,s.contacted,s.calls,s.answered,s.vmLeft,s.noVm,s.texts,s.emails,s.responded,
+    return [r,s.assigned,s.live,s.needsNumber,s.closed,s.contacted,s.calls,s.answered,s.vmLeft,s.noVm,s.texts,s.emails,s.responded,
       (s.rate*100).toFixed(1)+"%",
       s.phoned, s.picked, rateCell(s.picked, s.phoned),
       s.textBack, rateCell(s.textBack, s.texts),
@@ -1095,6 +1159,11 @@ repView.addEventListener("click", function(e){
   }
   if(!canEdit(l)){
     toast(me ? "That’s " + l.owner + "’s lead — read-only for you" : "Pick your name up top first", true);
+    return;
+  }
+  if(a === "status"){
+    edit(id, {leadStatus: act.dataset.s});
+    toast(act.dataset.s ? STATUS_LABEL[act.dataset.s] + " — off the call list" : "Back on the call list");
     return;
   }
   if(a === "log") logCall(id, act.dataset.k);
