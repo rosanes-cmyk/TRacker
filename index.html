@@ -221,6 +221,9 @@ td .who{display:flex; align-items:center; gap:8px}
 .c-resp select{width:100%; background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r); padding:6px 6px; font-size:11.5px; font-weight:600}
 .c-resp select.yes{border-color:color-mix(in srgb, var(--good) 50%, var(--line)); background:var(--good-soft); color:var(--good)}
 .c-upd{display:flex; align-items:center; justify-content:space-between; gap:6px; font-size:11px; color:var(--muted)}
+.backbtn{margin-top:4px; border:1px solid color-mix(in srgb, var(--accent) 45%, var(--line)); background:var(--accent-soft); color:var(--accent); border-radius:var(--r); padding:4px 10px; font-size:11.5px; font-weight:600; cursor:pointer}
+.backbtn:hover{background:var(--accent); color:var(--accent-ink)}
+.row.ro .backbtn{display:none}
 .notebtn{border:1px solid transparent; background:none; color:var(--muted); cursor:pointer; border-radius:5px; padding:3px 5px; font-size:11px}
 .notebtn:hover{border-color:var(--line-2); color:var(--accent)}
 .notebtn.has{color:var(--accent); background:var(--accent-soft); border-color:color-mix(in srgb, var(--accent) 30%, var(--line))}
@@ -242,6 +245,14 @@ td .who{display:flex; align-items:center; gap:8px}
 .addbox{border:1px solid var(--line); border-radius:var(--r); background:var(--surface); padding:14px; margin-top:14px}
 .addbox textarea{width:100%; min-height:86px; background:var(--surface-2); border:1px solid var(--line-2); border-radius:var(--r); padding:9px; font-family:var(--mono); font-size:12.5px}
 .addbox .hint{color:var(--muted); font-size:12px; margin:6px 0 9px}
+.checklist{display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--r); overflow:hidden}
+.ck{display:grid; grid-template-columns:20px 1fr auto; gap:10px; align-items:baseline; padding:7px 11px; background:var(--surface); font-size:13px}
+.ck .g{color:var(--crit); font-weight:700}
+.ck.ok .g{color:var(--good)}
+.ck .t{color:var(--muted); overflow-wrap:anywhere}
+.ck.ok .t{color:var(--ink); font-weight:500}
+.ck .r{color:var(--muted); font-size:12px; white-space:nowrap}
+@media (max-width:620px){ .ck{grid-template-columns:20px 1fr} .ck .r{grid-column:2/-1} }
 
 dialog{border:1px solid var(--line); border-radius:12px; background:var(--surface); color:var(--ink); padding:0; max-width:640px; width:calc(100% - 32px); box-shadow:var(--shadow)}
 dialog::backdrop{background:rgba(8,16,15,.5)}
@@ -363,6 +374,12 @@ var gq = "";
 var showCols = false;
 var listDirty = false, openNotes = new Set();
 var history = [];   // this session, this person, newest last
+var bulkText = "", addPreview = null;
+/* words the board itself prints — a pasted row is made of these, never of names */
+var UI_WORDS = ["hot","distress","rei","rei ↗","called","to call","responded","touched","working",
+                "calls","call","text","email","answered","vm left","no vm","vm full","you",
+                "wrong number","invalid / disconnected","opted out","do not call","not the owner",
+                "out of buy box area","yes – text","yes – email","yes – call back","yes – text & email","no"];
 
 /* ---------------- storage helpers ---------------- */
 function lsGet(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
@@ -861,12 +878,27 @@ function renderRep(){
   }).join("");
 
   var addbox = document.getElementById("addbox");
-  addbox.innerHTML = mine ?
-    '<h3>Add leads to your list</h3>' +
-    '<p class="hint">One per line. <code>Name</code>, or <code>Name, phone</code> to bring the number over too.</p>' +
-    '<textarea id="bulk" placeholder="Ellen Minor, +15103725847&#10;Carlo Hernandez"></textarea>' +
-    '<div style="margin-top:9px"><button class="btn primary" id="bulkBtn" type="button">Add to '+esc(view)+'’s list</button></div>'
-    : "";
+  if(!mine){ addbox.innerHTML = ""; }
+  else if(addPreview){
+    var good = addPreview.filter(function(r){ return r.ok; }).length,
+        bad  = addPreview.length - good;
+    addbox.innerHTML = '<h3>Check before adding</h3>' +
+      '<p class="hint">'+good+' will be added'+(bad ? ', '+bad+' skipped' : '')+'.</p>' +
+      '<div class="checklist">' + addPreview.map(function(r){
+        return '<div class="ck'+(r.ok?" ok":"")+'"><span class="g">'+(r.ok?"✓":"✗")+'</span>'+
+          '<span class="t">'+esc(r.ok ? (r.name || "(no name)") + (r.phone ? " · " + r.phone : "") : r.line)+'</span>'+
+          '<span class="r">'+esc(r.ok ? "" : r.reason)+'</span></div>';
+      }).join("") + '</div>' +
+      '<div style="margin-top:11px; display:flex; gap:8px">' +
+        '<button class="btn primary" id="bulkBtn" type="button"'+(good?"":" disabled")+'>Add '+good+(good===1?" lead":" leads")+'</button>' +
+        '<button class="btn" id="bulkCancel" type="button">Back</button></div>';
+  } else {
+    addbox.innerHTML = '<h3>Add leads to your list</h3>' +
+      '<p class="hint">One per line. <code>Name</code>, or <code>Name, phone</code> to bring the number over too. Pasting a row copied off this page won’t work — it isn’t a list of names.</p>' +
+      '<textarea id="bulk" placeholder="Ellen Minor, +15103725847&#10;Carlo Hernandez"></textarea>' +
+      '<div style="margin-top:9px"><button class="btn primary" id="bulkCheck" type="button">Check list</button></div>';
+    document.getElementById("bulk").value = bulkText;
+  }
 
   renderList(list, mine);
   syncExportBtn();
@@ -906,6 +938,7 @@ function buildRow(l, editable){
     '<div class="c-lead"><div class="lead-name"><span class="nm"></span>'+
       (l.bucket ? '<span class="tagb '+esc(l.bucket)+'">'+esc(l.bucket)+'</span>' : '')+
       '<span class="st" data-f="st"></span></div>' +
+      '<button class="backbtn" type="button" data-act="revive" hidden>↺ Put back on the call list</button>'+
       '<div class="lead-meta"><a data-f="tel" class="num"></a>'+
         (l.reiLink ? ' · <a href="'+esc(l.reiLink)+'" target="_blank" rel="noopener">REI ↗</a>' : '')+
       '</div></div>' +
@@ -942,7 +975,8 @@ function buildRow(l, editable){
     notes: row.querySelector('[data-act="notes"]'),
     notebtn: row.querySelector('[data-act="note"]'),
     schips: row.querySelectorAll('[data-act="status"]'),
-    callf: row.querySelector('[data-f="callflag"]')
+    callf: row.querySelector('[data-f="callflag"]'),
+    back: row.querySelector('[data-act="revive"]')
   };
   COUNTERS.forEach(function(c){
     refs[c[0]] = row.querySelector('[data-f="'+c[0]+'"]');
@@ -980,6 +1014,7 @@ function syncRow(l){
   r.upd.textContent = workedAt(l) ? ago(workedAt(l)) : "—";
   r.upd.title = workedAt(l) ? (new Date(l.updatedAt).toLocaleString() + (l.updatedBy?" · "+l.updatedBy:"")) : "";
   r.el.classList.toggle("dead", !isLive(l));
+  r.back.hidden = isLive(l);
   for(var i=0;i<r.schips.length;i++){
     r.schips[i].setAttribute("aria-pressed", String(r.schips[i].dataset.s === (l.leadStatus||"")));
   }
@@ -1201,6 +1236,8 @@ repView.addEventListener("click", function(e){
     return;
   }
   if(e.target.id === "undoBtn"){ undoLast(); return; }
+  if(e.target.id === "bulkCheck"){ bulkCheck(); return; }
+  if(e.target.id === "bulkCancel"){ addPreview = null; renderRep(); return; }
   if(e.target.id === "bulkBtn"){ bulkAdd(); return; }
   var act = e.target.closest("[data-act]");
   if(!act) return;
@@ -1217,6 +1254,11 @@ repView.addEventListener("click", function(e){
   }
   if(!canEdit(l)){
     toast(me ? "That’s " + l.owner + "’s lead — read-only for you" : "Pick your name up top first", true);
+    return;
+  }
+  if(a === "revive"){
+    edit(id, {leadStatus: ""}, false, "Put back on the call list");
+    toast((l.name || "Lead") + " is back on the call list");
     return;
   }
   if(a === "status"){
@@ -1243,6 +1285,7 @@ repView.addEventListener("change", function(e){
                                        false, "Responded: " + (RESP_LABEL[act.value]||act.value));
 });
 repView.addEventListener("input", function(e){
+  if(e.target.id === "bulk"){ bulkText = e.target.value; return; }
   if(e.target.id === "rq"){ filter.q = e.target.value; renderRep(); return; }
   var act = e.target.closest('[data-act="notes"]'); if(!act) return;
   var row = act.closest(".row"); if(!row) return;
@@ -1254,18 +1297,55 @@ repView.addEventListener("focusout", function(){
   if(listDirty) setTimeout(function(){ if(listDirty) renderRep(); }, 0);
 });
 
-function bulkAdd(){
+function digitsOf(t){ return String(t||"").replace(/[^0-9]/g,""); }
+function parseBulk(text){
+  var mineList = leads.filter(function(l){ return l.owner===view; });
+  var seenName = {}, seenPhone = {};
+  mineList.forEach(function(l){
+    if(l.name) seenName[l.name.trim().toLowerCase()] = true;
+    if(l.phone) seenPhone[digitsOf(l.phone).slice(-10)] = true;
+  });
+  return text.split("\n").map(function(raw){
+    var line = raw.replace(/^[\s•·\-–—]+/, "").trim();
+    if(!line) return null;
+    var parts = line.split(/\s*[,\t]\s*/);
+    var name = (parts[0]||"").trim(), phone = (parts[1]||"").trim();
+    var d = digitsOf(name);
+    if(UI_WORDS.indexOf(line.toLowerCase()) >= 0)
+      return {line:line, reason:"part of a copied row, not a name"};
+    if(!/[a-z0-9]/i.test(line))
+      return {line:line, reason:"no letters or numbers in it"};
+    // a line that is only a phone number is a lead with no name, not junk
+    if(!/[a-z]/i.test(name) && d.length >= 7){ phone = phone || name; name = ""; }
+    else if(!/[a-z]/i.test(name))
+      return {line:line, reason:"doesn’t look like a name"};
+    var key = digitsOf(phone).slice(-10);
+    if(name && seenName[name.toLowerCase()])
+      return {line:line, reason:"already on your list"};
+    if(key && seenPhone[key])
+      return {line:line, reason:"that number is already on your list"};
+    if(name) seenName[name.toLowerCase()] = true;
+    if(key) seenPhone[key] = true;
+    return {line:line, ok:true, name:name, phone:phone};
+  }).filter(Boolean);
+}
+function bulkCheck(){
   var ta = document.getElementById("bulk");
-  var lines = ta.value.split("\n").map(function(s){ return s.trim(); }).filter(Boolean);
-  if(!lines.length){ toast("Paste some names first", true); return; }
+  bulkText = ta ? ta.value : bulkText;
+  var rows = parseBulk(bulkText);
+  if(!rows.length){ toast("Paste some names first", true); return; }
+  addPreview = rows;
+  renderRep();
+}
+function bulkAdd(){
+  var rows = (addPreview || []).filter(function(r){ return r.ok; });
+  if(!rows.length){ toast("Nothing here to add", true); return; }
   var mineList = leads.filter(function(l){ return l.owner===view; });
   var rank = mineList.reduce(function(m,l){ return Math.max(m, l.rank||0); }, 0);
   var ownerId = mineList.length ? mineList[0].ownerId : "";
   var stamp = Date.now(), added = 0;
-  lines.forEach(function(line, i){
-    var parts = line.split(/\s*[,\t]\s*/);
-    var name = parts[0], phone = parts[1] || "";
-    if(!name) return;
+  rows.forEach(function(r, i){
+    var name = r.name, phone = r.phone;
     rank++; added++;
     var id = "m" + stamp + "-" + i;
     var doc = blank({id:id, owner:view, ownerId:ownerId, rank:rank, name:name, phone:phone,
@@ -1275,7 +1355,7 @@ function bulkAdd(){
     if(db) db.doc("leads/"+id).set(body).catch(function(){ toast("Couldn’t save new leads", true); });
     else localSave();
   });
-  ta.value = "";
+  bulkText = ""; addPreview = null;
   document.getElementById("list").dataset.sig = "";
   rebuild();
   toast(added + (added===1?" lead added":" leads added"));
