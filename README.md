@@ -30,7 +30,7 @@ so roughly eleven more assignment rounds fit before old rounds need archiving.
 | `reiLink` | string | Deep link to the contact in REI BlackBook. |
 | `calls` | number | Cumulative dial attempts. |
 | `answered`, `vmLeft`, `noVm`, `vmFull` | number | Cumulative outcomes; they sum to `calls`. `vmFull` is a blocked attempt — the rep wanted to leave a voicemail and the box was full — kept apart from `noVm`, which is a choice. |
-| `leadStatus` | `""` \| `wrongNumber` \| `invalid` \| `optedOut` \| `doNotCall` \| `notOwner` | Empty means working. `wrongNumber` and `invalid` park the lead as needing a new number; the other three close it. A parked lead leaves the call list and every rate denominator, and is reported separately so a file of dud numbers never reads as a rep not calling. |
+| `leadStatus` | `""` \| `wrongNumber` \| `invalid` \| `optedOut` \| `doNotCall` \| `notOwner` \| `outOfBuyBox` | Empty means working. `wrongNumber` and `invalid` park the lead as needing a new number; the other three close it. A parked lead leaves the call list and every rate denominator, and is reported separately so a file of dud numbers never reads as a rep not calling. `outOfBuyBox` is the exception: it leaves the call list but stays in contacted and in the rates, because the contact really happened and the rep qualified it correctly. |
 | `textSent`, `emailSent` | boolean | Outreach checkboxes. |
 | `responded` | `no` \| `call` \| `text` \| `email` \| `both` | Which channel the lead came back on. `call` is a callback or an engaged pickup; `both` means text and email, the value the field carried before `call` existed. |
 | `notes` | string | Free text per lead. |

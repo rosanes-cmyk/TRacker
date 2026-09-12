@@ -232,6 +232,8 @@ td .who{display:flex; align-items:center; gap:8px}
 .schip:hover{border-color:var(--accent); color:var(--accent)}
 .schip[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
 .schip.dead[aria-pressed="true"]{background:var(--crit-soft); border-color:var(--crit); color:var(--crit)}
+.st.dq{color:var(--warn); border-color:color-mix(in srgb, var(--warn) 45%, var(--line))}
+.schip.dq[aria-pressed="true"]{background:var(--warn); border-color:var(--warn); color:var(--accent-ink)}
 .st.dead{color:var(--crit); border-color:color-mix(in srgb, var(--crit) 45%, var(--line)); background:var(--crit-soft)}
 .row.dead .c-lead .nm,.row.dead .c-rank{opacity:.7}
 .noterow textarea{flex:1; resize:vertical; min-height:70px; max-height:240px; overflow-y:auto; line-height:1.5; background:var(--surface-2); border:1px solid var(--line-2); border-radius:var(--r); padding:7px 9px; font-size:12.5px}
@@ -335,14 +337,17 @@ var LEAD_STATUS = [
   ["invalid",     "Invalid / disconnected","number"],
   ["optedOut",    "Opted out",            "closed"],
   ["doNotCall",   "Do not call",          "closed"],
-  ["notOwner",    "Not the owner",        "closed"]
+  ["notOwner",    "Not the owner",        "closed"],
+  ["outOfBuyBox", "Out of buy box area",  "dq"    ]
 ];
+var PARKED_FILTERS = {number:1, closed:1, dq:1};
 var STATUS_LABEL = {}, STATUS_BUCKET = {};
 LEAD_STATUS.forEach(function(x){ STATUS_LABEL[x[0]] = x[1]; STATUS_BUCKET[x[0]] = x[2]; });
 var STALE_MS = 36*60*60*1000, QUIET_MS = 12*60*60*1000;
 /* the four states a lead can be in, most worked first — one hue, light to dark */
 var STEPS = [["responded","Responded","var(--step4)"],["called","Called","var(--step3)"],
              ["touched","Texted or emailed","var(--step2)"],["toCall","Not called yet","var(--step1)"],
+             ["dq","Out of buy box","var(--warn)"],
              ["dead","Parked — bad number or closed","var(--line-2)"]];
 
 var db = null, downloads = null;
@@ -357,6 +362,7 @@ var filter = { q:"", chip:"all", sort:"rank" };
 var gq = "";
 var showCols = false;
 var listDirty = false, openNotes = new Set();
+var history = [];   // this session, this person, newest last
 
 /* ---------------- storage helpers ---------------- */
 function lsGet(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
@@ -413,7 +419,8 @@ function hasWork(l){
 }
 function workedAt(l){ return hasWork(l) ? (l.updatedAt||"") : ""; }
 function statusOf(l){
-  if(l.leadStatus) return [STATUS_LABEL[l.leadStatus] || l.leadStatus, "dead"];
+  if(l.leadStatus) return [STATUS_LABEL[l.leadStatus] || l.leadStatus,
+                           bucketOf(l) === "dq" ? "dq" : "dead"];
   if(l.responded && l.responded!=="no") return ["Responded","responded"];
   if(l.calls>0) return ["Called","called"];
   if(l.textSent||l.emailSent) return ["Touched","touched"];
@@ -421,11 +428,12 @@ function statusOf(l){
 }
 function stats(list){
   var s = {assigned:list.length, contacted:0, calls:0, answered:0, vmLeft:0, noVm:0, vmFull:0, texts:0, emails:0, responded:0,
-           phoned:0, picked:0, textBack:0, emailBack:0, needsNumber:0, closed:0, last:""};
+           phoned:0, picked:0, textBack:0, emailBack:0, needsNumber:0, closed:0, disq:0, last:""};
   list.forEach(function(l){
-    var bucket = bucketOf(l), live = !bucket;
+    var bucket = bucketOf(l), live = bucket !== "number" && bucket !== "closed";
     if(bucket === "number") s.needsNumber++;
     else if(bucket === "closed") s.closed++;
+    else if(bucket === "dq") s.disq++;
     if(live && l.calls>0) s.contacted++;
     if(live && (l.calls>0 || l.responded === "call")) s.phoned++;
     if(live && (l.answered>0 || l.responded === "call")) s.picked++;
@@ -439,7 +447,8 @@ function stats(list){
     if(w && w > s.last) s.last = w;
   });
   s.unworkable = s.needsNumber + s.closed;
-  s.live = s.assigned - s.unworkable;
+  s.live = s.assigned - s.unworkable;   // still counts toward the rates
+  s.toWork = s.live - s.disq;           // what is left on the call list
   s.rate = s.contacted ? s.responded/s.contacted : 0;
   // one rate per channel, each against the leads that channel was actually used on
   s.callRate  = s.phoned ? s.picked/s.phoned : 0;
@@ -450,7 +459,17 @@ function stats(list){
 
 /* ---------------- writes ---------------- */
 function canEdit(l){ return !!me && l.owner === me; }
-function edit(id, patch, quiet){
+function edit(id, patch, quiet, label){
+  if(label){
+    var was = byId(id);
+    if(was){
+      var before = {};
+      Object.keys(patch).forEach(function(k){ before[k] = was[k]; });
+      history.push({id:id, before:before, after:Object.assign({}, patch),
+                    label:label, name:was.name || "(no name)"});
+      if(history.length > 30) history.shift();
+    }
+  }
   var prev = pending.get(id) || {};
   var next = Object.assign({}, prev, patch, {updatedAt:new Date().toISOString(), updatedBy:me||"—"});
   pending.set(id, next);
@@ -489,15 +508,19 @@ function flush(){
     });
   });
 }
+function labelFor(kind){
+  for(var i=0;i<COUNTERS.length;i++){ if(COUNTERS[i][0]===kind) return COUNTERS[i][1]; }
+  return kind;
+}
 function logCall(id, kind){
   var l = byId(id); if(!l || !canEdit(l)) return;
   var p = {}; p[kind] = (l[kind]||0)+1; p.calls = (l.calls||0)+1;
-  edit(id, p);
+  edit(id, p, false, labelFor(kind) + " +1");
 }
 function undoCall(id, kind){
   var l = byId(id); if(!l || !canEdit(l) || !l[kind]) return;
   var p = {}; p[kind] = l[kind]-1; p.calls = Math.max(0,(l.calls||0)-1);
-  edit(id, p);
+  edit(id, p, false, labelFor(kind) + " −1");
 }
 
 /* ---------------- rendering: chrome ---------------- */
@@ -535,10 +558,11 @@ function renderMe(){
 
 /* ---------------- rendering: dashboard ---------------- */
 function splitByStatus(list){
-  var c = {responded:0, called:0, touched:0, toCall:0, dead:0};
+  var c = {responded:0, called:0, touched:0, toCall:0, dead:0, dq:0};
   list.forEach(function(l){
     var k = statusOf(l)[1];
-    if(k === "dead") c.dead++;
+    if(k === "dq") c.dq++;
+    else if(k === "dead") c.dead++;
     else if(k === "responded") c.responded++;
     else if(k === "called") c.called++;
     else if(k === "touched") c.touched++;
@@ -567,7 +591,7 @@ function rateCell(got, sent){ return sent ? (100*got/sent).toFixed(1)+"%" : "—
 function fullTable(rows, all){
   var html = '<div class="tablewrap"><table><thead><tr>' +
     ["Rep","Assigned","Contacted","Calls","Answered","VM left","No VM","Texts","Emails","Responded","Resp. rate",
-     "Call resp.","Text resp.","Email resp.","VM full","Needs number","Closed","Last activity"]
+     "Call resp.","Text resp.","Email resp.","VM full","Needs number","Closed","Out of box","Last activity"]
       .map(function(h){ return "<th>"+h+"</th>"; }).join("") + '</tr></thead><tbody>';
   rows.forEach(function(x){
     var s = x.s;
@@ -582,6 +606,7 @@ function fullTable(rows, all){
       '<td class="num">'+rateCell(s.textBack, s.texts)+'</td>'+
       '<td class="num">'+rateCell(s.emailBack, s.emails)+'</td>'+
       '<td class="num">'+s.vmFull+'</td><td class="num">'+s.needsNumber+'</td><td class="num">'+s.closed+'</td>'+
+      '<td class="num">'+s.disq+'</td>'+
       '<td class="'+(agoClass(s.last)==="bad"?"stale":"")+'">'+esc(s.last ? ago(s.last) : "never")+'</td></tr>';
   });
   html += '<tr class="total"><td>All reps</td><td class="num">'+all.assigned+'</td><td class="num">'+all.contacted+'</td>'+
@@ -592,6 +617,7 @@ function fullTable(rows, all){
     '<td class="num">'+rateCell(all.textBack, all.texts)+'</td>'+
     '<td class="num">'+rateCell(all.emailBack, all.emails)+'</td>'+
     '<td class="num">'+all.vmFull+'</td><td class="num">'+all.needsNumber+'</td><td class="num">'+all.closed+'</td>'+
+    '<td class="num">'+all.disq+'</td>'+
     '<td>'+esc(all.last ? ago(all.last) : "never")+'</td></tr>';
   return html + '</tbody></table></div>';
 }
@@ -623,6 +649,7 @@ function renderDash(){
   }
   if(split.toCall) notes.push([behind.length ? "" : "warn", "◆", fmtN(split.toCall)+" still to call"]);
   if(all.needsNumber) notes.push(["", "⊘", fmtN(all.needsNumber)+" need a new number"]);
+  if(all.disq) notes.push(["", "◇", fmtN(all.disq)+" out of buy box"]);
   if(all.responded) notes.push(["ok","✓", fmtN(all.responded)+" responded — follow up first"]);
 
   html += '<section class="cover"><div class="cover-top">'+
@@ -644,7 +671,7 @@ function renderDash(){
       return '<i style="width:'+(100*s.n/all.assigned).toFixed(2)+'%; background:'+s.color+'" title="'+
         esc(s.label+" — "+fmtN(s.n)+" leads ("+pct(s.n, all.assigned)+")")+'"></i>';
     }).join("")+'</div>'+
-    '<div class="legend">'+segs.map(function(s){
+    '<div class="legend">'+segs.filter(function(s){ return s.n > 0; }).map(function(s){
       return '<span class="lg"><span class="sw" style="background:'+s.color+'"></span>'+
         '<span class="v">'+fmtN(s.n)+'</span><span class="t">'+esc(s.label)+' · '+pct(s.n, all.assigned)+'</span></span>';
     }).join("")+'</div></section>';
@@ -747,7 +774,7 @@ function visibleLeads(){
   list = list.filter(function(l){
     if(q && !matches(l,q)) return false;
     // a parked lead only shows under its own filter, never in the working list
-    if(filter.chip !== "number" && filter.chip !== "closed" && !isLive(l)) return false;
+    if(!PARKED_FILTERS[filter.chip] && !isLive(l)) return false;
     switch(filter.chip){
       case "todo": return l.calls === 0;
       case "called": return l.calls > 0;
@@ -757,6 +784,7 @@ function visibleLeads(){
       case "Distress": return l.bucket === "Distress";
       case "number": return bucketOf(l) === "number";
       case "closed": return bucketOf(l) === "closed";
+      case "dq": return bucketOf(l) === "dq";
       default: return true;
     }
   });
@@ -789,6 +817,7 @@ function renderRep(){
           '<option value="calls">Sort: most called</option><option value="recent">Sort: recently updated</option>' +
         '</select>' +
         '<button class="btn" id="notesBtn" type="button"></button>' +
+        (me === view ? '<button class="btn" id="undoBtn" type="button" title="Nothing to undo">↩ Undo</button>' : '') +
       '</div>' +
       '<div class="listhead"><span>#</span><span>Lead</span><span>Log a call attempt</span><span>Calls</span><span>Outreach</span><span>Responded?</span><span>Updated</span></div>' +
       '<div class="list" id="list"></div>' +
@@ -800,7 +829,8 @@ function renderRep(){
 
   document.getElementById("repTitle").textContent = view + "’s leads";
   document.getElementById("repSub").textContent =
-    s.live + " to work" + (s.unworkable ? " · " + s.unworkable + " parked" : "") +
+    s.toWork + " to work" + (s.unworkable ? " · " + s.unworkable + " parked" : "") +
+    (s.disq ? " · " + s.disq + " out of buy box" : "") +
     " · " + s.contacted + " contacted · " + s.calls + " calls logged · " +
     s.responded + " responded · last activity " + (s.last ? ago(s.last) : "never");
 
@@ -821,10 +851,11 @@ function renderRep(){
   nbtn.textContent = anyOpen ? "Hide notes" : "Show notes" + (withNotes ? " (" + withNotes + ")" : "");
   nbtn.disabled = !withNotes && !anyOpen;
 
-  var chips = [["all","All "+s.live],["todo","Not called yet"],["called","Called"],["answered","Answered"],
+  var chips = [["all","All "+s.toWork],["todo","Not called yet"],["called","Called"],["answered","Answered"],
                ["responded","Responded"],["HOT","HOT"],["Distress","Distress"]];
   if(s.needsNumber) chips.push(["number","Needs new number ("+s.needsNumber+")"]);
   if(s.closed)      chips.push(["closed","Closed ("+s.closed+")"]);
+  if(s.disq)        chips.push(["dq","Out of buy box ("+s.disq+")"]);
   document.getElementById("fchips").innerHTML = chips.map(function(c){
     return '<button class="fchip" type="button" data-chip="'+c[0]+'" aria-pressed="'+(filter.chip===c[0])+'">'+esc(c[1])+'</button>';
   }).join("");
@@ -839,6 +870,7 @@ function renderRep(){
 
   renderList(list, mine);
   syncExportBtn();
+  syncUndoBtn();
 }
 function renderList(list, editable){
   var host = document.getElementById("list");
@@ -893,7 +925,7 @@ function buildRow(l, editable){
     '<div class="noterow" hidden>'+
       '<div class="statusrow"><span class="slab">Lead status</span>'+
         LEAD_STATUS.map(function(x){
-          return '<button class="schip'+(x[2]?' dead':'')+'" type="button" data-act="status" data-s="'+x[0]+'" aria-pressed="false">'+esc(x[1])+'</button>';
+          return '<button class="schip'+(x[2] ? (x[2]==="dq" ? ' dq' : ' dead') : '')+'" type="button" data-act="status" data-s="'+x[0]+'" aria-pressed="false">'+esc(x[1])+'</button>';
         }).join("")+'</div>'+
       '<textarea data-act="notes" placeholder="Notes for this lead"></textarea></div>';
   var refs = {
@@ -974,6 +1006,30 @@ function exportScope(){
   return {list: [], who: "", label: "Export CSV"};
 }
 
+function undoLast(){
+  if(!history.length){ toast("Nothing to undo", true); return; }
+  var h = history.pop(), l = byId(h.id);
+  syncUndoBtn();
+  if(!l){ toast("That lead is no longer here", true); return; }
+  if(!canEdit(l)){ toast("That lead isn't yours to change", true); return; }
+  // someone else may have moved on since; their work outranks this undo
+  var moved = Object.keys(h.after).some(function(k){ return String(l[k]) !== String(h.after[k]); });
+  if(moved){
+    toast((l.updatedBy && l.updatedBy !== me ? l.updatedBy : "Someone") +
+          " changed this lead after you — not undoing " + h.label, true);
+    return;
+  }
+  edit(h.id, h.before);   // no label, so an undo is never itself undone
+  toast("Undid " + h.label + " on " + h.name);
+}
+function syncUndoBtn(){
+  var b = document.getElementById("undoBtn");
+  if(!b) return;
+  var last = history[history.length-1];
+  b.disabled = !last;
+  b.title = last ? "Undo " + last.label + " on " + last.name : "Nothing to undo";
+}
+
 function syncExportBtn(){
   var btn = document.getElementById("exportBtn"), scope = exportScope();
   btn.textContent = scope.label;
@@ -1047,11 +1103,11 @@ function leadsCsv(list){
   return head.join(",")+"\n"+rows.join("\n")+"\n";
 }
 function rollupCsv(){
-  var head = ["Rep","Assigned","Workable","Needs_New_Number","Closed","Contacted","Outbound_Calls","Answered","VM_Left","No_Answer_No_VM","Texts_Sent","Emails_Sent","Responded","Response_Rate",
+  var head = ["Rep","Assigned","To_Work","Needs_New_Number","Closed","Out_Of_Buy_Box","Contacted","Outbound_Calls","Answered","VM_Left","No_Answer_No_VM","Texts_Sent","Emails_Sent","Responded","Response_Rate",
     "Leads_Phoned","Answered_Or_Called_Back","Call_Response_Rate","Replied_By_Text","Text_Response_Rate","Replied_By_Email","Email_Response_Rate","Last_Activity"];
   var rows = repsPresent().concat(["All reps"]).map(function(r){
     var s = stats(r==="All reps" ? leads : leads.filter(function(l){ return l.owner===r; }));
-    return [r,s.assigned,s.live,s.needsNumber,s.closed,s.contacted,s.calls,s.answered,s.vmLeft,s.noVm,s.texts,s.emails,s.responded,
+    return [r,s.assigned,s.toWork,s.needsNumber,s.closed,s.disq,s.contacted,s.calls,s.answered,s.vmLeft,s.noVm,s.texts,s.emails,s.responded,
       (s.rate*100).toFixed(1)+"%",
       s.phoned, s.picked, rateCell(s.picked, s.phoned),
       s.textBack, rateCell(s.textBack, s.texts),
@@ -1092,6 +1148,7 @@ document.getElementById("tabs").addEventListener("click", function(e){
 document.getElementById("me").addEventListener("change", function(e){
   me = e.target.value === "__admin" ? "admin" : e.target.value;
   lsSet("thb.me", me);
+  history = [];
   document.getElementById("repView").dataset.rep = "";
   if(me && me !== "admin") view = me;
   else if(!canOpen(view)) view = "dash";
@@ -1143,6 +1200,7 @@ repView.addEventListener("click", function(e){
     renderRep();
     return;
   }
+  if(e.target.id === "undoBtn"){ undoLast(); return; }
   if(e.target.id === "bulkBtn"){ bulkAdd(); return; }
   var act = e.target.closest("[data-act]");
   if(!act) return;
@@ -1162,13 +1220,18 @@ repView.addEventListener("click", function(e){
     return;
   }
   if(a === "status"){
-    edit(id, {leadStatus: act.dataset.s});
+    edit(id, {leadStatus: act.dataset.s}, false,
+         act.dataset.s ? STATUS_LABEL[act.dataset.s] : "Back to working");
     toast(act.dataset.s ? STATUS_LABEL[act.dataset.s] + " — off the call list" : "Back on the call list");
     return;
   }
   if(a === "log") logCall(id, act.dataset.k);
   else if(a === "undo") undoCall(id, act.dataset.k);
-  else if(a === "toggle"){ var p = {}; p[act.dataset.k] = !l[act.dataset.k]; edit(id, p); }
+  else if(a === "toggle"){
+    var p = {}, on = !l[act.dataset.k], what = act.dataset.k === "textSent" ? "Text" : "Email";
+    p[act.dataset.k] = on;
+    edit(id, p, false, what + (on ? " sent" : " cleared"));
+  }
 });
 repView.addEventListener("change", function(e){
   if(e.target.id === "sortSel"){ filter.sort = e.target.value; renderRep(); return; }
@@ -1176,7 +1239,8 @@ repView.addEventListener("change", function(e){
   var row = act.closest(".row"); if(!row) return;
   var l = byId(row.dataset.id); if(!l) return;
   if(!canEdit(l)){ syncRow(l); toast("That’s " + l.owner + "’s lead — read-only for you", true); return; }
-  if(act.dataset.act === "resp") edit(row.dataset.id, {responded: act.value});
+  if(act.dataset.act === "resp") edit(row.dataset.id, {responded: act.value},
+                                       false, "Responded: " + (RESP_LABEL[act.value]||act.value));
 });
 repView.addEventListener("input", function(e){
   if(e.target.id === "rq"){ filter.q = e.target.value; renderRep(); return; }
@@ -1217,6 +1281,14 @@ function bulkAdd(){
   toast(added + (added===1?" lead added":" leads added"));
 }
 
+document.addEventListener("keydown", function(e){
+  if(!(e.ctrlKey || e.metaKey) || e.shiftKey || String(e.key).toLowerCase() !== "z") return;
+  var t = e.target;
+  if(t && /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName)) return;
+  if(view === "dash" || view !== me) return;
+  e.preventDefault();
+  undoLast();
+});
 window.addEventListener("beforeunload", function(e){
   if(pending.size){ flush(); e.preventDefault(); e.returnValue = ""; }
 });
