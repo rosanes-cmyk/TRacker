@@ -128,6 +128,23 @@ main{padding-block:20px 56px}
 .daytable .own{color:var(--muted); font-weight:500}
 .daytable .forlist{color:var(--hot); font-weight:600}
 .st.worked{color:var(--hot); border-color:color-mix(in srgb, var(--hot) 40%, var(--line)); background:var(--hot-soft)}
+.dw{display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--r); overflow:hidden}
+.dwrow{display:grid; grid-template-columns:minmax(120px,auto) auto minmax(70px,auto) 1fr; gap:16px; align-items:center; padding:12px 16px; background:var(--surface)}
+.dwrow.idle{color:var(--muted)}
+.dwrow .p{font-weight:600; display:flex; align-items:center; gap:7px; flex-wrap:wrap}
+.dwrow.idle .p{font-weight:500}
+.dwrow .dots{display:flex; gap:4px}
+.dwrow .dots i{width:10px; height:10px; border-radius:3px; background:var(--line-2); display:block}
+.dwrow .dots i.on{background:var(--step3)}
+.dwrow .n{font-family:var(--mono); font-size:12.5px; font-weight:600; font-variant-numeric:tabular-nums; white-space:nowrap}
+.dwrow .f{font-size:12.5px; color:var(--muted)}
+.dwrow .floor{color:var(--warn)}
+.dwnote{color:var(--muted); font-size:12px; margin:9px 0 30px; max-width:70ch}
+@media (max-width:680px){
+  .dwrow{grid-template-columns:1fr auto; row-gap:6px}
+  .dwrow .dots{grid-column:1}
+  .dwrow .f{grid-column:1/-1}
+}
 .days{display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; margin-bottom:30px}
 .dayrow{display:grid; grid-template-columns:minmax(96px,auto) 1fr 54px; gap:14px; align-items:center; padding:9px 16px; background:var(--surface); cursor:pointer}
 .dayrow:hover{background:var(--surface-2)}
@@ -669,6 +686,39 @@ function dailyRollup(){
   });
   return days;
 }
+/* Days worked belongs to the person who did the work, not to whose list it
+   was — so covering David's list is a day worked for Barbie, not for David.
+   Days before tracking began can only be counted from each lead's last touch,
+   which is a floor, never the true figure. */
+function daysWorked(){
+  var daily = dailyRollup(), tracked = Object.keys(daily).sort();
+  var start = tracked.length ? tracked[0] : bizDay();
+  var who = {};
+  function slot(p){
+    return who[p] || (who[p] = {person:p, days:{}, calls:0, lists:{}, before:{}});
+  }
+  repsPresent().forEach(slot);
+  tracked.forEach(function(d){
+    var day = daily[d];
+    for(var k in day.who){
+      var c = day.who[k], w = slot(c.who);
+      w.days[d] = true;
+      w.calls += c.calls || 0;
+      w.lists[c.list] = true;
+    }
+  });
+  // the days before tracking: one date per lead, so this can only be a floor
+  leads.forEach(function(l){
+    if(!hasWork(l) || !l.updatedAt || !l.updatedBy || l.updatedBy === "—") return;
+    var d = bizDay(l.updatedAt);
+    if(d >= start) return;
+    slot(l.updatedBy).before[d] = true;
+  });
+  return {tracked: tracked, start: start,
+          rows: Object.keys(who).map(function(p){ return who[p]; })
+                  .sort(function(a,b){ return Object.keys(b.days).length - Object.keys(a.days).length
+                                            || a.person.localeCompare(b.person); })};
+}
 function dayLabel(d){
   var t = new Date(d + "T12:00:00Z");
   return isNaN(t) ? d : t.toLocaleDateString(undefined, {weekday:"short", month:"short", day:"numeric", timeZone:"UTC"});
@@ -863,6 +913,33 @@ function renderDash(){
       fmtN(cells.reduce(function(a,c){ return a + c.leads; },0))+'</td>'+
       DAY_KEYS.map(function(f){ return '<td class="num">'+fmtN(day.total[f]||0)+'</td>'; }).join("")+
       '</tr></tbody></table></div>';
+
+    /* ---- how many days each person has actually worked ---- */
+    var dw = daysWorked(), nTracked = dw.tracked.length;
+    html += '<div class="sec-head"><h2>Days worked</h2>'+
+      '<span class="sub">Counted for whoever did the work, not whose list it was.</span></div>';
+    html += '<div class="dw">'+dw.rows.map(function(r){
+      var worked = Object.keys(r.days).length, before = Object.keys(r.before).length;
+      var lists = Object.keys(r.lists).sort().map(function(x){
+        return x === r.person ? "own list" : x + "’s";
+      });
+      var covering = coveringFor().length && r.person === me;
+      return '<div class="dwrow'+(worked?"":" idle")+'">'+
+        '<span class="p">'+esc(r.person)+
+          (coveredBy(r.person) ? ' <span class="st worked">away · '+esc(coveredBy(r.person))+' covering</span>' : '')+
+        '</span>'+
+        '<span class="dots">'+dw.tracked.map(function(d){
+          return '<i class="'+(r.days[d]?"on":"")+'" title="'+esc(dayLabel(d))+(r.days[d]?" — worked":" — nothing logged")+'"></i>';
+        }).join("")+'</span>'+
+        '<span class="n">'+worked+' of '+nTracked+(nTracked===1?" day":" days")+'</span>'+
+        '<span class="f">'+(worked
+          ? fmtN(r.calls)+' calls · '+esc(lists.join(", "))
+          : 'nothing logged since tracking began')+
+          (before ? ' <span class="floor">· at least '+before+' earlier '+(before===1?"day":"days")+'</span>' : '')+
+        '</span></div>';
+    }).join("")+'</div>';
+    html += '<p class="dwnote">Days before '+esc(dayLabel(dw.start))+
+      ' can only be counted from each lead’s last touch, so those are floors — a rep who worked a lead twice shows only the later day.</p>';
 
     /* ---- calls per day, so a quiet day shows itself ---- */
     var peak = dayList.reduce(function(m,d){ return Math.max(m, daily[d].total.calls||0); }, 0) || 1;
