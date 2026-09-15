@@ -135,6 +135,8 @@ main{padding-block:20px 56px}
 .dwrow.idle .p{font-weight:500}
 .dwrow .dots{display:flex; gap:4px}
 .dwrow .dots i{width:10px; height:10px; border-radius:3px; background:var(--line-2); display:block}
+.dwrow .dots:empty::before{content:'—'; color:var(--muted); font-size:12px}
+.dwrow .atleast{color:var(--warn); font-weight:500}
 .dwrow .dots i.on{background:var(--step3)}
 .dwrow .n{font-family:var(--mono); font-size:12.5px; font-weight:600; font-variant-numeric:tabular-nums; white-space:nowrap}
 .dwrow .f{font-size:12.5px; color:var(--muted)}
@@ -913,8 +915,12 @@ function renderDash(){
       fmtN(cells.reduce(function(a,c){ return a + c.leads; },0))+'</td>'+
       DAY_KEYS.map(function(f){ return '<td class="num">'+fmtN(day.total[f]||0)+'</td>'; }).join("")+
       '</tr></tbody></table></div>';
+  }
 
-    /* ---- how many days each person has actually worked ---- */
+  /* ---- how many days each person has actually worked ----
+     Always shown: with nothing tracked yet it is the only place the earlier
+     week's days appear at all, which is exactly when it is most wanted. */
+  {
     var dw = daysWorked(), nTracked = dw.tracked.length;
     html += '<div class="sec-head"><h2>Days worked</h2>'+
       '<span class="sub">Counted for whoever did the work, not whose list it was.</span></div>';
@@ -931,17 +937,23 @@ function renderDash(){
         '<span class="dots">'+dw.tracked.map(function(d){
           return '<i class="'+(r.days[d]?"on":"")+'" title="'+esc(dayLabel(d))+(r.days[d]?" — worked":" — nothing logged")+'"></i>';
         }).join("")+'</span>'+
-        '<span class="n">'+worked+' of '+nTracked+(nTracked===1?" day":" days")+'</span>'+
-        '<span class="f">'+(worked
-          ? fmtN(r.calls)+' calls · '+esc(lists.join(", "))
-          : 'nothing logged since tracking began')+
-          (before ? ' <span class="floor">· at least '+before+' earlier '+(before===1?"day":"days")+'</span>' : '')+
+        '<span class="n">'+(before ? '<span class="atleast">at least</span> ' : '')+
+          (worked + before)+((worked+before)===1?" day":" days")+'</span>'+
+        '<span class="f">'+
+          (nTracked
+            ? (worked ? worked+' of '+nTracked+' tracked '+(nTracked===1?"day":"days")+' · '+fmtN(r.calls)+' calls · '+esc(lists.join(", "))
+                      : 'none of '+nTracked+' tracked '+(nTracked===1?"day":"days"))
+            : 'tracking starts today')+
+          (before ? ' <span class="floor">· '+before+' before tracking</span>' : '')+
         '</span></div>';
     }).join("")+'</div>';
-    html += '<p class="dwnote">Days before '+esc(dayLabel(dw.start))+
-      ' can only be counted from each lead’s last touch, so those are floors — a rep who worked a lead twice shows only the later day.</p>';
+    html += '<p class="dwnote">Days '+(nTracked ? 'before '+esc(dayLabel(dw.start)) : 'before today')+
+      ' are counted from each lead’s last touch, so they are a floor — a rep who worked the same lead on two days shows only the later one. '+
+      'From '+(nTracked ? esc(dayLabel(dw.start)) : 'today')+' on, every day is counted exactly.</p>';
+  }
 
-    /* ---- calls per day, so a quiet day shows itself ---- */
+  /* ---- calls per day, so a quiet day shows itself ---- */
+  if(dayList.length){
     var peak = dayList.reduce(function(m,d){ return Math.max(m, daily[d].total.calls||0); }, 0) || 1;
     html += '<div class="days">'+dayList.slice(-14).map(function(d){
       var c = daily[d].total.calls || 0;
