@@ -698,7 +698,6 @@ function dailyRollup(){
    which is a floor, never the true figure. */
 function daysWorked(){
   var daily = dailyRollup(), tracked = Object.keys(daily).sort();
-  var start = tracked.length ? tracked[0] : bizDay();
   var who = {};
   function slot(p){
     return who[p] || (who[p] = {person:p, days:{}, calls:0, lists:{}, before:{}});
@@ -713,14 +712,17 @@ function daysWorked(){
       w.lists[c.list] = true;
     }
   });
-  // the days before tracking: one date per lead, so this can only be a floor
+  /* Any day with no byDay row of its own: one date per lead, so this can only
+     be a floor. Work done today before daily tracking started belongs here too,
+     so the test is "is that day already counted exactly?" and never "is that day
+     older than the first tracked one?" — which silently dropped today. */
   leads.forEach(function(l){
     if(!hasWork(l) || !l.updatedAt || !l.updatedBy || l.updatedBy === "—") return;
-    var d = bizDay(l.updatedAt);
-    if(d >= start) return;
-    slot(l.updatedBy).before[d] = true;
+    var d = bizDay(l.updatedAt), w = slot(l.updatedBy);
+    if(w.days[d]) return;
+    w.before[d] = true;
   });
-  return {tracked: tracked, start: start,
+  return {tracked: tracked,
           rows: Object.keys(who).map(function(p){ return who[p]; })
                   .sort(function(a,b){ return Object.keys(b.days).length - Object.keys(a.days).length
                                             || a.person.localeCompare(b.person); })};
@@ -931,7 +933,7 @@ function renderDash(){
      Always shown: with nothing tracked yet it is the only place the earlier
      week's days appear at all, which is exactly when it is most wanted. */
   {
-    var dw = daysWorked(), nTracked = dw.tracked.length;
+    var dw = daysWorked();
     html += '<div class="sec-head"><h2>Days worked</h2>'+
       '<span class="sub">Which days each person worked. Counted for whoever did the work, not whose list it was.</span></div>';
     html += '<div class="dw">'+dw.rows.map(function(r){
@@ -958,7 +960,7 @@ function renderDash(){
         '<span class="f">'+(worked ? fmtN(r.calls)+' calls · '+esc(lists.join(", ")) : '')+'</span></div>';
     }).join("")+'</div>';
     html += '<p class="dwnote"><span class="dc ex">day</span> counted exactly &nbsp;·&nbsp; '+
-      '<span class="dc">day</span> from before tracking — may be under, never over.</p>';
+      '<span class="dc">day</span> counted from the lead’s last touch — may be under, never over.</p>';
   }
 
   /* ---- calls per day, so a quiet day shows itself ---- */
