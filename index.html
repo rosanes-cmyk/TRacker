@@ -61,6 +61,7 @@ option:disabled{color:var(--muted)}
 .tab:hover{color:var(--ink)}
 .tab[aria-selected="true"]{color:var(--ink); border-bottom-color:var(--accent)}
 .tab .mine{font-size:10px; letter-spacing:.07em; text-transform:uppercase; color:var(--accent); background:var(--accent-soft); padding:2px 5px; border-radius:4px}
+.tab .cov{font-size:10px; letter-spacing:.07em; text-transform:uppercase; color:var(--hot); background:var(--hot-soft); padding:2px 5px; border-radius:4px}
 .tab .cnt{font-family:var(--mono); font-size:11px; color:var(--muted); font-weight:500}
 .tabnote{align-self:center; padding-left:10px; font-size:12px; color:var(--muted)}
 
@@ -120,6 +121,23 @@ main{padding-block:20px 56px}
 .ago.warn{color:var(--warn)}
 .ago.bad{color:var(--crit)}
 
+.daynav{display:flex; align-items:center; gap:10px; margin-bottom:12px}
+.daynav b{font-family:var(--cond); font-size:17px}
+.daynav .sub{color:var(--muted); font-size:12.5px}
+.daytable td.name{font-weight:600}
+.daytable .own{color:var(--muted); font-weight:500}
+.daytable .forlist{color:var(--hot); font-weight:600}
+.st.worked{color:var(--hot); border-color:color-mix(in srgb, var(--hot) 40%, var(--line)); background:var(--hot-soft)}
+.days{display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--r); overflow:hidden; margin-bottom:30px}
+.dayrow{display:grid; grid-template-columns:minmax(96px,auto) 1fr 54px; gap:14px; align-items:center; padding:9px 16px; background:var(--surface); cursor:pointer}
+.dayrow:hover{background:var(--surface-2)}
+.dayrow.on{background:var(--accent-soft)}
+.dayrow .dl{font-size:13px}
+.dayrow.on .dl{font-weight:600; color:var(--accent)}
+.dayrow .db{height:8px; border-radius:100px; background:color-mix(in srgb, var(--step1) 55%, var(--surface)); overflow:hidden}
+.dayrow .db i{display:block; height:100%; border-radius:100px; background:var(--step3)}
+.dayrow .dn{font-size:12.5px; font-weight:600; text-align:right}
+@media (max-width:620px){ .dayrow{grid-template-columns:minmax(84px,auto) 1fr 44px; gap:9px; padding:9px 12px} }
 .chans{border:1px solid var(--line); border-radius:var(--r); background:var(--surface); overflow:hidden; margin-bottom:30px}
 .chan{display:grid; grid-template-columns:62px minmax(70px,1fr) 46px minmax(160px,1.35fr); gap:14px; align-items:center; padding:12px 16px; border-top:1px solid var(--line)}
 .chan:first-child{border-top:0}
@@ -368,6 +386,16 @@ function chipClassFor(bucket){
 var STATUS_LABEL = {}, STATUS_BUCKET = {};
 LEAD_STATUS.forEach(function(x){ STATUS_LABEL[x[0]] = x[1]; STATUS_BUCKET[x[0]] = x[2]; });
 var STALE_MS = 36*60*60*1000, QUIET_MS = 12*60*60*1000;
+/* Reps work from wherever they are; the company day is California's, so every
+   rep's work lands in the same business day however far ahead their clock is. */
+var BIZ_TZ = "America/Los_Angeles";
+var DAY_KEYS = ["calls","answered","vmLeft","noVm","vmFull","texts","emails","responses"];
+function bizDay(when){
+  var d = when ? new Date(when) : new Date();
+  try {
+    return new Intl.DateTimeFormat("en-CA", {timeZone:BIZ_TZ, year:"numeric", month:"2-digit", day:"2-digit"}).format(d);
+  } catch(e){ return d.toISOString().slice(0,10); }
+}
 /* the four states a lead can be in, most worked first — one hue, light to dark */
 var STEPS = [["responded","Responded","var(--step4)"],["called","Called","var(--step3)"],
              ["touched","Texted or emailed","var(--step2)"],["toCall","Not called yet","var(--step1)"],
@@ -385,11 +413,21 @@ var view = "dash";
 var me = lsGet("thb.me") || "";
 var filter = { q:"", chip:"all", sort:"rank" };
 var gq = "";
+var dayPick = "";   // which day the day-by-day table is showing
 var showCols = false;
 var listDirty = false, openNotes = new Set();
 var history = [];   // this session, this person, newest last
 var bulkText = "", addPreview = null;
 var skipPending = new Set();   // rows waiting for a reason before the skip applies
+/* { <list owner>: <person working it> } — a list keeps its owner's name; this
+   only says who is doing the work while they are away. Set by ops. */
+var coverage = {};
+function coveredBy(rep){ return coverage[rep] || ""; }
+function coveringFor(){
+  var out = [];
+  for(var owner in coverage){ if(coverage[owner] === me) out.push(owner); }
+  return out;
+}
 /* words the board itself prints — a pasted row is made of these, never of names */
 var UI_WORDS = ["hot","distress","rei","rei ↗","called","to call","responded","touched","working",
                 "calls","call","text","email","answered","vm left","no vm","vm full","you",
@@ -418,6 +456,7 @@ function blank(l){
     task:l.task||"", assignedDate:l.assignedDate||"",
     calls:+l.calls||0, answered:+l.answered||0, vmLeft:+l.vmLeft||0, noVm:+l.noVm||0, vmFull:+l.vmFull||0,
     leadStatus:l.leadStatus||"", skipReason:l.skipReason||"",
+    byDay:(l.byDay && typeof l.byDay === "object") ? l.byDay : {},
     textSent:!!l.textSent, emailSent:!!l.emailSent, responded:l.responded||"no",
     notes:l.notes||"", updatedAt:l.updatedAt||"", updatedBy:l.updatedBy||""
   };
@@ -439,9 +478,9 @@ function repsPresent(){
   return out.length ? out : REP_ORDER.slice();
 }
 function canOpen(rep){
-  if(me === "admin") return true;   // Cherry / ops reads every board
-  if(!me) return false;             // nobody picked yet: dashboard only
-  return rep === me;                // a rep sees their own board and no other
+  if(me === "admin") return true;        // Cherry / ops reads every board
+  if(!me) return false;                  // nobody picked yet: dashboard only
+  return rep === me || coveredBy(rep) === me;   // your own list, plus any you cover
 }
 function bucketOf(l){ return STATUS_BUCKET[l.leadStatus] || ""; }
 function isLive(l){ return !bucketOf(l); }
@@ -494,7 +533,7 @@ function stats(list){
 }
 
 /* ---------------- writes ---------------- */
-function canEdit(l){ return !!me && l.owner === me; }
+function canEdit(l){ return !!me && (l.owner === me || coveredBy(l.owner) === me); }
 function edit(id, patch, quiet, label){
   if(label){
     var was = byId(id);
@@ -544,6 +583,15 @@ function flush(){
     });
   });
 }
+function dayPatch(l, deltas){
+  var d = bizDay(), cur = (l.byDay && l.byDay[d]) || {}, row = {by: me || "—"};
+  DAY_KEYS.forEach(function(k){
+    var v = (cur[k] || 0) + (deltas[k] || 0);
+    if(v > 0) row[k] = v;
+  });
+  var byDay = {}; byDay[d] = row;
+  return byDay;   // update() merges nested objects, so other days are untouched
+}
 function labelFor(kind){
   for(var i=0;i<COUNTERS.length;i++){ if(COUNTERS[i][0]===kind) return COUNTERS[i][1]; }
   return kind;
@@ -551,11 +599,15 @@ function labelFor(kind){
 function logCall(id, kind){
   var l = byId(id); if(!l || !canEdit(l)) return;
   var p = {}; p[kind] = (l[kind]||0)+1; p.calls = (l.calls||0)+1;
+  var d = {calls:1}; d[kind] = 1;
+  p.byDay = dayPatch(l, d);
   edit(id, p, false, labelFor(kind) + " +1");
 }
 function undoCall(id, kind){
   var l = byId(id); if(!l || !canEdit(l) || !l[kind]) return;
   var p = {}; p[kind] = l[kind]-1; p.calls = Math.max(0,(l.calls||0)-1);
+  var d = {calls:-1}; d[kind] = -1;
+  p.byDay = dayPatch(l, d);
   edit(id, p, false, labelFor(kind) + " −1");
 }
 
@@ -576,7 +628,9 @@ function renderTabs(){
   reps.filter(canOpen).forEach(function(r){
     var n = leads.filter(function(l){ return l.owner===r; }).length;
     html += '<button class="tab" role="tab" data-v="'+esc(r)+'" aria-selected="'+(view===r)+'">'+esc(r)+
-            '<span class="cnt">'+n+'</span>'+(me===r?'<span class="mine">you</span>':'')+'</button>';
+            '<span class="cnt">'+n+'</span>'+
+            (me===r ? '<span class="mine">you</span>'
+                    : (coveredBy(r) ? '<span class="cov">'+esc(coveredBy(r))+'</span>' : ''))+'</button>';
   });
   if(!me) html += '<span class="tabnote">Pick your name to open your list</span>';
   tabs.innerHTML = html;
@@ -593,6 +647,32 @@ function renderMe(){
 }
 
 /* ---------------- rendering: dashboard ---------------- */
+/* Every lead carries what happened to it on each day; this turns that into
+   "who worked, on whose list, on this day". */
+function dailyRollup(){
+  var days = {};
+  leads.forEach(function(l){
+    var bd = l.byDay || {};
+    for(var d in bd){
+      if(!Object.prototype.hasOwnProperty.call(bd, d)) continue;
+      var row = bd[d] || {}, who = row.by || "—";
+      var day = days[d] || (days[d] = {total:{}, who:{}});
+      var k = who + "\u0000" + l.owner;
+      var cell = day.who[k] || (day.who[k] = {who:who, list:l.owner, leads:0});
+      cell.leads++;
+      DAY_KEYS.forEach(function(f){
+        if(!row[f]) return;
+        cell[f] = (cell[f]||0) + row[f];
+        day.total[f] = (day.total[f]||0) + row[f];
+      });
+    }
+  });
+  return days;
+}
+function dayLabel(d){
+  var t = new Date(d + "T12:00:00Z");
+  return isNaN(t) ? d : t.toLocaleDateString(undefined, {weekday:"short", month:"short", day:"numeric", timeZone:"UTC"});
+}
 function splitByStatus(list){
   var c = {responded:0, called:0, touched:0, toCall:0, dead:0, dq:0, skip:0};
   list.forEach(function(l){
@@ -615,7 +695,8 @@ function agoClass(last){
 function repRow(label, s, sp, n, isMe, isTotal){
   var live = n - sp.dead, worked = live - sp.toCall, p = live ? Math.round(100*worked/live) : 0;
   return '<tr'+(isTotal?' class="total"':'')+'>'+
-    '<td><span class="rep">'+esc(label)+'</span>'+(isMe?' <span class="st called">you</span>':'')+'</td>'+
+    '<td><span class="rep">'+esc(label)+'</span>'+(isMe?' <span class="st called">you</span>':'')+
+      (coveredBy(label) ? ' <span class="st worked">worked by '+esc(coveredBy(label))+'</span>' : '')+'</td>'+
     '<td class="cov"><span class="cov-in"><span class="track"><i style="width:'+p+'%"></i></span>'+
       '<span class="covpct">'+p+'%</span></span></td>'+
     '<td class="col-calls num">'+fmtN(s.calls)+'</td>'+
@@ -747,6 +828,53 @@ function renderDash(){
         : esc(c[4]))+'</span></div>';
   }).join("") + '</div>';
 
+  /* ---- day by day: who worked, and on whose list ---- */
+  var daily = dailyRollup(), dayList = Object.keys(daily).sort();
+  html += '<div class="sec-head"><h2>Day by day</h2>'+
+    '<span class="sub">Who worked, and whose list they worked. Daily tracking began '+
+    (dayList.length ? esc(dayLabel(dayList[0])) : "today") +
+    ' — work before that is in the totals above, but not split by day.</span></div>';
+  if(!dayList.length){
+    html += '<div class="empty">Nothing logged yet today. As soon as a rep logs a call it appears here.</div>';
+  } else {
+    if(dayList.indexOf(dayPick) < 0) dayPick = dayList[dayList.length-1];
+    var di = dayList.indexOf(dayPick), day = daily[dayPick];
+    html += '<div class="daynav">'+
+      '<button class="btn" id="dayPrev" type="button"'+(di<=0?" disabled":"")+'>◀</button>'+
+      '<b>'+esc(dayLabel(dayPick))+'</b>'+
+      '<button class="btn" id="dayNext" type="button"'+(di>=dayList.length-1?" disabled":"")+'>▶</button>'+
+      (dayPick === bizDay() ? '<span class="sub">today, so far</span>' : '')+'</div>';
+    var cells = Object.keys(day.who).map(function(k){ return day.who[k]; })
+      .sort(function(a,b){ return a.who.localeCompare(b.who) || a.list.localeCompare(b.list); });
+    html += '<div class="tablewrap"><table class="daytable"><thead><tr>'+
+      '<th>Who worked</th><th>Whose list</th><th>Leads</th><th>Calls</th><th>Answered</th>'+
+      '<th>VM left</th><th>No VM</th><th>VM full</th><th>Texts</th><th>Emails</th><th>Responses</th>'+
+      '</tr></thead><tbody>';
+    cells.forEach(function(c){
+      var own = c.who === c.list;
+      html += '<tr><td class="name">'+esc(c.who)+'</td>'+
+        '<td class="name">'+(own ? '<span class="own">their own</span>'
+                                 : '<span class="forlist">for '+esc(c.list)+'</span>')+'</td>'+
+        '<td class="num">'+fmtN(c.leads)+'</td>'+
+        DAY_KEYS.map(function(f){ return '<td class="num">'+fmtN(c[f]||0)+'</td>'; }).join("")+
+        '</tr>';
+    });
+    html += '<tr class="total"><td>'+esc(dayLabel(dayPick))+' total</td><td></td><td class="num">'+
+      fmtN(cells.reduce(function(a,c){ return a + c.leads; },0))+'</td>'+
+      DAY_KEYS.map(function(f){ return '<td class="num">'+fmtN(day.total[f]||0)+'</td>'; }).join("")+
+      '</tr></tbody></table></div>';
+
+    /* ---- calls per day, so a quiet day shows itself ---- */
+    var peak = dayList.reduce(function(m,d){ return Math.max(m, daily[d].total.calls||0); }, 0) || 1;
+    html += '<div class="days">'+dayList.slice(-14).map(function(d){
+      var c = daily[d].total.calls || 0;
+      return '<div class="dayrow'+(d===dayPick?" on":"")+'" data-day="'+esc(d)+'">'+
+        '<span class="dl">'+esc(dayLabel(d))+'</span>'+
+        '<span class="db"><i style="width:'+Math.round(100*c/peak)+'%"></i></span>'+
+        '<span class="dn num">'+fmtN(c)+'</span></div>';
+    }).join("")+'</div>';
+  }
+
   /* ---- rep by rep ---- */
   html += '<div class="sec-head"><h2>Rep by rep</h2>'+
     '<span class="sub">Coverage is the share of that rep’s list with any activity logged.</span>'+
@@ -838,7 +966,7 @@ function visibleLeads(){
 }
 function renderRep(){
   var host = document.getElementById("repView");
-  var mine = me === view;
+  var mine = me === view || coveredBy(view) === me;
   var list = visibleLeads();
   var total = leads.filter(function(l){ return l.owner===view; });
   var s = stats(total);
@@ -866,7 +994,8 @@ function renderRep(){
     rowRefs.clear();
   }
 
-  document.getElementById("repTitle").textContent = view + "’s leads";
+  document.getElementById("repTitle").textContent = view + "’s leads" +
+    (coveredBy(view) ? " · worked by " + coveredBy(view) : "");
   document.getElementById("repSub").textContent =
     s.toWork + " to work" + (s.unworkable ? " · " + s.unworkable + " parked" : "") +
     (s.disq ? " · " + s.disq + " out of buy box" : "") +
@@ -879,6 +1008,9 @@ function renderRep(){
     banner.innerHTML = '<div class="banner warn"><span>◆</span><span><b>Pick your name up top to start logging.</b> Until you do, every list is read-only.</span></div>';
   } else if(me === "admin"){
     banner.innerHTML = '<div class="banner"><span>◆</span><span><b>Ops view.</b> You can read every rep’s list and export it; logging is left to the reps.</span></div>';
+  } else if(coveredBy(view) === me){
+    banner.innerHTML = '<div class="banner"><span>◆</span><span>This is <b>'+esc(view)+'</b>’s list and it keeps his name. '+
+      'You’re covering it, so everything you log here is recorded as <b>worked by '+esc(me)+'</b>.</span></div>';
   } else if(!mine){
     banner.innerHTML = '<div class="banner"><span>◆</span><span>You’re logged as <b>'+esc(me)+'</b>, so '+esc(view)+'’s list is read-only. Switch to the <b>'+esc(me)+'</b> tab to log your calls.</span></div>';
   } else {
@@ -1169,11 +1301,11 @@ function csvCell(v){
 }
 function leadsCsv(list){
   var head = ["Owner","Owner_ID","Rank","Name","Phone","Bucket","Contact_ID","REI_Link","Status",
-    "Outbound_Calls","Answered","VM_Left","No_Answer_No_VM","VM_Full","Text_Sent","Email_Sent","Responded","Lead_Status","Skip_Reason","Notes","Assigned_Date","Last_Updated","Updated_By"];
+    "Outbound_Calls","Answered","VM_Left","No_Answer_No_VM","VM_Full","Text_Sent","Email_Sent","Responded","Lead_Status","Skip_Reason","Notes","Assigned_Date","Last_Updated","Updated_By","Worked_By"];
   var rows = list.map(function(l){
     return [l.owner,l.ownerId,l.rank,l.name,l.phone,l.bucket,l.id,l.reiLink,statusOf(l)[0],
       l.calls,l.answered,l.vmLeft,l.noVm,l.vmFull,l.textSent?"Yes":"No",l.emailSent?"Yes":"No",
-      RESP_LABEL[l.responded]||"No",STATUS_LABEL[l.leadStatus]||"Working",l.skipReason,l.notes,l.assignedDate,l.updatedAt,l.updatedBy].map(csvCell).join(",");
+      RESP_LABEL[l.responded]||"No",STATUS_LABEL[l.leadStatus]||"Working",l.skipReason,l.notes,l.assignedDate,l.updatedAt,l.updatedBy,coveredBy(l.owner)||l.owner].map(csvCell).join(",");
   });
   return head.join(",")+"\n"+rows.join("\n")+"\n";
 }
@@ -1250,6 +1382,13 @@ document.getElementById("dashView").addEventListener("click", function(e){
     offerFile("thb-rollup-"+today()+".csv", rollupCsv(), "Rollup export"); return;
   }
   if(e.target.id === "colsBtn"){ showCols = !showCols; renderDash(); return; }
+  if(e.target.id === "dayPrev" || e.target.id === "dayNext"){
+    var ds = Object.keys(dailyRollup()).sort(), i = ds.indexOf(dayPick);
+    dayPick = ds[Math.max(0, Math.min(ds.length-1, i + (e.target.id === "dayNext" ? 1 : -1)))] || dayPick;
+    renderDash(); return;
+  }
+  var dr = e.target.closest("[data-day]");
+  if(dr){ dayPick = dr.dataset.day; renderDash(); return; }
   var g = e.target.closest("[data-goto]");
   if(g){
     view = g.dataset.rep;
@@ -1331,6 +1470,9 @@ repView.addEventListener("click", function(e){
   else if(a === "toggle"){
     var p = {}, on = !l[act.dataset.k], what = act.dataset.k === "textSent" ? "Text" : "Email";
     p[act.dataset.k] = on;
+    var dd = {};
+    dd[act.dataset.k === "textSent" ? "texts" : "emails"] = on ? 1 : -1;
+    p.byDay = dayPatch(l, dd);
     edit(id, p, false, what + (on ? " sent" : " cleared"));
   }
 });
@@ -1347,8 +1489,12 @@ repView.addEventListener("change", function(e){
   var row = act.closest(".row"); if(!row) return;
   var l = byId(row.dataset.id); if(!l) return;
   if(!canEdit(l)){ syncRow(l); toast("That’s " + l.owner + "’s lead — read-only for you", true); return; }
-  if(act.dataset.act === "resp") edit(row.dataset.id, {responded: act.value},
-                                       false, "Responded: " + (RESP_LABEL[act.value]||act.value));
+  if(act.dataset.act === "resp"){
+    var was = l.responded && l.responded !== "no", now = act.value && act.value !== "no";
+    var rp = {responded: act.value};
+    if(was !== now) rp.byDay = dayPatch(l, {responses: now ? 1 : -1});
+    edit(row.dataset.id, rp, false, "Responded: " + (RESP_LABEL[act.value]||act.value));
+  }
 });
 repView.addEventListener("input", function(e){
   if(e.target.id === "bulk"){ bulkText = e.target.value; return; }
@@ -1449,6 +1595,11 @@ if(window.claude && typeof window.claude.use === "function"){
   window.claude.use("db").then(function(store){
     if(!store){ localOnly = true; setSync(); noteLocal(); return; }
     db = store;
+    db.doc("meta/coverage").onSnapshot(function(snap){
+      coverage = (snap.exists && snap.data()) ? snap.data() : {};
+      delete coverage.id;
+      rebuild();
+    }, function(){ /* coverage is optional; without it everyone just works their own list */ });
     db.collection("leads").limit(1000).onSnapshot(function(snap){
       dbReady = true; sawData = true;
       var next = new Map();
