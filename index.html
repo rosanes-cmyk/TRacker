@@ -212,6 +212,12 @@ td .who{display:flex; align-items:center; gap:8px}
 .chips{display:flex; gap:4px; flex-wrap:wrap}
 .fchip{border:1px solid var(--line-2); background:var(--surface); border-radius:100px; padding:5px 11px; font-size:12.5px; font-weight:600; color:var(--ink-2); cursor:pointer}
 .fchip[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+.fchip .c{opacity:.62; font-weight:500; font-variant-numeric:tabular-nums}
+.reptable .nb{color:var(--muted); font-size:12px}
+.batchbar{display:flex; gap:7px; align-items:center; flex-wrap:wrap; margin:0 0 14px}
+.batchbar .bl{font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); font-weight:600}
+.batchbar .bh{color:var(--muted); font-size:12px; margin-left:2px}
+@media (max-width:620px){ .batchbar .bh{flex-basis:100%; margin:2px 0 0} }
 .sel{background:var(--surface); border:1px solid var(--line-2); border-radius:var(--r); padding:7px 9px; font-size:13px; font-weight:500}
 
 .list{display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--r); overflow:hidden}
@@ -438,6 +444,7 @@ var filter = { q:"", chip:"all", sort:"rank" };
 var gq = "";
 var dayPick = "";   // which day the day-by-day table is showing
 var showCols = false;
+var batchPick = lsGet("thb.batch") || "";   // "" = every batch at once
 var listDirty = false, openNotes = new Set();
 var history = [];   // this session, this person, newest last
 var bulkText = "", addPreview = null;
@@ -504,6 +511,35 @@ function canOpen(rep){
   if(me === "admin") return true;        // Cherry / ops reads every board
   if(!me) return false;                  // nobody picked yet: dashboard only
   return rep === me || coveredBy(rep) === me;   // your own list, plus any you cover
+}
+/* Lists come in batches, one assignment date each. An older batch is finished
+   work, so folding it in with a fresh one turns a hand-out into what looks like
+   a collapse. Every counted figure respects the pick; searching never does. */
+function batchList(){
+  var seen = {};
+  leads.forEach(function(l){ if(l.assignedDate) seen[l.assignedDate] = (seen[l.assignedDate]||0)+1; });
+  return Object.keys(seen).sort().map(function(d,i){ return {date:d, label:"Batch "+(i+1), n:seen[d]}; });
+}
+function inBatch(l){ return !batchPick || l.assignedDate === batchPick; }
+function batchLabel(d){
+  var hit = batchList().filter(function(b){ return b.date === d; })[0];
+  return hit ? hit.label : "";
+}
+function batchBar(){
+  var bs = batchList();
+  if(bs.length < 2) return "";      // with one batch, "all batches" is the only view
+  return '<div class="batchbar"><span class="bl">Showing</span>'+
+    [{date:"", label:"All batches", n:leads.length}].concat(bs).map(function(b){
+      return '<button class="fchip" type="button" data-batch="'+esc(b.date)+'" aria-pressed="'+
+        (batchPick === b.date)+'">'+esc(b.label)+' <span class="c">'+fmtN(b.n)+'</span></button>';
+    }).join("")+
+    '<span class="bh">'+(batchPick
+      ? esc(batchLabel(batchPick)+" was handed out "+dayLabel(batchPick))
+      : esc(bs.map(function(b){
+          var list = leads.filter(function(l){ return l.assignedDate === b.date; });
+          var st = stats(list), sp = splitByStatus(list);
+          return b.label+" "+pct(st.live - sp.toCall, st.assigned)+" worked";
+        }).join(" \u00b7 ")))+'</span></div>';
 }
 function bucketOf(l){ return STATUS_BUCKET[l.leadStatus] || ""; }
 function isLive(l){ return !bucketOf(l); }
@@ -649,7 +685,7 @@ function renderTabs(){
   var reps = repsPresent();
   var html = '<button class="tab" role="tab" data-v="dash" aria-selected="'+(view==="dash")+'">Dashboard</button>';
   reps.filter(canOpen).forEach(function(r){
-    var n = leads.filter(function(l){ return l.owner===r; }).length;
+    var n = leads.filter(function(l){ return l.owner===r && inBatch(l); }).length;
     html += '<button class="tab" role="tab" data-v="'+esc(r)+'" aria-selected="'+(view===r)+'">'+esc(r)+
             '<span class="cnt">'+n+'</span>'+
             (me===r ? '<span class="mine">you</span>'
@@ -761,8 +797,8 @@ function repRow(label, s, sp, n, isMe, isTotal){
   return '<tr'+(isTotal?' class="total"':'')+'>'+
     '<td><span class="rep">'+esc(label)+'</span>'+(isMe?' <span class="st called">you</span>':'')+
       (coveredBy(label) ? ' <span class="st worked">worked by '+esc(coveredBy(label))+'</span>' : '')+'</td>'+
-    '<td class="cov"><span class="cov-in"><span class="track"><i style="width:'+p+'%"></i></span>'+
-      '<span class="covpct">'+p+'%</span></span></td>'+
+    '<td class="cov">'+(n ? '<span class="cov-in"><span class="track"><i style="width:'+p+'%"></i></span>'+
+      '<span class="covpct">'+p+'%</span></span>' : '<span class="nb">none in this batch</span>')+'</td>'+
     '<td class="col-calls num">'+fmtN(s.calls)+'</td>'+
     '<td class="col-ans num">'+fmtN(s.answered)+'</td>'+
     '<td class="num">'+fmtN(s.responded)+'</td>'+
@@ -813,15 +849,17 @@ function renderDash(){
   var box = document.getElementById("gq");
   var caret = (box && document.activeElement === box) ? box.selectionStart : -1;
 
-  var all = stats(leads), reps = repsPresent(), split = splitByStatus(leads);
+  var pool = leads.filter(inBatch);
+  var all = stats(pool), reps = repsPresent(), split = splitByStatus(pool);
   var worked = all.live - split.toCall;
   var rows = reps.map(function(r){
-    var list = leads.filter(function(l){ return l.owner === r; });
+    var list = pool.filter(function(l){ return l.owner === r; });
     return {rep:r, s:stats(list), sp:splitByStatus(list), n:list.length};
   });
 
   var html = '<div class="sec-head"><h2>Where the '+fmtN(all.assigned)+' leads stand</h2>'+
-    '<span class="sub">Live — every number updates as reps log calls.</span></div>';
+    '<span class="sub">'+(batchPick ? esc(batchLabel(batchPick))+' only — ' : '')+
+    'live, every number updates as reps log calls.</span></div>'+batchBar();
 
   /* ---- headline: one figure, one bar, what needs attention ---- */
   var notes = [], behind = rows.filter(function(x){ return agoClass(x.s.last) === "bad"; });
@@ -991,7 +1029,7 @@ function renderDash(){
   }
 
   /* ---- find a lead ---- */
-  html += '<div class="sec-head"><h2>Find a lead</h2><span class="sub">Searches all '+fmtN(all.assigned)+' leads across every rep.</span></div>';
+  html += '<div class="sec-head"><h2>Find a lead</h2><span class="sub">Searches all '+fmtN(leads.length)+' leads, every rep and every batch.</span></div>';
   html += '<div class="finder"><div class="search"><span class="ico">⌕</span>' +
     '<input id="gq" type="search" placeholder="Name, phone, or REI contact ID" value="'+esc(gq)+'" autocomplete="off"></div>' +
     '<button class="btn" id="rollupBtn" type="button">Export rollup</button></div>';
@@ -1038,6 +1076,7 @@ function visibleLeads(){
   var q = filter.q.trim().toLowerCase();
   var list = leads.filter(function(l){ return l.owner === view; });
   list = list.filter(function(l){
+    if(!inBatch(l)) return false;
     if(q && !matches(l,q)) return false;
     // a parked lead only shows under its own filter, never in the working list
     if(!PARKED_FILTERS[filter.chip] && !isLive(l)) return false;
@@ -1068,7 +1107,7 @@ function renderRep(){
   var host = document.getElementById("repView");
   var mine = me === view || coveredBy(view) === me;
   var list = visibleLeads();
-  var total = leads.filter(function(l){ return l.owner===view; });
+  var total = leads.filter(function(l){ return l.owner===view && inBatch(l); });
   var s = stats(total);
 
   if(!host.dataset.rep || host.dataset.rep !== view){
@@ -1076,6 +1115,7 @@ function renderRep(){
     host.innerHTML =
       '<div class="sec-head"><h2 id="repTitle"></h2><span class="sub" id="repSub"></span></div>' +
       '<div id="repBanner"></div>' +
+      '<div id="repBatch"></div>' +
       '<div class="boardbar">' +
         '<div class="search" style="flex:1 1 240px"><span class="ico">⌕</span><input id="rq" type="search" placeholder="Find a lead in this list" autocomplete="off"></div>' +
         '<div class="chips" id="fchips"></div>' +
@@ -1094,7 +1134,9 @@ function renderRep(){
     rowRefs.clear();
   }
 
+  document.getElementById("repBatch").innerHTML = batchBar();
   document.getElementById("repTitle").textContent = view + "’s leads" +
+    (batchPick ? " · " + batchLabel(batchPick) : "") +
     (coveredBy(view) ? " · worked by " + coveredBy(view) : "");
   document.getElementById("repSub").textContent =
     s.toWork + " to work" + (s.unworkable ? " · " + s.unworkable + " parked" : "") +
@@ -1300,16 +1342,18 @@ function syncRow(l){
 }
 
 function exportScope(){
+  // an export hands over exactly what is on screen, batch pick included
+  var pool = leads.filter(inBatch), tag = batchPick ? "-batch"+batchLabel(batchPick).split(" ")[1] : "";
   if(view !== "dash"){
     var narrowed = filter.chip !== "all" || filter.q.trim();
-    if(narrowed) return {list: visibleLeads(), who: view.toLowerCase()+"-"+filter.chip,
+    if(narrowed) return {list: visibleLeads(), who: view.toLowerCase()+"-"+filter.chip+tag,
                          label: "Export these " + visibleLeads().length + " (CSV)"};
-    return {list: leads.filter(function(l){ return l.owner===view; }),
-            who: view.toLowerCase(), label: "Export " + view + " (CSV)"};
+    return {list: pool.filter(function(l){ return l.owner===view; }),
+            who: view.toLowerCase()+tag, label: "Export " + view + " (CSV)"};
   }
-  if(me === "admin")   return {list: leads, who: "all-reps", label: "Export all (CSV)"};
-  if(me)               return {list: leads.filter(function(l){ return l.owner===me; }),
-                               who: me.toLowerCase(), label: "Export " + me + " (CSV)"};
+  if(me === "admin")   return {list: pool, who: "all-reps"+tag, label: "Export all (CSV)"};
+  if(me)               return {list: pool.filter(function(l){ return l.owner===me; }),
+                               who: me.toLowerCase()+tag, label: "Export " + me + " (CSV)"};
   return {list: [], who: "", label: "Export CSV"};
 }
 
@@ -1412,8 +1456,9 @@ function leadsCsv(list){
 function rollupCsv(){
   var head = ["Rep","Assigned","To_Work","Needs_New_Number","Closed","Out_Of_Buy_Box","Skipped","Contacted","Outbound_Calls","Answered","VM_Left","No_Answer_No_VM","Texts_Sent","Emails_Sent","Responded","Response_Rate",
     "Leads_Phoned","Answered_Or_Called_Back","Call_Response_Rate","Replied_By_Text","Text_Response_Rate","Replied_By_Email","Email_Response_Rate","Last_Activity"];
+  var pool = leads.filter(inBatch);
   var rows = repsPresent().concat(["All reps"]).map(function(r){
-    var s = stats(r==="All reps" ? leads : leads.filter(function(l){ return l.owner===r; }));
+    var s = stats(r==="All reps" ? pool : pool.filter(function(l){ return l.owner===r; }));
     return [r,s.assigned,s.toWork,s.needsNumber,s.closed,s.disq,s.skipped,s.contacted,s.calls,s.answered,s.vmLeft,s.noVm,s.texts,s.emails,s.responded,
       (s.rate*100).toFixed(1)+"%",
       s.phoned, s.picked, rateCell(s.picked, s.phoned),
@@ -1477,7 +1522,15 @@ document.getElementById("copyBtn").addEventListener("click", function(){
 document.getElementById("dashView").addEventListener("input", function(e){
   if(e.target.id === "gq"){ gq = e.target.value; renderResults(); }
 });
+function pickBatch(el){
+  batchPick = el.dataset.batch || "";
+  lsSet("thb.batch", batchPick);
+  document.getElementById("repView").dataset.rep = "";   // the cached skeleton holds stale counts
+  render();
+}
 document.getElementById("dashView").addEventListener("click", function(e){
+  var bt = e.target.closest("[data-batch]");
+  if(bt){ pickBatch(bt); return; }
   if(e.target.id === "rollupBtn"){
     offerFile("thb-rollup-"+today()+".csv", rollupCsv(), "Rollup export"); return;
   }
@@ -1502,6 +1555,8 @@ document.getElementById("dashView").addEventListener("click", function(e){
 
 var repView = document.getElementById("repView");
 repView.addEventListener("click", function(e){
+  var bt = e.target.closest("[data-batch]");
+  if(bt){ pickBatch(bt); return; }
   var chip = e.target.closest("[data-chip]");
   if(chip){ filter.chip = chip.dataset.chip; renderRep(); return; }
   if(e.target.id === "notesBtn"){

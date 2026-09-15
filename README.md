@@ -18,8 +18,9 @@ across Era, Barbie, David, and Diego. Built from `lead-tracker-spec-for-jonathan
 ## How it's stored
 
 Every lead is one document at `leads/<REI Contact_ID>` in the artifact's database,
-shared by everyone who opens the page. 400 documents today; the store holds 5,000,
-so roughly eleven more assignment rounds fit before old rounds need archiving.
+shared by everyone who opens the page. 700 documents today; the store holds 5,000,
+and the page reads up to 1,000, so the read limit binds first — raise the
+`limit(1000)` on the `leads` subscription before the next 300-lead round.
 
 | Field | Type | Notes |
 | --- | --- | --- |
@@ -34,20 +35,42 @@ so roughly eleven more assignment rounds fit before old rounds need archiving.
 | `skipReason` | string | Why a lead was skipped. Required — the status will not apply without one — and cleared when the lead goes back on the call list. |
 | `textSent`, `emailSent` | boolean | Outreach checkboxes. |
 | `responded` | `no` \| `call` \| `text` \| `email` \| `both` | Which channel the lead came back on. `call` is a callback or an engaged pickup; `both` means text and email, the value the field carried before `call` existed. |
+| `assignedDate` | string | The day the lead was handed out, `YYYY-MM-DD`. Doubles as the batch key: each distinct date is one batch, numbered in date order, and the Showing switch filters every counted figure by it. |
 | `notes` | string | Free text per lead. |
 | `updatedAt`, `updatedBy` | string | ISO timestamp and rep name of the last edit. |
 
 Counters are written as absolute values, not increments, so a retried save can't
 double-count a dial.
 
+### Batches
+
+A rep's list grows in rounds. Folding a finished round in with a fresh one turns a
+hand-out into what reads as a collapse — 100% becomes 40% overnight with nobody
+having done less — so the dashboard and every rep board carry a **Showing** switch:
+All batches / Batch 1 / Batch 2 / … built from the distinct `assignedDate` values.
+The pick drives every counted figure, the tab counts and the CSV export; searching
+and the Days worked panel deliberately ignore it, since neither is about one round.
+On All batches the hint line spells out each batch's own percentage, so the mixed
+figure can't be misread.
+
 ## Loading a new batch of leads
 
 1. Drop the new export in `data/`.
 2. `python3 scripts/build_seed.py data/<new-file>.csv` — writes `.seedtmp/<id>.json`
    per lead plus `.seedtmp/_batches.txt`, one line per 50-write batch.
-3. Feed each line to the Artifact `write_db` tool with `db_op: "batch"`, passing the
-   artifact URL above. Re-seeding a lead that already exists resets its counters,
-   so only seed ids that are actually new.
+3. Back up first: `ArtifactData action:list`, collection `leads`, with `out_dir` set.
+   It is the only way back if a write goes wrong.
+4. Check for collisions before writing anything. A `set` on an existing id replaces
+   that lead and wipes its calls, notes and status. Compare the export's
+   `Contact_ID`s against the backup and refuse to write any id already there.
+5. Continue the rank numbering rather than restarting it — a new export numbers
+   each rep 1..N again, and two leads sharing `owner` + `rank` scramble the list
+   order. Add the rep's current maximum rank to each new one.
+6. Feed each batch to `ArtifactData action:"batch"` with the artifact URL above.
+   Every entry should come back at **version 1**; any higher version means that
+   write landed on an existing lead.
+7. Verify: re-list the collection and diff the pre-write ids against the backup.
+   Expect zero missing, zero changed, and exactly the new ids added.
 
 Reps can also paste names straight into their own tab ("Add leads to your list"),
 which is the faster path for a handful of leads.
