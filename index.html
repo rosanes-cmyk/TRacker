@@ -115,6 +115,23 @@ main{padding-block:20px 56px}
 .tile .v{font-size:27px; font-weight:600; letter-spacing:-.025em; line-height:1.15; font-variant-numeric:proportional-nums}
 .tile .f{font-size:12px; color:var(--muted)}
 
+/* the glossary: closed by default so it never competes with the numbers,
+   one tap away for anyone who needs to check what a word counts */
+.key{border:1px solid var(--line); border-radius:var(--r); background:var(--surface); margin-bottom:30px}
+.key>summary{padding:12px 16px; cursor:pointer; font-weight:600; font-size:13.5px; list-style:none}
+.key>summary::-webkit-details-marker{display:none}
+.key>summary::before{content:"＋"; color:var(--muted); margin-right:9px; font-weight:400}
+.key[open]>summary::before{content:"−"}
+.key>summary:hover{color:var(--accent, inherit)}
+.key dl{margin:0; padding:2px 16px 16px; border-top:1px solid var(--line);
+        display:grid; grid-template-columns:minmax(120px,190px) 1fr; gap:9px 18px}
+.key dt{font-weight:600; font-size:12.5px; padding-top:1px}
+.key dd{margin:0; font-size:12.5px; color:var(--muted); line-height:1.5}
+@media (max-width:640px){
+  .key dl{grid-template-columns:1fr; gap:2px 0}
+  .key dd{margin-bottom:9px}
+}
+
 .reps{border:1px solid var(--line); border-radius:var(--r); background:var(--surface); overflow:hidden; margin-bottom:30px}
 .reptable{width:100%; min-width:0; border-collapse:collapse}
 .reptable th{position:static; padding:8px 14px; border-bottom:0}
@@ -441,11 +458,11 @@ function bizDay(when){
   } catch(e){ return d.toISOString().slice(0,10); }
 }
 /* the four states a lead can be in, most worked first — one hue, light to dark */
-var STEPS = [["responded","Responded","var(--step4)"],["called","Called","var(--step3)"],
-             ["touched","Texted or emailed","var(--step2)"],["toCall","Not called yet","var(--step1)"],
+var STEPS = [["responded","They came back to us","var(--step4)"],["called","Called, no answer yet","var(--step3)"],
+             ["touched","Texted or emailed only","var(--step2)"],["toCall","Not called yet","var(--step1)"],
              ["skip","Skipped for now","var(--info, #7f8c99)"],
-             ["dq","Out of buy box","var(--warn)"],
-             ["dead","Parked — bad number or closed","var(--line-2)"]];
+             ["dq","Out of our buying area","var(--warn)"],
+             ["dead","Bad number or do-not-call","var(--line-2)"]];
 
 var db = null, downloads = null;
 var raw = new Map();          // id -> server doc
@@ -572,7 +589,8 @@ function batchBar(){
       : esc(bs.map(function(b){
           var list = leads.filter(function(l){ return l.assignedDate === b.date; });
           var st = stats(list), sp = splitByStatus(list);
-          return b.label+" "+pct(st.live - sp.toCall, st.assigned)+" worked";
+          // same arithmetic as the headline, so the chips and the big number agree
+          return b.label+" "+pct(st.assigned - sp.toCall, st.assigned)+" done";
         }).join(" \u00b7 ")))+'</span></div>';
 }
 function bucketOf(l){ return STATUS_BUCKET[l.leadStatus] || ""; }
@@ -849,10 +867,32 @@ function repRow(label, s, sp, n, isMe, isTotal){
 }
 function rateCell(got, sent){ return sent ? (100*got/sent).toFixed(1)+"%" : "—"; }
 function fullTable(rows, all){
+  /* Every heading says what it counts in plain words, and carries the sentence
+     version on hover, so nobody has to be told what a column means twice. */
+  var cols = [
+    ["Rep", "Who the leads belong to"],
+    ["Leads given", "How many leads this rep was handed"],
+    ["Called", "Leads they have dialled at least once"],
+    ["Calls made", "Total dials, counting repeat tries on the same lead"],
+    ["Picked up", "Calls where someone actually answered"],
+    ["Voicemails", "Calls where they left a message"],
+    ["Rang out", "Calls with no answer and no message left"],
+    ["Texts sent", "Leads they have texted"],
+    ["Emails sent", "Leads they have emailed"],
+    ["Came back", "Leads who answered, called back, texted back or emailed back"],
+    ["Came back %", "Of the leads they called, the share who came back"],
+    ["Answered us %", "Of the leads they phoned, the share who picked up or rang back"],
+    ["Texted back %", "Of the leads they texted, the share who replied"],
+    ["Emailed back %", "Of the leads they emailed, the share who replied"],
+    ["Mailbox full", "Calls that could not even leave a message"],
+    ["Bad number", "Wrong or disconnected — needs a new number before anyone calls again"],
+    ["Do not contact", "Opted out, do-not-call, or not the owner — stop calling these"],
+    ["Out of area", "Outside the area we buy in"],
+    ["Skipped", "Set aside for now — still to come back to"],
+    ["Last worked", "When this rep last logged anything"]
+  ];
   var html = '<div class="tablewrap"><table><thead><tr>' +
-    ["Rep","Assigned","Contacted","Calls","Answered","VM left","No VM","Texts","Emails","Responded","Resp. rate",
-     "Call resp.","Text resp.","Email resp.","VM full","Needs number","Closed","Out of box","Skipped","Last activity"]
-      .map(function(h){ return "<th>"+h+"</th>"; }).join("") + '</tr></thead><tbody>';
+    cols.map(function(c){ return '<th title="'+esc(c[1])+'">'+esc(c[0])+"</th>"; }).join("") + '</tr></thead><tbody>';
   rows.forEach(function(x){
     var s = x.s;
     html += '<tr>' +
@@ -923,12 +963,17 @@ function renderDash(){
   if(all.skipped) notes.push(["warn", "⏭", fmtN(all.skipped)+" skipped — still to come back to"]);
   if(all.responded) notes.push(["ok","✓", fmtN(all.responded)+" responded — follow up first"]);
 
+  /* The headline has to survive being checked with a calculator. splitByStatus
+     puts every lead in exactly one bucket, so "done" and "still to call" always
+     add back to the total — the old mix of dialled, worked and workable counts
+     never did, and left Cherry with three numbers that disagreed. */
+  var done = all.assigned - split.toCall;
   html += '<section class="cover"><div class="cover-top">'+
-    '<div class="hero"><span class="k">Of the file worked</span>'+
-      '<span class="n">'+pct(worked, all.assigned)+'</span>'+
-      '<span class="f">'+fmtN(worked)+' of '+fmtN(all.live)+' workable leads have activity logged · '+
-        fmtN(all.contacted)+' have had a dial'+
-        (all.unworkable ? ' · '+fmtN(all.unworkable)+' parked of '+fmtN(all.assigned)+' assigned' : '')+
+    '<div class="hero"><span class="k">Of the list, done so far</span>'+
+      '<span class="n">'+pct(done, all.assigned)+'</span>'+
+      '<span class="f">'+fmtN(done)+' of the '+fmtN(all.assigned)+' leads are dealt with — called, '+
+        'or marked bad number, do-not-call or out of area. '+
+        (split.toCall ? '<b>'+fmtN(split.toCall)+' still to call.</b>' : 'Nothing left to call.')+
         '</span></div>'+
     (notes.length ? '<div class="attn">'+notes.slice(0,3).map(function(n){
         return '<span class="note '+n[0]+'"><span class="g" aria-hidden="true">'+n[1]+'</span>'+esc(n[2])+'</span>';
@@ -948,11 +993,16 @@ function renderDash(){
     }).join("")+'</div></section>';
 
   /* ---- the four numbers under it ---- */
+  /* Each tile answers a question in the words someone would actually ask it,
+     and spells out its own arithmetic underneath, so no one has to guess what
+     the number is divided by. */
   var tiles = [
-    ["Calls logged", fmtN(all.calls), "dial attempts, every rep"],
-    ["Answered", fmtN(all.answered), all.calls ? pct(all.answered, all.calls)+" of dials" : "no dials logged yet"],
-    ["Responses", fmtN(all.responded), "came back by text or email"],
-    ["Response rate", (all.rate*100).toFixed(1)+"%", "of the "+fmtN(all.contacted)+" leads called"]
+    ["Calls made", fmtN(all.calls), reps.length===1 ? "by "+esc(reps[0]) : "by "+reps.join(" and ")+" together"],
+    ["Someone picked up", fmtN(all.answered),
+      all.calls ? oneIn(all.answered, all.calls)+" of the "+fmtN(all.calls)+" calls" : "no calls logged yet"],
+    ["Leads who came back", fmtN(all.responded),
+      all.contacted ? oneIn(all.responded, all.contacted)+" of the leads we have called" : "no one called yet"],
+    ["Still to call", fmtN(split.toCall), "out of "+fmtN(all.assigned)+" leads"]
   ];
   html += '<div class="tiles">'+tiles.map(function(t){
     return '<div class="tile"><span class="k">'+esc(t[0])+'</span><span class="v">'+esc(t[1])+
@@ -961,12 +1011,12 @@ function renderDash(){
 
   /* ---- what each channel brings back ---- */
   var chans = [
-    ["Call",  all.picked,    all.phoned,    "leads phoned picked up or called back", "no dials logged yet"],
-    ["Text",  all.textBack,  all.texts,     "leads texted replied",   "no texts sent yet"],
-    ["Email", all.emailBack, all.emails,    "leads emailed replied",  "no emails sent yet"]
+    ["Calling",  all.picked,    all.phoned,    "leads we called picked up or rang us back", "nobody called yet"],
+    ["Texting",  all.textBack,  all.texts,     "leads we texted wrote back",   "no texts sent yet"],
+    ["Emailing", all.emailBack, all.emails,    "leads we emailed wrote back",  "no emails sent yet"]
   ];
-  html += '<div class="sec-head"><h2>Response by channel</h2>'+
-    '<span class="sub">How often each way of reaching out gets something back.</span></div>';
+  html += '<div class="sec-head"><h2>Which way of reaching out works best</h2>'+
+    '<span class="sub">Out of the leads we tried each way, how many gave us something back.</span></div>';
   html += '<div class="chans">' + chans.map(function(c){
     var got = c[1], sent = c[2];
     // a reply logged without its send ticked would otherwise read as a bar past full
@@ -976,7 +1026,8 @@ function renderDash(){
       '<span class="cp">'+(sent ? pct(got, sent) : "—")+'</span>'+
       '<span class="cf">'+(sent
         ? (over ? fmtN(got)+' replies logged against only '+fmtN(sent)+' sends — some sends were never ticked'
-                : fmtN(got)+' of '+fmtN(sent)+' '+c[3])
+                : fmtN(got)+' of '+fmtN(sent)+' '+c[3]+
+                  (got ? ' — '+oneIn(got, sent) : ''))
         : esc(c[4]))+'</span></div>';
   }).join("") + '</div>';
 
@@ -1000,8 +1051,12 @@ function renderDash(){
     var cells = Object.keys(day.who).map(function(k){ return day.who[k]; })
       .sort(function(a,b){ return a.who.localeCompare(b.who) || a.list.localeCompare(b.list); });
     html += '<div class="tablewrap"><table class="daytable"><thead><tr>'+
-      '<th>Who worked</th><th>Whose list</th><th>Leads</th><th>Calls</th><th>Answered</th>'+
-      '<th>VM left</th><th>No VM</th><th>VM full</th><th>Texts</th><th>Emails</th><th>Responses</th>'+
+      '<th>Who worked</th><th>Whose list</th><th title="Leads they touched that day">Leads</th>'+
+      '<th title="Total dials">Calls made</th><th title="Calls where someone answered">Picked up</th>'+
+      '<th title="Calls where they left a message">Voicemails</th>'+
+      '<th title="No answer, no message left">Rang out</th>'+
+      '<th title="Could not even leave a message">Mailbox full</th>'+
+      '<th>Texts sent</th><th>Emails sent</th><th title="Leads who came back to us">Came back</th>'+
       '</tr></thead><tbody>';
     cells.forEach(function(c){
       var own = c.who === c.list;
@@ -1042,15 +1097,17 @@ function renderDash(){
         '<span class="chips">'+(total
           ? all.slice(-12).map(function(d){
               return '<span class="dc'+(r.days[d]?" ex":"")+'" title="'+esc(dayLabel(d))+
-                (r.days[d] ? " — counted exactly" : " — from the lead’s last touch, may be under")+'">'+esc(dayShort(d))+'</span>';
+                (r.days[d] ? " — we have the full day-by-day record for this day"
+                           : " — before day-by-day tracking started, so this day is counted from when each lead was last touched")+'">'+esc(dayShort(d))+'</span>';
             }).join("")
           : '<span class="none">no days logged</span>')+
         (all.length > 12 ? '<span class="none">+'+(all.length-12)+' more</span>' : '')+
         '</span>'+
         '<span class="f">'+(worked ? fmtN(r.calls)+' calls · '+esc(lists.join(", ")) : '')+'</span></div>';
     }).join("")+'</div>';
-    html += '<p class="dwnote"><span class="dc ex">day</span> counted exactly &nbsp;·&nbsp; '+
-      '<span class="dc">day</span> counted from the lead’s last touch — may be under, never over.</p>';
+    html += '<p class="dwnote"><span class="dc ex">day</span> a day we have the full record for '+
+      '&nbsp;·&nbsp; <span class="dc">day</span> a day from before day-by-day tracking started — '+
+      'we know they worked, so the real total can only be higher, never lower.</p>';
   }
 
   /* ---- calls per day, so a quiet day shows itself ---- */
@@ -1067,18 +1124,39 @@ function renderDash(){
 
   /* ---- rep by rep ---- */
   html += '<div class="sec-head"><h2>Rep by rep</h2>'+
-    '<span class="sub">Coverage is the share of that rep’s list with any activity logged.</span>'+
+    '<span class="sub">How far each rep has got through the leads they were given.</span>'+
     '<button class="btn" id="colsBtn" type="button">'+(showCols ? "Hide extra columns" : "Show every column")+'</button></div>';
   if(showCols){
     html += fullTable(rows, all);
   } else {
     html += '<div class="reps"><table class="reptable"><thead><tr>'+
-      '<th>Rep</th><th class="cov">Coverage</th><th class="col-calls">Calls</th>'+
-      '<th class="col-ans">Answered</th><th>Responses</th><th>Last activity</th></tr></thead><tbody>'+
+      '<th>Rep</th><th class="cov" title="Share of their leads with any work logged">How far through</th>'+
+      '<th class="col-calls" title="Total dials">Calls made</th>'+
+      '<th class="col-ans" title="Calls where someone answered">Picked up</th>'+
+      '<th title="Leads who answered, called back, texted back or emailed back">Came back</th>'+
+      '<th title="When this rep last logged anything">Last worked</th></tr></thead><tbody>'+
       rows.map(function(x){ return repRow(x.rep, x.s, x.sp, x.n, me === x.rep, false); }).join("")+
       repRow("All reps", all, split, all.assigned, false, true)+
       '</tbody></table></div>';
   }
+
+  /* ---- what the words mean ---- */
+  html += '<details class="key"><summary>What these numbers mean</summary>'+
+    '<dl>'+[
+      ["Called", "We dialled the lead at least once. One lead called five times still counts as one."],
+      ["Calls made", "Every dial, counted separately. Five tries at one lead is five calls."],
+      ["Picked up", "A real person answered the phone."],
+      ["Voicemail", "Nobody answered, so the rep left a message."],
+      ["Rang out", "Nobody answered and no message was left."],
+      ["Came back", "The lead did something back — answered, rang us, texted back or emailed back. This is the one that matters."],
+      ["Still to call", "Leads nobody has dialled yet. This is the work left."],
+      ["Bad number", "Wrong or disconnected. Needs a new number before anyone wastes another call."],
+      ["Do not contact", "Opted out, do-not-call, or not the owner. Stop calling these."],
+      ["Out of our buying area", "The property is somewhere we don't buy."],
+      ["Skipped for now", "Set aside on purpose. Still ours to come back to — not finished."],
+      ["About 1 in 30", "Plain-English version of the percentage next to it. 1 in 30 means for every 30 leads, one came back."],
+      ["Last worked", "When that rep last logged anything at all, on any batch."]
+    ].map(function(r){ return '<dt>'+esc(r[0])+'</dt><dd>'+esc(r[1])+'</dd>'; }).join("")+'</dl></details>';
 
   /* ---- find a lead ---- */
   html += '<div class="sec-head"><h2>Find a lead</h2><span class="sub">Searches all '+fmtN(leads.length)+' leads, every rep and every batch.</span></div>';
@@ -1458,6 +1536,15 @@ function render(){
 function esc(s){ return String(s==null?"":s).replace(/[&<>"']/g, function(c){
   return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
 function pct(a,b){ return b ? Math.round(100*a/b)+"%" : "0%"; }
+/* A percentage under about 5% stops meaning anything to most people — "2.7%" is
+   a number you have to do arithmetic on. "About 1 in 37" is the same fact, already
+   in the shape a person thinks in, so every rate on the dashboard carries one. */
+function oneIn(got, of){
+  if(!of || !got) return "";
+  if(got >= of) return "every one";
+  var n = Math.round(of/got);
+  return n <= 1 ? "nearly every one" : "about 1 in "+fmtN(n);
+}
 function fmtN(n){ return Number(n||0).toLocaleString("en-US"); }
 function fmtPhone(p){
   var d = String(p||"").replace(/[^0-9]/g,"");
