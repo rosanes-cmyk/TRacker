@@ -580,9 +580,10 @@ function batchBar(){
       return '<button class="fchip" type="button" data-batch="'+esc(b.date)+'" aria-pressed="'+
         (batchPick === b.date)+'">'+esc(b.label)+' <span class="c">'+fmtN(b.n)+'</span></button>';
     }).join("")+
+    /* The chip already carries the date, so repeating "handed out <date>" beside
+       it said the same thing twice. Only the per-rep split earns its place here. */
     '<span class="bh">'+(batchPick
-      ? esc("handed out " + dayLabel(batchPick) + " \u2014 " +
-          repsPresent().map(function(r){
+      ? esc(repsPresent().map(function(r){
             return {r:r, n:leads.filter(function(l){ return l.owner === r && l.assignedDate === batchPick; }).length};
           }).filter(function(x){ return x.n; })
            .map(function(x){ return x.r + " " + fmtN(x.n); }).join(" \u00b7 "))
@@ -956,10 +957,10 @@ function renderDash(){
     notes.push(["bad","▲", who.join(", ") + (who.length>1 ? " have" : " has") + " logged nothing in a day"]);
   }
   if(batchPick && !all.contacted && !all.calls)
-    notes.push(["", "◇", "handed out "+dayLabel(batchPick)+" — not started yet"]);
+    notes.push(["", "◇", "nobody has started this batch yet"]);
   if(split.toCall) notes.push([behind.length ? "" : "warn", "◆", fmtN(split.toCall)+" still to call"]);
   if(all.needsNumber) notes.push(["", "⊘", fmtN(all.needsNumber)+" need a new number"]);
-  if(all.disq) notes.push(["", "◇", fmtN(all.disq)+" out of buy box"]);
+  if(all.disq) notes.push(["", "◇", fmtN(all.disq)+" out of our buying area"]);
   if(all.skipped) notes.push(["warn", "⏭", fmtN(all.skipped)+" skipped — still to come back to"]);
   if(all.responded) notes.push(["ok","✓", fmtN(all.responded)+" responded — follow up first"]);
 
