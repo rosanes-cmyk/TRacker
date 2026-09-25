@@ -897,9 +897,13 @@ function renderDash(){
   var all = stats(pool), reps = repsPresent(), split = splitByStatus(pool);
   var worked = all.live - split.toCall;
   var rows = reps.map(function(r){
+    var mine = leads.filter(function(l){ return l.owner === r; });
     var list = pool.filter(function(l){ return l.owner === r; });
-    return {rep:r, s:stats(list), sp:splitByStatus(list), n:list.length};
+    var s = stats(list);
+    s.last = stats(mine).last;      // across every batch, never just this one
+    return {rep:r, s:s, sp:splitByStatus(list), n:list.length};
   });
+  all.last = stats(leads).last;
 
   var html = '<div class="sec-head"><h2>Where the '+fmtN(all.assigned)+' leads stand</h2>'+
     '<span class="sub">'+(batchPick ? esc(batchLabel(batchPick))+' only — ' : '')+
@@ -911,6 +915,8 @@ function renderDash(){
     var who = behind.map(function(x){ return x.rep; });
     notes.push(["bad","▲", who.join(", ") + (who.length>1 ? " have" : " has") + " logged nothing in a day"]);
   }
+  if(batchPick && !all.contacted && !all.calls)
+    notes.push(["", "◇", "handed out "+dayLabel(batchPick)+" — not started yet"]);
   if(split.toCall) notes.push([behind.length ? "" : "warn", "◆", fmtN(split.toCall)+" still to call"]);
   if(all.needsNumber) notes.push(["", "⊘", fmtN(all.needsNumber)+" need a new number"]);
   if(all.disq) notes.push(["", "◇", fmtN(all.disq)+" out of buy box"]);
@@ -979,7 +985,8 @@ function renderDash(){
   html += '<div class="sec-head"><h2>Day by day</h2>'+
     '<span class="sub">Who worked, and whose list they worked. Daily tracking began '+
     (dayList.length ? esc(dayLabel(dayList[0])) : "today") +
-    ' — work before that is in the totals above, but not split by day.</span></div>';
+    ' — work before that is in the totals above, but not split by day.'+
+    (batchPick ? ' Covers every batch, not just '+esc(batchLabel(batchPick))+'.' : '')+'</span></div>';
   if(!dayList.length){
     html += '<div class="empty">Nothing logged yet today. As soon as a rep logs a call it appears here.</div>';
   } else {
@@ -1017,7 +1024,8 @@ function renderDash(){
   {
     var dw = daysWorked();
     html += '<div class="sec-head"><h2>Days worked</h2>'+
-      '<span class="sub">Which days each person worked. Counted for whoever did the work, not whose list it was.</span></div>';
+      '<span class="sub">Which days each person worked. Counted for whoever did the work, not whose list it was.'+
+      (batchPick ? ' Covers every batch, not just '+esc(batchLabel(batchPick))+'.' : '')+'</span></div>';
     html += '<div class="dw">'+dw.rows.map(function(r){
       var worked = Object.keys(r.days).length, before = Object.keys(r.before).length;
       var lists = Object.keys(r.lists).sort().map(function(x){
