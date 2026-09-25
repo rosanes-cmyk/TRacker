@@ -696,13 +696,37 @@ function flush(){
   });
 }
 function dayPatch(l, deltas){
-  var d = bizDay(), cur = (l.byDay && l.byDay[d]) || {}, row = {by: me || "—"};
+  var today = bizDay(), bd = l.byDay || {}, cur = bd[today] || {};
+  var out = {}, row = {by: me || "—"};
   DAY_KEYS.forEach(function(k){
     var v = (cur[k] || 0) + (deltas[k] || 0);
-    if(v > 0) row[k] = v;
+    if(v >= 0){
+      /* Write the zero rather than leaving the key out: update() merges, so an
+         omitted key keeps whatever was stored and the correction disappears. */
+      if(v > 0 || cur[k]) row[k] = v;
+      return;
+    }
+    /* Today cannot absorb it, so the rep is undoing something logged on an
+       earlier day. Take the rest off the most recent day that actually carries
+       it — otherwise the undo lands nowhere and the day totals drift above the
+       lead's own figures, which is how 18 leads came to overstate their days. */
+    var left = -v;
+    if(cur[k]) row[k] = 0;
+    Object.keys(bd).sort().reverse().forEach(function(d){
+      if(d === today || left <= 0) return;
+      var have = (out[d] && out[d][k] != null) ? out[d][k] : (bd[d][k] || 0);
+      if(have <= 0) return;
+      var take = Math.min(have, left);
+      (out[d] = out[d] || {})[k] = have - take;
+      left -= take;
+    });
   });
-  var byDay = {}; byDay[d] = row;
-  return byDay;   // update() merges nested objects, so other days are untouched
+  /* An undo that reached back into earlier days leaves today with nothing but a
+     name. Writing that would invent a day the rep never worked — the very thing
+     the phantom rows were — so today only gets a row when it actually carries a
+     count, zeros included, since a zero is how a correction is recorded. */
+  if(DAY_KEYS.some(function(k){ return row[k] != null; })) out[today] = row;
+  return out;   // update() merges nested objects, so untouched days stay as they are
 }
 function labelFor(kind){
   for(var i=0;i<COUNTERS.length;i++){ if(COUNTERS[i][0]===kind) return COUNTERS[i][1]; }
@@ -838,6 +862,13 @@ function splitByStatus(list){
   var c = {responded:0, called:0, touched:0, toCall:0, dead:0, dq:0, skip:0};
   list.forEach(function(l){
     var k = statusOf(l)[1];
+    /* A lead who came back is the most valuable thing on the board, so here it
+       outranks a soft park — skipped, or out of area. Otherwise someone who rang
+       us back sits hidden under "Skipped for now" and the two "came back" figures
+       on this page disagree. A hard stop still wins: a bad number or a do-not-call
+       cannot be worked whatever the lead did. This counts for the dashboard only;
+       statusOf is untouched, so the reps' own rows read exactly as before. */
+    if((k === "skip" || k === "dq") && l.responded && l.responded !== "no") k = "responded";
     if(k === "skip") c.skip++;
     else if(k === "dq") c.dq++;
     else if(k === "dead") c.dead++;
