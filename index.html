@@ -1034,7 +1034,7 @@ function renderDash(){
   /* ---- day by day: who worked, and on whose list ---- */
   var daily = dailyRollup(), dayList = Object.keys(daily).sort();
   html += '<div class="sec-head"><h2>Day by day</h2>'+
-    '<span class="sub">Who worked, and whose list they worked. Daily tracking began '+
+    '<span class="sub">What each rep got done, day by day. Daily tracking began '+
     (dayList.length ? esc(dayLabel(dayList[0])) : "today") +
     ' — work before that is in the totals above, but not split by day.'+
     (batchPick ? ' Covers every batch, not just '+esc(batchLabel(batchPick))+'.' : '')+'</span></div>';
@@ -1050,8 +1050,13 @@ function renderDash(){
       (dayPick === bizDay() ? '<span class="sub">today, so far</span>' : '')+'</div>';
     var cells = Object.keys(day.who).map(function(k){ return day.who[k]; })
       .sort(function(a,b){ return a.who.localeCompare(b.who) || a.list.localeCompare(b.list); });
+    /* "Whose list" only says anything on a day someone worked another rep's leads.
+       With nobody covering for anybody it reads "their own" on every row forever,
+       so it is dropped — and comes back by itself the day cover happens again. */
+    var showList = cells.some(function(c){ return c.who !== c.list; });
     html += '<div class="tablewrap"><table class="daytable"><thead><tr>'+
-      '<th>Who worked</th><th>Whose list</th><th title="Leads they touched that day">Leads</th>'+
+      '<th>Who worked</th>'+(showList ? '<th title="Whose leads they worked that day">Whose list</th>' : '')+
+      '<th title="Leads they touched that day">Leads</th>'+
       '<th title="Total dials">Calls made</th><th title="Calls where someone answered">Picked up</th>'+
       '<th title="Calls where they left a message">Voicemails</th>'+
       '<th title="No answer, no message left">Rang out</th>'+
@@ -1061,14 +1066,14 @@ function renderDash(){
     cells.forEach(function(c){
       var own = c.who === c.list;
       html += '<tr><td class="name">'+esc(c.who)+'</td>'+
-        '<td class="name">'+(own ? '<span class="own">their own</span>'
-                                 : '<span class="forlist">for '+esc(c.list)+'</span>')+'</td>'+
+        (showList ? '<td class="name">'+(own ? '<span class="own">their own</span>'
+                                 : '<span class="forlist">for '+esc(c.list)+'</span>')+'</td>' : '')+
         '<td class="num">'+fmtN(c.leads)+'</td>'+
         DAY_KEYS.map(function(f){ return '<td class="num">'+fmtN(c[f]||0)+'</td>'; }).join("")+
         '</tr>';
     });
-    html += '<tr class="total"><td>'+esc(dayLabel(dayPick))+' total</td><td></td><td class="num">'+
-      fmtN(cells.reduce(function(a,c){ return a + c.leads; },0))+'</td>'+
+    html += '<tr class="total"><td>'+esc(dayLabel(dayPick))+' total</td>'+(showList ? '<td></td>' : '')+
+      '<td class="num">'+fmtN(cells.reduce(function(a,c){ return a + c.leads; },0))+'</td>'+
       DAY_KEYS.map(function(f){ return '<td class="num">'+fmtN(day.total[f]||0)+'</td>'; }).join("")+
       '</tr></tbody></table></div>';
   }
