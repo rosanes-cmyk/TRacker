@@ -730,14 +730,18 @@ function renderTabs(){
   tabs.innerHTML = html;
 }
 function renderMe(){
-  var sel = document.getElementById("me");
-  if(sel.dataset.built === "1"){ sel.value = me; return; }
-  var reps = repsPresent();
-  sel.innerHTML = '<option value="">Choose your name…</option>' +
-    reps.map(function(r){ return '<option value="'+esc(r)+'">'+esc(r)+'</option>'; }).join("") +
-    '<option value="__admin">Cherry / ops (view only)</option>';
-  sel.value = (me === "admin") ? "__admin" : me;
-  sel.dataset.built = "1";
+  var sel = document.getElementById("me"), reps = repsPresent();
+  /* Cherry is stored as "admin" but her option's value is "__admin". Assigning
+     the stored name straight to the select matched no option and blanked the
+     box on every re-render, so map it once and use that everywhere. */
+  var want = (me === "admin") ? "__admin" : me, sig = reps.join("\u0000");
+  if(sel.dataset.sig !== sig){          // rebuild only when the roster changes
+    sel.innerHTML = '<option value="">Choose your name…</option>' +
+      reps.map(function(r){ return '<option value="'+esc(r)+'">'+esc(r)+'</option>'; }).join("") +
+      '<option value="__admin">Cherry / ops (view only)</option>';
+    sel.dataset.sig = sig;
+  }
+  if(sel.value !== want) sel.value = want;
 }
 
 /* ---------------- rendering: dashboard ---------------- */
