@@ -518,7 +518,14 @@ function canOpen(rep){
 function batchList(){
   var seen = {};
   leads.forEach(function(l){ if(l.assignedDate) seen[l.assignedDate] = (seen[l.assignedDate]||0)+1; });
-  return Object.keys(seen).sort().map(function(d,i){ return {date:d, label:"Batch "+(i+1), n:seen[d]}; });
+  return Object.keys(seen).sort().map(function(d){ return {date:d, label:monthDay(d), n:seen[d]}; });
+}
+function monthDay(d){
+  var t = new Date(d + "T12:00:00Z");
+  if(isNaN(t)) return d;
+  // the year only earns its space once a batch falls outside the current one
+  return t.toLocaleDateString("en-US", {month:"short", day:"numeric", timeZone:"UTC"}) +
+    (t.getUTCFullYear() === new Date().getFullYear() ? "" : " " + t.getUTCFullYear());
 }
 function inBatch(l){ return !batchPick || l.assignedDate === batchPick; }
 function batchLabel(d){
@@ -534,7 +541,11 @@ function batchBar(){
         (batchPick === b.date)+'">'+esc(b.label)+' <span class="c">'+fmtN(b.n)+'</span></button>';
     }).join("")+
     '<span class="bh">'+(batchPick
-      ? esc(batchLabel(batchPick)+" was handed out "+dayLabel(batchPick))
+      ? esc("handed out " + dayLabel(batchPick) + " \u2014 " +
+          repsPresent().map(function(r){
+            return {r:r, n:leads.filter(function(l){ return l.owner === r && l.assignedDate === batchPick; }).length};
+          }).filter(function(x){ return x.n; })
+           .map(function(x){ return x.r + " " + fmtN(x.n); }).join(" \u00b7 "))
       : esc(bs.map(function(b){
           var list = leads.filter(function(l){ return l.assignedDate === b.date; });
           var st = stats(list), sp = splitByStatus(list);
@@ -1343,7 +1354,7 @@ function syncRow(l){
 
 function exportScope(){
   // an export hands over exactly what is on screen, batch pick included
-  var pool = leads.filter(inBatch), tag = batchPick ? "-batch"+batchLabel(batchPick).split(" ")[1] : "";
+  var pool = leads.filter(inBatch), tag = batchPick ? "-"+batchPick : "";
   if(view !== "dash"){
     var narrowed = filter.chip !== "all" || filter.q.trim();
     if(narrowed) return {list: visibleLeads(), who: view.toLowerCase()+"-"+filter.chip+tag,
@@ -1755,7 +1766,7 @@ if(window.claude && typeof window.claude.use === "function"){
       delete coverage.id;
       rebuild();
     }, function(){ /* coverage is optional; without it everyone just works their own list */ });
-    db.collection("leads").limit(1000).onSnapshot(function(snap){
+    db.collection("leads").limit(5000).onSnapshot(function(snap){
       dbReady = true; sawData = true;
       var next = new Map();
       snap.docs.forEach(function(d){ next.set(d.id, Object.assign({id:d.id}, d.data())); });

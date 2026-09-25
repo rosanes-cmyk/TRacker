@@ -18,9 +18,10 @@ across Era, Barbie, David, and Diego. Built from `lead-tracker-spec-for-jonathan
 ## How it's stored
 
 Every lead is one document at `leads/<REI Contact_ID>` in the artifact's database,
-shared by everyone who opens the page. 700 documents today; the store holds 5,000,
-and the page reads up to 1,000, so the read limit binds first — raise the
-`limit(1000)` on the `leads` subscription before the next 300-lead round.
+shared by everyone who opens the page. 1,100 documents today. The store holds 5,000
+and the page's `leads` subscription now reads up to the same 5,000, so neither
+binds before the other — a page that reads fewer than the store holds drops the
+overflow silently, with a full-looking board and no error.
 
 | Field | Type | Notes |
 | --- | --- | --- |
@@ -47,7 +48,9 @@ double-count a dial.
 A rep's list grows in rounds. Folding a finished round in with a fresh one turns a
 hand-out into what reads as a collapse — 100% becomes 40% overnight with nobody
 having done less — so the dashboard and every rep board carry a **Showing** switch:
-All batches / Batch 1 / Batch 2 / … built from the distinct `assignedDate` values.
+All batches / Sep 11 / Sep 15 / …, one chip per distinct `assignedDate`. The chips
+are dated rather than numbered: an export's own batch number is its sender's
+count, not the tracker's, and the two drift apart the moment one is skipped.
 The pick drives every counted figure, the tab counts and the CSV export; searching
 and the Days worked panel deliberately ignore it, since neither is about one round.
 On All batches the hint line spells out each batch's own percentage, so the mixed
