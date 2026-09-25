@@ -69,6 +69,17 @@ main{padding-block:20px 56px}
 .banner{display:flex; gap:10px; align-items:flex-start; padding:10px 13px; border-radius:var(--r); border:1px solid var(--line); background:var(--surface); font-size:13px; color:var(--ink-2); margin-bottom:16px}
 .banner b{color:var(--ink)}
 .banner.warn{border-color:color-mix(in srgb, var(--warn) 40%, var(--line)); background:color-mix(in srgb, var(--warn) 7%, var(--surface))}
+/* Maintenance strip. Full-bleed and above the tabs so it cannot be mistaken for
+   one view's banner - while it is up the numbers on every view are in motion. */
+#notice{background:color-mix(in srgb, var(--warn) 13%, var(--surface));
+  border-bottom:1px solid color-mix(in srgb, var(--warn) 45%, var(--line))}
+#notice .in{display:flex; gap:11px; align-items:flex-start; padding:11px 0; font-size:13px; color:var(--ink-2)}
+#notice .g{color:var(--warn); font-size:15px; line-height:1.2; flex:none}
+#notice b{color:var(--ink)}
+#notice .sub{display:block; color:var(--muted); font-size:12px; margin-top:2px}
+@keyframes noticePulse{0%,100%{opacity:1}50%{opacity:.45}}
+#notice .g{animation:noticePulse 1.8s ease-in-out infinite}
+@media (prefers-reduced-motion:reduce){ #notice .g{animation:none} }
 
 /* ---------- dashboard ---------- */
 .sec-head{display:flex; align-items:baseline; gap:12px; flex-wrap:wrap; margin-bottom:12px}
@@ -213,6 +224,8 @@ td .who{display:flex; align-items:center; gap:8px}
 .fchip{border:1px solid var(--line-2); background:var(--surface); border-radius:100px; padding:5px 11px; font-size:12.5px; font-weight:600; color:var(--ink-2); cursor:pointer}
 .fchip[aria-pressed="true"]{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
 .fchip .c{opacity:.62; font-weight:500; font-variant-numeric:tabular-nums}
+.tagf{font-size:9.5px; letter-spacing:.05em; text-transform:uppercase; font-weight:700;
+  color:var(--muted); border:1px dashed var(--line-2); border-radius:100px; padding:1px 6px; white-space:nowrap}
 .reptable .nb{color:var(--muted); font-size:12px}
 .batchbar{display:flex; gap:7px; align-items:center; flex-wrap:wrap; margin:0 0 14px}
 .batchbar .bl{font-size:10.5px; letter-spacing:.07em; text-transform:uppercase; color:var(--muted); font-weight:600}
@@ -362,6 +375,8 @@ dialog::backdrop{background:rgba(8,16,15,.5)}
   </div>
 </header>
 
+<div id="notice" role="status" hidden></div>
+
 <nav class="tabs" id="tabs" role="tablist" aria-label="Views"></nav>
 
 <main class="wrap" id="main">
@@ -452,6 +467,14 @@ var skipPending = new Set();   // rows waiting for a reason before the skip appl
 /* { <list owner>: <person working it> } — a list keeps its owner's name; this
    only says who is doing the work while they are away. Set by ops. */
 var coverage = {};
+var notice = {};
+function renderNotice(){
+  var el = document.getElementById("notice");
+  if(!notice || !notice.on || !(notice.text||"").trim()){ el.hidden = true; el.innerHTML = ""; return; }
+  el.hidden = false;
+  el.innerHTML = '<div class="wrap in"><span class="g" aria-hidden="true">\u25c6</span><span><b>'+
+    esc(notice.text)+'</b>'+(notice.sub ? '<span class="sub">'+esc(notice.sub)+'</span>' : '')+'</span></div>';
+}
 function coveredBy(rep){ return coverage[rep] || ""; }
 function coveringFor(){
   var out = [];
@@ -483,7 +506,7 @@ function blank(l){
   return {
     id:l.id, owner:l.owner||"", ownerId:l.ownerId||"", rank:+l.rank||0,
     name:l.name||"", phone:l.phone||"", bucket:l.bucket||"", reiLink:l.reiLink||"",
-    task:l.task||"", assignedDate:l.assignedDate||"",
+    task:l.task||"", assignedDate:l.assignedDate||"", fromRep:l.fromRep||"",
     calls:+l.calls||0, answered:+l.answered||0, vmLeft:+l.vmLeft||0, noVm:+l.noVm||0, vmFull:+l.vmFull||0,
     leadStatus:l.leadStatus||"", skipReason:l.skipReason||"",
     byDay:(l.byDay && typeof l.byDay === "object") ? l.byDay : {},
@@ -749,7 +772,7 @@ function daysWorked(){
   function slot(p){
     return who[p] || (who[p] = {person:p, days:{}, calls:0, lists:{}, before:{}});
   }
-  repsPresent().forEach(slot);
+  var onTeam = {}; repsPresent().forEach(function(r){ onTeam[r] = 1; slot(r); });
   tracked.forEach(function(d){
     var day = daily[d];
     for(var k in day.who){
@@ -769,6 +792,7 @@ function daysWorked(){
     if(w.days[d]) return;
     w.before[d] = true;
   });
+  Object.keys(who).forEach(function(p){ who[p].left = !onTeam[p]; });
   return {tracked: tracked,
           rows: Object.keys(who).map(function(p){ return who[p]; })
                   .sort(function(a,b){ return Object.keys(b.days).length - Object.keys(a.days).length
@@ -995,7 +1019,8 @@ function renderDash(){
       var total = all.length;
       return '<div class="dwrow'+(total?"":" idle")+'">'+
         '<span class="p">'+esc(r.person)+
-          (coveredBy(r.person) ? ' <span class="st worked">away · '+esc(coveredBy(r.person))+' covering</span>' : '')+
+          (r.left ? ' <span class="st">left the team</span>'
+                  : coveredBy(r.person) ? ' <span class="st worked">away · '+esc(coveredBy(r.person))+' covering</span>' : '')+
         '</span>'+
         '<span class="n">'+total+(total===1?" day":" days")+'</span>'+
         '<span class="chips">'+(total
@@ -1245,6 +1270,7 @@ function buildRow(l, editable){
   row.innerHTML =
     '<div class="c-rank num">'+ (l.rank||"") +'</div>' +
     '<div class="c-lead"><div class="lead-name"><span class="nm"></span>'+
+      (l.fromRep ? '<span class="tagf">from '+esc(l.fromRep)+'</span>' : '')+
       (l.bucket ? '<span class="tagb '+esc(l.bucket)+'">'+esc(l.bucket)+'</span>' : '')+
       '<span class="st" data-f="st"></span></div>' +
       '<button class="backbtn" type="button" data-act="revive" hidden>↺ Put back on the call list</button>'+
@@ -1761,6 +1787,10 @@ if(window.claude && typeof window.claude.use === "function"){
   window.claude.use("db").then(function(store){
     if(!store){ localOnly = true; setSync(); noteLocal(); return; }
     db = store;
+    db.doc("meta/notice").onSnapshot(function(snap){
+      notice = (snap.exists && snap.data()) ? snap.data() : {};
+      renderNotice();
+    }, function(){ /* no notice is the normal state; a failure here must not block the board */ });
     db.doc("meta/coverage").onSnapshot(function(snap){
       coverage = (snap.exists && snap.data()) ? snap.data() : {};
       delete coverage.id;

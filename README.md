@@ -18,7 +18,10 @@ across Era, Barbie, David, and Diego. Built from `lead-tracker-spec-for-jonathan
 ## How it's stored
 
 Every lead is one document at `leads/<REI Contact_ID>` in the artifact's database,
-shared by everyone who opens the page. 1,100 documents today. The store holds 5,000
+shared by everyone who opens the page. 1,100 leads today, plus `meta/coverage`
+(who is covering whose list while they are away) and `meta/notice` (the
+maintenance strip: `{on, text, sub}`, raised and cleared by writing that one
+document, never by republishing — a republish reloads every rep mid-edit). The store holds 5,000
 and the page's `leads` subscription now reads up to the same 5,000, so neither
 binds before the other — a page that reads fewer than the store holds drops the
 overflow silently, with a full-looking board and no error.
@@ -36,12 +39,31 @@ overflow silently, with a full-looking board and no error.
 | `skipReason` | string | Why a lead was skipped. Required — the status will not apply without one — and cleared when the lead goes back on the call list. |
 | `textSent`, `emailSent` | boolean | Outreach checkboxes. |
 | `responded` | `no` \| `call` \| `text` \| `email` \| `both` | Which channel the lead came back on. `call` is a callback or an engaged pickup; `both` means text and email, the value the field carried before `call` existed. |
+| `fromRep` | string | Set only on a lead that changed hands, naming the rep whose list it came from. `owner` is the rep working it now, so without this the list it was worked under would be lost; the row shows it as a small `from David` tag. |
 | `assignedDate` | string | The day the lead was handed out, `YYYY-MM-DD`. Doubles as the batch key: each distinct date is one batch, numbered in date order, and the Showing switch filters every counted figure by it. |
 | `notes` | string | Free text per lead. |
 | `updatedAt`, `updatedBy` | string | ISO timestamp and rep name of the last edit. |
 
 Counters are written as absolute values, not increments, so a retried save can't
 double-count a dial.
+
+### When a rep leaves
+
+Their leads are re-owned rather than left behind: `owner` and `ownerId` become
+the receiving rep's, `rank` continues from that rep's current maximum so no two
+leads share a number, and `fromRep` records where the lead came from. The rep
+then has no leads, so `repsPresent()` drops them from the tabs and the rep table
+on its own; clear their entry in `meta/coverage` too.
+
+What is **not** rewritten is `updatedBy` and the `byDay` rows. Those say who did
+the work, and re-stamping them with the new owner's name would invent work days
+that person never had. Days worked therefore still lists the departed rep, tagged
+`left the team`, for the days they really worked. The consequence to be aware of:
+the rep-by-rep table counts calls by whose list a lead is on, so the receiving rep
+absorbs the calls the leaver logged. That was an explicit choice, not an oversight.
+
+Use `update`, not `set`, and pin `if_version` on every entry: `update` touches
+only the four fields, so a call a rep logs mid-transfer cannot be clobbered.
 
 ### Batches
 
