@@ -1,0 +1,671 @@
+Owner,Owner_ID,Rank,Name,Phone,Bucket,Contact_ID,REI_Link,Status,Outbound_Calls,Answered,VM_Left,No_Answer_No_VM,VM_Full,Text_Sent,Email_Sent,Responded,Lead_Status,Skip_Reason,Notes,Assigned_Date,Last_Updated,Updated_By,Worked_By,From_Rep
+Barbie,146507,1,Wylie Gerst,+15108607400,HOT,17198893,https://my.reiblackbook.com/contacts/17198893,Called,2,0,2,0,0,Yes,No,No,Working,,"Routed to VM, Left a message. Texted them too. ",2026-09-11,2026-09-18T20:50:25.819Z,Barbie,Barbie,
+Barbie,146507,2,Karen Dansvy,+13235009653,HOT,17670005,https://my.reiblackbook.com/contacts/17670005,Called,2,0,2,0,,Yes,No,No,Working,,"Routed to VM, Left a message. texted them too. ",2026-09-11,2026-09-18T20:51:55.149Z,Barbie,Barbie,
+Barbie,146507,3,Lynn Trannguyen,+14157565355,HOT,17871252,https://my.reiblackbook.com/contacts/17871252,Called,2,0,2,0,0,Yes,No,No,Working,,,2026-09-11,2026-09-18T20:55:30.191Z,Barbie,Barbie,
+Barbie,146507,4,Lynn Marie Jacinto,+16505319884,HOT,18074720,https://my.reiblackbook.com/contacts/18074720,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-18T20:58:39.292Z,Barbie,Barbie,
+Barbie,146507,5,Martin Lee,+15109372804,HOT,18130117,https://my.reiblackbook.com/contacts/18130117,Called,2,2,0,0,,Yes,No,No,Working,,"CALL SUMMARY - Sep 11, 2026
+
+++ Contact Result: CONNECTED then DROPPED (outbound, Barbie/team, ~36 seconds) - Martin answered, then the call dropped
+
+++ Contact: Martin Lee - LIENS LEAD (Direct Mail Checks), 2823 Magnolia St, Oakland, CA 94608
+
+++ Detail: Two brief outbound calls answered but no usable audio captured. Barbie followed up with a text referencing Thea's prior conversation with Martin, checking in on whether anything's changed - especially regarding the lien - with an opt-out (Reply STOP). Callback (510) 937-2804.
+
+++ Next Step: Retry - continue outbound attempts and monitor for text reply.
+
+++ Lead Temperature: COLD (unresponsive, per retry note; ongoing lien follow-up)
+
+++ Texts: sent Sep 11, 2026, 3:55 PM
+AUTO DISCONNCECT",2026-09-11,2026-09-18T21:00:58.182Z,Barbie,Barbie,
+Barbie,146507,6,DELFIN DAGLORIA,+15106047622,HOT,18150037,https://my.reiblackbook.com/contacts/18150037,Called,3,1,1,0,1,Yes,No,No,Working,,"CALL SUMMARY - Sep 11, 2026
+
+++ Contact Result: CONNECTED (outbound, 15 seconds) - answered, no voicemail set up on this line
+
+++ Contact: Delfin J Dagloria - LIENS LEAD (Direct Mail Checks), 686 4th St, Richmond, CA 94801
+
+++ Detail: Call connected again (15 seconds), following an earlier 21-second answered call. Barbie sent a follow-up text referencing their prior conversation about 4th St in Richmond, noting Delfin had asked about the offer, and asking to connect so she can share the details. Ownership mismatch remains on file: PropertyRadar lists Margaret J. Pinckard and Pinckard TBD Trust as vested owners - Delfin is not listed, so his authority to sell should still be confirmed. Callback (510) 604-7622.
+
+++ Next Step: Await Delfin's response to the text - be ready to share offer details and verify his relationship/authority to the vested owners once he reconnects.
+
+++ Lead Temperature: WARM (engaged twice today, actively discussing the offer)
+
+++ Texts: sent Sep 11, 2026, 5:16 PM",2026-09-11,2026-09-18T21:04:08.205Z,Barbie,Barbie,
+Barbie,146507,7,Le,+14156246901,HOT,18153379,https://my.reiblackbook.com/contacts/18153379,Called,2,1,1,0,,Yes,No,No,Working,,"CALL SUMMARY - Sep 11, 2026
+
+++ Contact Result: ATTEMPTED (outbound, no connect) - no answer, VM left
+
+++ Contact: Le - PRIMARY SELLER (Property Leads/PPL), 224 Cordova St, San Francisco, CA 94112
+
+++ Detail: Left a VM. Prior notes confirm Le wants to know Twin Home Buyer's offer before booking a property visit - property is tenant-occupied, asking price $1.7M. Prior VMs (Aug 21 and Aug 22) also left updates asking Le to call back regarding his property. Callback (415) 624-6901.
+
+++ Next Step: Continue follow-up attempts - retry call or text to deliver the offer update since Le is waiting to hear the number before scheduling a visit.
+
+++ Lead Temperature: WARM (engaged seller, actively reviewing options, asking price on file)
+
+++ Texts: none sent this round - prior text sent Aug 22, 2026, 12:33 PM
+Hung up",2026-09-11,2026-09-18T21:13:18.019Z,Barbie,Barbie,
+Barbie,146507,8,Mario Barbosa,+19094627859,HOT,18170701,https://my.reiblackbook.com/contacts/18170701,Skipped,0,0,0,0,,No,No,No,Skipped for now,SKIP calling the lead as per Miss Cherry. Has note: Mario advised that he wants to put things on hold for now. Juan conf,,2026-09-11,2026-09-12T20:01:42.358Z,Barbie,Barbie,
+Barbie,146507,9,Fred Smith,+14089210007,HOT,18191797,https://my.reiblackbook.com/contacts/18191797,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-18T21:23:02.424Z,Barbie,Barbie,
+Barbie,146507,10,No information Provided,+12525548095,HOT,18257307,https://my.reiblackbook.com/contacts/18257307,Invalid / disconnected,0,0,0,0,,No,No,No,Invalid / disconnected,,,2026-09-11,2026-09-12T18:01:48.110Z,Barbie,Barbie,
+Barbie,146507,11,No information provided,+16509949984,HOT,18293570,https://my.reiblackbook.com/contacts/18293570,Do not call,2,0,1,1,,No,No,No,Do not call,,"called it twice. Kept on ringing. No one answered. Can't text them., It's a landline
+
+9/18 - not selling his property",2026-09-11,2026-09-18T21:28:56.379Z,Barbie,Barbie,
+Barbie,146507,12,No information provided,+15108253214,HOT,18388732,https://my.reiblackbook.com/contacts/18388732,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-18T21:49:40.886Z,Barbie,Barbie,
+Barbie,146507,13,Andrena Warr,+19098227784,HOT,18441819,https://my.reiblackbook.com/contacts/18441819,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-11,2026-09-18T21:32:15.417Z,Barbie,Barbie,
+Barbie,146507,14,Humberto Merino,+15102431420,HOT,18443627,https://my.reiblackbook.com/contacts/18443627,Called,2,0,0,2,,No,Yes,No,Working,,can't send text. it's a landline,2026-09-11,2026-09-18T21:34:37.760Z,Barbie,Barbie,
+Barbie,146507,15,Susan Delgado,+14158378565,HOT,18451951,https://my.reiblackbook.com/contacts/18451951,Called,2,0,1,1,,Yes,Yes,No,Working,,,2026-09-11,2026-09-18T21:38:58.956Z,Barbie,Barbie,
+Barbie,146507,16,David SARASUA,+14082273749,HOT,18472132,https://my.reiblackbook.com/contacts/18472132,Do not call,2,1,0,1,,Yes,Yes,No,Do not call,,"CALL SUMMARY - Sept 17, 2026 [*** STATUS FLAG: LOST/DEAD LEAD — HUNG UP ***]
+++ Contact Result: Reached the lead — after hearing the reason for the call, he hung up
+++ Property: 3002 Breen Ct, San Jose, CA 95121, United States
+++ Contact/Seller: David Sarasua, (408) 227-3749, dsarasua@pacbell.net, Source: Motivated Leads (PPL), Sales Agent: Thea, Barbie
+++ Motivation: None — hung up upon hearing the call's purpose, no interest indicated
+++ Condition: Not established
+++ Pricing: Not established (No Amount Offer on file)
+++ Timeline: N/A
+++ Appointment: None set
+++ Next Step: Mark as Lost/Dead lead per hang-up response; no further outreach planned unless status changes
+++ Lead Temperature: DEAD (Lead Stage: 9 Lost/Dead Lead; contact notes: ""After he heard the reason of the call, he hung up""; prior notes: ""No Answer, reached a 'we are unable to take your call, please call back later' message, no voicemail available, no conversation"" — Jul 20, 2026 and Jul 18, 2026, Theavil Marie)
+++ Texts: N/A logged in this thread
+++ Email: N/A logged in this thread
+++ Voicemail: N/A this session",2026-09-11,2026-09-18T21:43:28.704Z,Barbie,Barbie,
+Barbie,146507,17,Dania Aceves,+17603019033,HOT,18489510,https://my.reiblackbook.com/contacts/18489510,Skipped,0,0,0,0,,No,No,No,Skipped for now,ACQUIRED,SKIP - AQUIRED. ,2026-09-11,2026-09-12T20:03:46.401Z,Barbie,Barbie,
+Barbie,146507,18,Unknown,+13502172037,HOT,18508916,https://my.reiblackbook.com/contacts/18508916,Called,2,0,0,2,,Yes,No,No,Working,,I couldn't update the ABOUT page. I already tried it on the Smart Contacts as well as Legacy Contac,2026-09-11,2026-09-18T21:51:30.859Z,Barbie,Barbie,
+Barbie,146507,19,JAMES KELLY,+12093863815,HOT,18543446,https://my.reiblackbook.com/contacts/18543446,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-18T21:53:27.403Z,Barbie,Barbie,
+Barbie,146507,20,,+17868860184,HOT,18614311,https://my.reiblackbook.com/contacts/18614311,Invalid / disconnected,0,0,0,0,,No,No,No,Invalid / disconnected,,can't send text. It's a landline,2026-09-11,2026-09-12T19:02:12.022Z,Barbie,Barbie,
+Barbie,146507,21,Unknown,+12098556741,HOT,18673357,https://my.reiblackbook.com/contacts/18673357,Called,2,0,0,2,,No,No,No,Working,,can't text - It's a landline,2026-09-11,2026-09-18T21:55:46.564Z,Barbie,Barbie,
+Barbie,146507,22,Norbert Johnson,+19252380801,HOT,18760227,https://my.reiblackbook.com/contacts/18760227,Responded,2,0,2,0,,Yes,No,Yes – text,Working,,"He replied: ""Hi, maybe next year. Have a good day.🙂""",2026-09-11,2026-09-18T21:57:48.526Z,Barbie,Barbie,
+Barbie,146507,23,,+16503271688,HOT,18790292,https://my.reiblackbook.com/contacts/18790292,Called,2,0,0,2,,No,No,No,Working,,can't send a message. It's a landline,2026-09-11,2026-09-18T21:58:56.196Z,Barbie,Barbie,
+Barbie,146507,24,,+17607606590,HOT,18895201,https://my.reiblackbook.com/contacts/18895201,Called,2,0,0,2,,No,No,No,Working,,can't send message. It's a landlilne,2026-09-11,2026-09-18T22:01:35.715Z,Barbie,Barbie,
+Barbie,146507,25,Antoine Moore,+14157079272,HOT,18935826,https://my.reiblackbook.com/contacts/18935826,Responded,1,0,1,0,,Yes,Yes,Yes – email,Working,,,2026-09-11,2026-09-18T22:00:04.527Z,Barbie,Barbie,
+Barbie,146507,26,Victor Hassan,+14086394623,HOT,18960718,https://my.reiblackbook.com/contacts/18960718,Skipped,0,0,0,0,,No,No,No,Skipped for now,Cancelled Property visit - comercial type,,2026-09-11,2026-09-12T21:32:38.869Z,Barbie,Barbie,
+Barbie,146507,27,,+15856850297,HOT,19019519,https://my.reiblackbook.com/contacts/19019519,Called,2,0,0,2,,No,No,No,Working,,can't send text. landline. ,2026-09-11,2026-09-12T20:53:51.802Z,Barbie,Barbie,
+Barbie,146507,28,Linda Whiteman,+17144012890,HOT,19108693,https://my.reiblackbook.com/contacts/19108693,Responded,1,0,0,1,,Yes,No,Yes – call back,Working,,She said she's still interested in selling the property. She just need more time to clear the court issues. She asked me to call her back Mid October. ,2026-09-11,2026-09-12T21:13:05.819Z,Barbie,Barbie,
+Barbie,146507,29,Jerad Bettencourt,+15598580694,HOT,19189905,https://my.reiblackbook.com/contacts/19189905,Called,2,0,0,2,,No,No,No,Working,,,2026-09-11,2026-09-18T22:04:36.314Z,Barbie,Barbie,
+Barbie,146507,30,Kevin Hudspith,+14083625306,HOT,19368138,https://my.reiblackbook.com/contacts/19368138,Called,1,0,1,0,,Yes,Yes,No,Working,,,2026-09-11,2026-09-12T21:30:42.175Z,Barbie,Barbie,
+Barbie,146507,31,Richard Young,+14084761366,HOT,19456964,https://my.reiblackbook.com/contacts/19456964,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-11,2026-09-18T22:11:48.061Z,Barbie,Barbie,
+Barbie,146507,32,Marcie,+14157602007,HOT,20069595,https://my.reiblackbook.com/contacts/20069595,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-18T22:14:37.234Z,Barbie,Barbie,
+Barbie,146507,33,Lawrence Smith,+12093463028,HOT,20079335,https://my.reiblackbook.com/contacts/20079335,Do not call,1,1,0,0,,No,No,No,Do not call,,,2026-09-11,2026-09-12T21:47:39.086Z,Barbie,Barbie,
+Barbie,146507,34,Alvie Arthenack,+14153429045,HOT,20114494,https://my.reiblackbook.com/contacts/20114494,Do not call,0,0,0,0,,No,No,No,Do not call,,Alvie is PASSING - not selling. Closed out.,2026-09-11,2026-09-12T21:49:59.925Z,Barbie,Barbie,
+Barbie,146507,35,David Luong,+14086368521,HOT,20147105,https://my.reiblackbook.com/contacts/20147105,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-18T22:16:55.556Z,Barbie,Barbie,
+Barbie,146507,36,Alonso Mora,+14157104710,HOT,20245827,https://my.reiblackbook.com/contacts/20245827,Called,3,0,3,0,,Yes,No,No,Working,,,2026-09-11,2026-09-22T15:30:26.686Z,Barbie,Barbie,
+Barbie,146507,37,Marlene Martin,+19168044970,HOT,20268767,https://my.reiblackbook.com/contacts/20268767,Do not call,1,1,0,0,,No,No,No,Do not call,,,2026-09-11,2026-09-12T22:30:10.911Z,Barbie,Barbie,
+Barbie,146507,38,Abdul,+17076940561,HOT,20313102,https://my.reiblackbook.com/contacts/20313102,Called,2,1,1,0,,Yes,No,No,Working,,He said he's no when I ask if he's still considering to sell the property. | Maybe follow-up after several months,2026-09-11,2026-09-18T22:24:17.393Z,Barbie,Barbie,
+Barbie,146507,39,No caller name,+16607246758,HOT,20360701,https://my.reiblackbook.com/contacts/20360701,Called,2,0,0,2,,Yes,No,No,Working,,,2026-09-11,2026-09-18T22:25:56.807Z,Barbie,Barbie,
+Barbie,146507,40,Christopher Brose,+14155334332,HOT,20385135,https://my.reiblackbook.com/contacts/20385135,Skipped,0,0,0,0,,No,No,No,Skipped for now,Offer sent,,2026-09-11,2026-09-12T22:13:50.062Z,Barbie,Barbie,
+Barbie,146507,41,Mary Holly,+15107125259,HOT,20391165,https://my.reiblackbook.com/contacts/20391165,Called,3,1,1,1,,Yes,No,No,Working,,Said that her children is handling it. said to call them back Monday at 1PM,2026-09-11,2026-09-21T20:48:57.747Z,Barbie,Barbie,
+Barbie,146507,42,Mario,+14156885847,HOT,20395639,https://my.reiblackbook.com/contacts/20395639,Responded,1,0,1,0,,Yes,No,Yes – text,Working,,he replied: Leaving Thailand tomorrow. Let's talk next week,2026-09-11,2026-09-18T22:30:19.445Z,Barbie,Barbie,
+Barbie,146507,43,Angelina Stafford,+14087717231,HOT,20419687,https://my.reiblackbook.com/contacts/20419687,Skipped,0,0,0,0,,No,No,No,Skipped for now,opened escrow,,2026-09-11,2026-09-12T22:34:44.211Z,Barbie,Barbie,
+Barbie,146507,44,Phillip Howard,+17372263974,HOT,20433203,https://my.reiblackbook.com/contacts/20433203,Skipped,0,0,0,0,,No,No,No,Skipped for now,Seller decline our offer and firm at $350k,,2026-09-11,2026-09-12T23:08:21.483Z,Barbie,Barbie,
+Barbie,146507,45,Yngve Eriksson,+14084662472,HOT,20452208,https://my.reiblackbook.com/contacts/20452208,Responded,2,0,2,0,,Yes,No,Yes – text,Working,,She replied: I already sold it Got $2.865.000 of market,2026-09-11,2026-09-18T22:34:12.690Z,Barbie,Barbie,
+Barbie,146507,46,Sandy Green,+19165013027,HOT,20464687,https://my.reiblackbook.com/contacts/20464687,Skipped,0,0,0,0,,No,No,No,Skipped for now,Note says: Seller backed out; As per Carmen's profile - Seller rejected the offer,,2026-09-11,2026-09-14T17:09:50.771Z,Barbie,Barbie,
+Barbie,146507,47,Rob Walker,+17079135706,HOT,20487447,https://my.reiblackbook.com/contacts/20487447,Skipped,0,0,0,0,,No,No,No,Skipped for now,ACQUIRED,,2026-09-11,2026-09-12T23:00:16.977Z,Barbie,Barbie,
+Barbie,146507,48,Merri Pontar-Rawski,+14152791159,HOT,20523645,https://my.reiblackbook.com/contacts/20523645,Skipped,0,0,0,0,,No,No,No,Skipped for now,APPOINTMENT BOOKED,,2026-09-11,2026-09-12T23:00:48.033Z,Barbie,Barbie,
+Barbie,146507,49,Maria Ramos,+14157563261,HOT,20533795,https://my.reiblackbook.com/contacts/20533795,Skipped,0,0,0,0,,No,No,No,Skipped for now,Skip it. Thea will follow-up.,,2026-09-11,2026-09-14T17:14:01.077Z,Barbie,Barbie,
+Barbie,146507,50,Joe Dickerson,+14153409001,HOT,20546078,https://my.reiblackbook.com/contacts/20546078,Skipped,0,0,0,0,,No,No,No,Skipped for now,"OFFER SENT, REALTOR",,2026-09-11,2026-09-12T23:04:18.148Z,Barbie,Barbie,
+Barbie,146507,51,Shahriar Motie,+14088881019,HOT,20564108,https://my.reiblackbook.com/contacts/20564108,Skipped,0,0,0,0,,No,No,No,Skipped for now,Seller text says: She wants it to put on hold,,2026-09-11,2026-09-14T17:21:24.422Z,Barbie,Barbie,
+Barbie,146507,52,Naeemah Sabree,+15105753276,HOT,20591195,https://my.reiblackbook.com/contacts/20591195,Skipped,0,0,0,0,,No,No,No,Skipped for now,Under contract,,2026-09-11,2026-09-14T17:18:55.375Z,Barbie,Barbie,
+Barbie,146507,53,,+16503569531,HOT,20593989,https://my.reiblackbook.com/contacts/20593989,Called,2,0,0,2,,No,No,No,Working,,can't sent text. landline,2026-09-11,2026-09-18T22:59:12.946Z,Barbie,Barbie,
+Barbie,146507,54,Kim Atkinson,+16503253388,HOT,20597109,https://my.reiblackbook.com/contacts/20597109,Skipped,0,0,0,0,,No,No,No,Skipped for now,Property Visit,,2026-09-11,2026-09-12T23:14:00.755Z,Barbie,Barbie,
+Barbie,146507,55,Gerardo Bamonte,+17607012026,Distress,16760549,https://my.reiblackbook.com/contacts/16760549,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-18T23:05:37.256Z,Barbie,Barbie,
+Barbie,146507,56,Edward Builders,+15109676271,Distress,17485568,https://my.reiblackbook.com/contacts/17485568,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-18T23:08:25.369Z,Barbie,Barbie,
+Barbie,146507,57,Wil Romero,+16614818988,Distress,17510020,https://my.reiblackbook.com/contacts/17510020,Called,2,0,0,2,,Yes,No,No,Working,,,2026-09-11,2026-09-18T23:11:59.341Z,Barbie,Barbie,
+Barbie,146507,58,Jimmie Smith,+15599062525,Distress,17538576,https://my.reiblackbook.com/contacts/17538576,Skipped,1,0,1,0,,Yes,No,No,Skipped for now,The lead says call him next month,,2026-09-11,2026-09-17T22:26:34.125Z,Barbie,Barbie,
+Barbie,146507,59,,+19492049417,Distress,17656536,https://my.reiblackbook.com/contacts/17656536,Called,2,0,0,2,,Yes,No,No,Working,,,2026-09-11,2026-09-18T23:14:59.410Z,Barbie,Barbie,
+Barbie,146507,60,Divvione Francis,+15102598109,Distress,17670977,https://my.reiblackbook.com/contacts/17670977,Invalid / disconnected,1,0,0,1,,No,No,No,Invalid / disconnected,,,2026-09-11,2026-09-12T23:31:14.524Z,Barbie,Barbie,
+Barbie,146507,61,,+13233717456,Distress,17707690,https://my.reiblackbook.com/contacts/17707690,Called,2,0,1,1,,No,No,No,Working,,can't text them. ,2026-09-11,2026-09-18T23:16:36.633Z,Barbie,Barbie,
+Barbie,146507,62,Gabriel Ortiz,+12094171809,Distress,17735583,https://my.reiblackbook.com/contacts/17735583,Called,1,1,0,0,,No,No,No,Working,,"said she's driving, will just call her back",2026-09-11,2026-09-12T23:49:07.767Z,Barbie,Barbie,
+Barbie,146507,63,,+15103514096,Distress,17763016,https://my.reiblackbook.com/contacts/17763016,Called,2,0,0,2,,Yes,No,No,Working,,,2026-09-11,2026-09-18T23:17:53.439Z,Barbie,Barbie,
+Barbie,146507,64,No information provided,+17074165524,Distress,17766941,https://my.reiblackbook.com/contacts/17766941,Called,2,0,0,2,,Yes,No,No,Working,,,2026-09-11,2026-09-18T23:21:18.894Z,Barbie,Barbie,
+Barbie,146507,65,Allisson Moore,+19252498830,Distress,18013763,https://my.reiblackbook.com/contacts/18013763,Called,2,0,0,2,,No,No,No,Working,,can't message her,2026-09-11,2026-09-18T23:22:08.816Z,Barbie,Barbie,
+Barbie,146507,66,,+12184612675,Distress,18062397,https://my.reiblackbook.com/contacts/18062397,Invalid / disconnected,1,0,0,1,,No,No,No,Invalid / disconnected,,,2026-09-11,2026-09-13T00:01:04.861Z,Barbie,Barbie,
+Barbie,146507,67,,+17077123916,Distress,18074818,https://my.reiblackbook.com/contacts/18074818,Responded,2,0,2,0,,Yes,No,Yes – call back,Working,,said she dialed the wrong number,2026-09-11,2026-09-18T23:26:32.874Z,Barbie,Barbie,
+Barbie,146507,68,,+17075018846,Distress,18092372,https://my.reiblackbook.com/contacts/18092372,Do not call,0,0,0,0,,No,No,No,Do not call,,,2026-09-11,2026-09-13T00:06:58.323Z,Barbie,Barbie,
+Barbie,146507,69,,+17073443830,Distress,18114539,https://my.reiblackbook.com/contacts/18114539,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-18T23:28:25.155Z,Barbie,Barbie,
+Barbie,146507,70,JESUS BARAJAS,+15597725526,Distress,18140663,https://my.reiblackbook.com/contacts/18140663,Wrong number,1,1,0,0,,Yes,No,No,Wrong number,,"CALL SUMMARY - Sep 11, 2026
+
+++ Contact Result: CONNECTED (inbound callback) - lead called back and disputed the number
+
+++ Contact: Jesus L Barajas - NOTICE OF DEFAULT (NOD) LEAD (Direct Mail Checks) - now marked Dead Lead/Lost Deal
+
+++ Detail: Lead called back and said it's a wrong number - not the intended contact. Property is now marked Lost/Dead, Lead Stage ""9 Lost/Dead Lead."" Prior outreach history included repeated call attempts, VM left, and text check-ins referencing the active Notice of Default at 1206 S 12th Ave, which no longer appears to be a valid match for this phone number. Callback (559) 772-5526.
+
+++ Next Step: None - lead confirmed as wrong number, marked dead/lost. Consider re-skip tracing the property to find the correct contact.
+
+++ Lead Temperature: COLD (wrong number, dead lead)
+
+++ Texts: none sent this round - prior texts sent Nov 06, 2025 and Sep 11, 2026",2026-09-11,2026-09-12T17:50:03.660Z,Barbie,Barbie,
+Barbie,146507,71,Virginia Cooper,+13233580845,Distress,18149944,https://my.reiblackbook.com/contacts/18149944,Called,2,0,0,2,,Yes,No,No,Working,,"CALL SUMMARY - Sep 11, 2026
+
+++ Contact Result: ATTEMPTED (outbound, 2 calls - 2 seconds and 0 seconds) - answered but no usable audio/no connect, still unresponsive
+
+++ Contact: Virginia Cooper - NOTICE OF DEFAULT (NOD) LEAD (Direct Mail Checks)
+
+++ Detail: Notes confirm ""call her back again, lead is unresponsive."" A reminder text (""just a friendly reminder that Equity Track Inc. is here to help"") went undelivered. Skip trace previously done - no public records found. History shows repeated no-answer/auto-drop calls (Apr 15 and Jun 05, 2025). Callback (323) 358-0845.
+
+++ Next Step: Continue follow-up attempts given NOD urgency - retry call and consider alternate contact methods since texts are undelivered.
+
+++ Lead Temperature: COLD (unresponsive, undelivered text, unverifiable via skip trace)
+
+++ Texts: last sent Feb 03, 2026 - most recent reminder (undelivered) sent prior to today's call attempts",2026-09-11,2026-09-18T23:29:02.105Z,Barbie,Barbie,
+Barbie,146507,72,,+12099965711,Distress,18159534,https://my.reiblackbook.com/contacts/18159534,Called,1,0,0,1,,Yes,No,No,Working,,,2026-09-11,2026-09-14T15:19:46.836Z,Barbie,Barbie,
+Barbie,146507,73,Michael & Donna Wagner,+16106569138,Distress,18164107,https://my.reiblackbook.com/contacts/18164107,Do not call,1,1,0,0,,No,No,No,Do not call,,"CALL SUMMARY - Sep 11, 2026 ++ Contact Result: CONNECTED (outbound, 1 minute 10 seconds) - answered, live conversation
+
+++ Contact: Michael & Donna E. Wagner - MISMATCHED LEAD (Affidavit of Death campaign), property at 14297 Way, Modesto
+
+++ Detail: Barbie called Michael about the property at 14297 Way, Modesto and asked if he was interested in selling. Michael said he doesn't own that property and doesn't know why the team thinks he does. When asked if he had any other properties he'd consider selling, he said no, he's not selling anything. Contact tagged Dead Lead, Do Not Contact, Do Not Mail, Lost Deal, Remove From List. Callback (610) 656-9138.
+
+++ Next Step: None - lead confirmed no ownership/interest, marked dead/lost. Consider re-verifying property ownership records for 14297 Way, Modesto.
+
+ ++ Lead Temperature: COLD (no ownership match, not selling, marked dead/lost)
+
+ ++ Texts: none sent this call",2026-09-11,2026-09-12T17:40:41.057Z,Barbie,Barbie,
+Barbie,146507,74,Alana Foley- Greenwood,+13038033469,Distress,18173918,https://my.reiblackbook.com/contacts/18173918,Out of buy box area,0,0,0,0,,No,No,No,Out of buy box area,,"CALL SUMMARY - Sep 11, 2026 (OUT OF THE BUY BOX)
+
+++ Contact Result: NO CALL LOGGED - text confirmed unfamiliar contact, requested opt-out
+
+++ Contact: Alana Foley-Greenwood - OUT OF BUY BOX LEAD (Notice of Default/NOD), property at 290 N Holcomb Cir, Castle Rock, CO 80104
+
+++ Detail: Property is in Colorado, not California - flagged Out of Buy Box. Jerald texted Alana asking her to confirm receipt of the check at 290 N Holcomb Cir, Castle Rock, CO. Lead replied ""Stop"" and stated she doesn't know Jerald or anything about a check. Jerald followed up apologizing for the confusion. Prior VM was left with a ""follow up"" note (Oct 12, 2024). Contact tagged Dead Lead, Lost Deal. Callback (303) 803-3469.
+
+++ Next Step: None - property out of buy box (wrong state), lead requested opt-out and denies knowledge of the check. Marked dead/lost.
+
+++ Lead Temperature: COLD (out of service area, opt-out requested, dead/lost)
+
+++ Texts: sent Aug 14, 2024 - lead replied ""Stop"" same day",2026-09-11,2026-09-12T19:05:21.246Z,Barbie,Barbie,
+Barbie,146507,75,John Etchells,+12094966232,Distress,18176258,https://my.reiblackbook.com/contacts/18176258,Called,2,0,0,2,,No,No,No,Working,,couldn't send message. The number is unreachable,2026-09-11,2026-09-18T23:41:42.566Z,Barbie,Barbie,
+Barbie,146507,76,Brian Masterson,+17024081327,Distress,18181746,https://my.reiblackbook.com/contacts/18181746,Out of buy box area,0,0,0,0,,No,No,No,Out of buy box area,,"CALL SUMMARY - Sep 11, 2026 (OUT OF THE BUY BOX) 
+
+++ Contact Result: NO CALL LOGGED - text confirmed wrong number/no association
+
+++ Contact: Brian Masterson - OUT OF BUY BOX LEAD (Notice of Default/NOD), property at 4549 Savin Cir, Las Vegas, NV 89130
+
+++ Detail: Property flagged Out of Buy Box - located in Nevada, not California. Jernel texted Brian asking him to confirm the check was successfully delivered to 4549 Savin Cir, Las Vegas, NV. Lead replied ""No Brian at this number."" Campaign was Nevada/Colorado/Utah NOD, 1st mail. Contact tagged Dead Lead, Lost Deal. Callback (702) 408-1327.
+
+++ Next Step: None - property out of buy box (wrong state), lead confirmed no association with the name/number. Marked dead/lost.
+
+++ Lead Temperature: COLD (out of service area, wrong contact, dead/lost)
+
+++ Texts: sent Aug 15, 2024 - lead replied same day denying association",2026-09-11,2026-09-12T19:05:14.055Z,Barbie,Barbie,
+Barbie,146507,77,No information provided,+19257662363,Distress,18189458,https://my.reiblackbook.com/contacts/18189458,Called,2,1,0,1,,Yes,No,No,Working,,Hung up after he heard what the call is about,2026-09-11,2026-09-18T23:47:28.122Z,Barbie,Barbie,
+Barbie,146507,78,Glenn Morgan,+16615288866,Distress,18200218,https://my.reiblackbook.com/contacts/18200218,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-18T23:51:10.496Z,Barbie,Barbie,
+Barbie,146507,79,Ryan Chiu,+15109151281,Distress,18201441,https://my.reiblackbook.com/contacts/18201441,Called,2,0,2,0,,Yes,No,No,Working,,"Contact Result: ATTEMPTED (outbound, Barbie, no connect) - didn't answer, VM left
+Text: Sent (10;37AM)",2026-09-11,2026-09-18T23:54:02.522Z,Barbie,Barbie,
+Barbie,146507,80,Nathaniel Futterman,+15102255430,Distress,18201511,https://my.reiblackbook.com/contacts/18201511,Called,2,0,1,0,1,Yes,No,No,Working,,"Contact Result: ATTEMPTED (outbound, Barbie, no connect) - no answer, mailbox is full (no VM could be left)
+Text: Sent (11:02AM)",2026-09-11,2026-09-18T23:56:52.988Z,Barbie,Barbie,
+Barbie,146507,81,White Taylor,+14089640984,Distress,18201581,https://my.reiblackbook.com/contacts/18201581,Called,2,0,0,0,2,Yes,No,No,Working,,"++ Contact Result: ATTEMPTED (outbound, no answer this round) - mailbox is full, no VM could be left
+++ Texts: sent Aug 21, 2024, 11:19 AM",2026-09-11,2026-09-18T23:58:36.947Z,Barbie,Barbie,
+Barbie,146507,82,,+13074149841,Distress,18208804,https://my.reiblackbook.com/contacts/18208804,Invalid / disconnected,2,0,0,2,,No,No,No,Invalid / disconnected,,,2026-09-11,2026-09-14T15:43:27.643Z,Barbie,Barbie,
+Barbie,146507,83,Felecia Neals Trust,+15109186099,Distress,18230108,https://my.reiblackbook.com/contacts/18230108,Called,2,0,2,0,,Yes,No,No,Working,,"Contact Result: CONNECTED (outbound, 59 seconds) - answered, not available, left VM
+Text: Sept. 12, 2026 (11:30AM)",2026-09-11,2026-09-19T00:02:29.497Z,Barbie,Barbie,
+Barbie,146507,84,Spanish Lead,+18317561266,Distress,18240103,https://my.reiblackbook.com/contacts/18240103,Responded,1,0,0,1,,Yes,No,Yes – call back,Working,,said they're not interested,2026-09-11,2026-09-14T16:01:09.647Z,Barbie,Barbie,
+Barbie,146507,85,Marian,+19282503440,Distress,18254240,https://my.reiblackbook.com/contacts/18254240,Out of buy box area,0,0,0,0,,No,No,No,Out of buy box area,,OUT OF THE BUY BOX AREA | The property is in AZ.,2026-09-11,2026-09-12T19:05:32.402Z,Barbie,Barbie,
+Barbie,146507,86,No Information Provided,+19164076066,Distress,18275222,https://my.reiblackbook.com/contacts/18275222,Responded,2,0,2,0,,Yes,No,Yes – call back,Working,,,2026-09-11,2026-09-14T15:56:02.357Z,Barbie,Barbie,
+Barbie,146507,87,Jenny,+15105661773,Distress,18287974,https://my.reiblackbook.com/contacts/18287974,Do not call,0,0,0,0,,No,No,No,Do not call,,Lost/Dead || Previous note says to take them off the Mailing List ,2026-09-11,2026-09-12T17:42:39.059Z,Barbie,Barbie,
+Barbie,146507,88,ARLEEN SCOGGINS,+15309220470,Distress,18326383,https://my.reiblackbook.com/contacts/18326383,Called,2,0,0,0,2,Yes,No,No,Working,,"ATTEMPTED (outbound, no connect) - no answer, routed to VM, mailbox is full (no message could be left)
+Texts: sent Sept. 12, 2026, 11:52 AM",2026-09-11,2026-09-19T00:07:37.795Z,Barbie,Barbie,
+Barbie,146507,89,Unknown,+17606700649,Distress,18356901,https://my.reiblackbook.com/contacts/18356901,Invalid / disconnected,1,0,0,1,,No,No,No,Invalid / disconnected,,,2026-09-11,2026-09-14T16:06:04.469Z,Barbie,Barbie,
+Barbie,146507,90,Ramon Rodriguez Zamora,+15593097270,Distress,18377541,https://my.reiblackbook.com/contacts/18377541,Called,1,1,0,0,,No,No,No,Working,,Talked spanish. I will call her back to let david talk top them. ,2026-09-11,2026-09-12T17:12:54.504Z,Barbie,Barbie,
+Barbie,146507,91,,+17143069790,Distress,18407786,https://my.reiblackbook.com/contacts/18407786,Responded,2,0,0,2,,No,No,Yes – call back,Working,,,2026-09-11,2026-09-19T00:12:17.351Z,Barbie,Barbie,
+Barbie,146507,92,Spanish Lead,+13103653537,Distress,18426468,https://my.reiblackbook.com/contacts/18426468,Called,1,0,0,1,,Yes,No,No,Working,,,2026-09-11,2026-09-14T16:14:00.375Z,Barbie,Barbie,
+Barbie,146507,93,No information provided,+18052442039,Distress,18443141,https://my.reiblackbook.com/contacts/18443141,Invalid / disconnected,1,0,0,1,,No,No,No,Invalid / disconnected,,,2026-09-11,2026-09-14T16:19:25.321Z,Barbie,Barbie,
+Barbie,146507,94,Alexis Kermani,+18189329070,Distress,18443217,https://my.reiblackbook.com/contacts/18443217,Called,2,0,1,1,,Yes,No,No,Working,,,2026-09-11,2026-09-19T00:12:21.966Z,Barbie,Barbie,
+Barbie,146507,95,David King,+13234241378,Distress,18443223,https://my.reiblackbook.com/contacts/18443223,Called,2,1,1,0,,Yes,Yes,No,Working,,,2026-09-11,2026-09-19T15:01:46.138Z,Barbie,Barbie,
+Barbie,146507,96,Josefina Franco,+13106715811,Distress,18443230,https://my.reiblackbook.com/contacts/18443230,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-11,2026-09-19T15:06:30.359Z,Barbie,Barbie,
+Barbie,146507,97,Ernest Vitte,+18184224587,Distress,18443236,https://my.reiblackbook.com/contacts/18443236,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-19T15:09:24.604Z,Barbie,Barbie,
+Barbie,146507,98,Joyce Benbo,+13233779324,Distress,18443241,https://my.reiblackbook.com/contacts/18443241,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-19T15:11:31.644Z,Barbie,Barbie,
+Barbie,146507,99,Christina Schad,+18479122402,Distress,18443249,https://my.reiblackbook.com/contacts/18443249,Called,2,0,1,1,,Yes,Yes,No,Working,,,2026-09-11,2026-09-19T15:12:57.218Z,Barbie,Barbie,
+Barbie,146507,100,Ariel Gabucan,+16264833718,Distress,18443255,https://my.reiblackbook.com/contacts/18443255,Invalid / disconnected,1,0,0,1,,No,No,No,Invalid / disconnected,,,2026-09-11,2026-09-14T17:03:34.600Z,Barbie,Barbie,
+Barbie,146507,101,Robert Lowe,+17073333728,HOT,20597688,https://my.reiblackbook.com/contacts/20597688,Skipped,0,0,0,0,,No,No,No,Skipped for now,appointment booked,,2026-09-15,2026-09-15T17:16:49.957Z,Barbie,Barbie,
+Barbie,146507,102,,+17047515280,HOT,20616563,https://my.reiblackbook.com/contacts/20616563,Called,2,0,0,2,,Yes,No,No,Working,,,2026-09-15,2026-09-19T15:14:13.023Z,Barbie,Barbie,
+Barbie,146507,103,Jennifer Saenz,+18605319049,Distress,18443259,https://my.reiblackbook.com/contacts/18443259,Skipped,0,0,0,0,,No,No,No,Skipped for now,PROPERTY IS SOLD - i I SEARCHED IT IN REDFIN,,2026-09-15,2026-09-15T17:23:51.306Z,Barbie,Barbie,
+Barbie,146507,104,Scott Weber,+19516990587,Distress,18443264,https://my.reiblackbook.com/contacts/18443264,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T15:15:48.225Z,Barbie,Barbie,
+Barbie,146507,105,Jose Romero,+19513522941,Distress,18443266,https://my.reiblackbook.com/contacts/18443266,Called,2,0,0,2,,No,No,No,Working,,,2026-09-15,2026-09-19T15:17:18.009Z,Barbie,Barbie,
+Barbie,146507,106,Sandra Zamarripa,+19514856476,Distress,18443268,https://my.reiblackbook.com/contacts/18443268,Called,2,0,0,2,,Yes,No,No,Working,,,2026-09-15,2026-09-19T15:18:54.766Z,Barbie,Barbie,
+Barbie,146507,107,Rebecca Stroecker,+17606788846,Distress,18443271,https://my.reiblackbook.com/contacts/18443271,Called,3,0,2,1,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T15:23:19.722Z,Barbie,Barbie,
+Barbie,146507,108,Maria Gillies,+19094342209,Distress,18443273,https://my.reiblackbook.com/contacts/18443273,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T15:24:53.398Z,Barbie,Barbie,
+Barbie,146507,109,Allison Lucy,+17604204387,Distress,18443275,https://my.reiblackbook.com/contacts/18443275,Called,2,0,0,0,2,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T15:25:38.545Z,Barbie,Barbie,
+Barbie,146507,110,Henry Lucero,+16505789397,Distress,18443278,https://my.reiblackbook.com/contacts/18443278,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T15:27:43.127Z,Barbie,Barbie,
+Barbie,146507,111,Linda Anderson,+18059378965,Distress,18443280,https://my.reiblackbook.com/contacts/18443280,Called,2,0,0,0,2,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T15:30:40.513Z,Barbie,Barbie,
+Barbie,146507,112,Randy Soderstrom,+17753013588,Distress,18443283,https://my.reiblackbook.com/contacts/18443283,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T15:32:17.535Z,Barbie,Barbie,
+Barbie,146507,113,Adam Eggleston,+18055581189,Distress,18443296,https://my.reiblackbook.com/contacts/18443296,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T15:33:49.521Z,Barbie,Barbie,
+Barbie,146507,114,Michelle Jeffries,+15308934625,Distress,18443300,https://my.reiblackbook.com/contacts/18443300,Called,2,0,0,2,,No,Yes,No,Working,,,2026-09-15,2026-09-19T15:36:12.035Z,Barbie,Barbie,
+Barbie,146507,115,Rudy Rodriguez,+18183474602,Distress,18443302,https://my.reiblackbook.com/contacts/18443302,Called,2,0,0,2,,No,Yes,No,Working,,,2026-09-15,2026-09-19T15:31:52.791Z,Barbie,Barbie,
+Barbie,146507,116,Irma Ortega,+13107497689,Distress,18443309,https://my.reiblackbook.com/contacts/18443309,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-15,2026-09-19T15:38:49.554Z,Barbie,Barbie,
+Barbie,146507,117,Michael Lynch,+16109137812,Distress,18443315,https://my.reiblackbook.com/contacts/18443315,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T15:40:12.694Z,Barbie,Barbie,
+Barbie,146507,118,Kristopher Gonzales,+19517436599,Distress,18443320,https://my.reiblackbook.com/contacts/18443320,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T15:42:07.292Z,Barbie,Barbie,
+Barbie,146507,119,Martha Castanon,+19096977139,Distress,18443328,https://my.reiblackbook.com/contacts/18443328,Do not call,1,0,0,1,,No,No,No,Do not call,,,2026-09-15,2026-09-15T20:33:39.583Z,Barbie,Barbie,
+Barbie,146507,120,Arturo Guzman,+19093740526,Distress,18443331,https://my.reiblackbook.com/contacts/18443331,Do not call,1,1,0,0,,No,No,No,Do not call,,,2026-09-15,2026-09-15T20:36:53.016Z,Barbie,Barbie,
+Barbie,146507,121,Ramon Aguayo,+19092513599,Distress,18443333,https://my.reiblackbook.com/contacts/18443333,Called,1,1,0,0,,Yes,No,No,Working,,spanish lead,2026-09-15,2026-09-15T20:40:55.006Z,Barbie,Barbie,
+Barbie,146507,122,Iran Reyes,+14082271002,Distress,18443339,https://my.reiblackbook.com/contacts/18443339,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T15:44:01.750Z,Barbie,Barbie,
+Barbie,146507,123,Mahendra Mehta,+14085287246,Distress,18443343,https://my.reiblackbook.com/contacts/18443343,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T15:47:49.070Z,Barbie,Barbie,
+Barbie,146507,124,Marie Thomas,+13237588184,Distress,18443351,https://my.reiblackbook.com/contacts/18443351,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T15:50:31.963Z,Barbie,Barbie,
+Barbie,146507,125,Andrea Anaya,+19519432550,Distress,18443356,https://my.reiblackbook.com/contacts/18443356,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T15:53:40.295Z,Barbie,Barbie,
+Barbie,146507,126,Diana Pimienta,+19092381083,Distress,18443359,https://my.reiblackbook.com/contacts/18443359,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T15:57:31.925Z,Barbie,Barbie,
+Barbie,146507,127,Louise Christopher,+17607457387,Distress,18443362,https://my.reiblackbook.com/contacts/18443362,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T15:59:11.135Z,Barbie,Barbie,
+Barbie,146507,128,James Nichols,+16192646687,Distress,18443364,https://my.reiblackbook.com/contacts/18443364,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:00:50.181Z,Barbie,Barbie,
+Barbie,146507,129,Tina Richey,+17072976007,Distress,18443366,https://my.reiblackbook.com/contacts/18443366,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:02:37.630Z,Barbie,Barbie,
+Barbie,146507,130,Lai Nguyen,+14086464675,Distress,18443370,https://my.reiblackbook.com/contacts/18443370,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:04:38.516Z,Barbie,Barbie,
+Barbie,146507,131,Rashidan Gorsi,+15307553110,Distress,18443373,https://my.reiblackbook.com/contacts/18443373,Called,2,0,0,0,2,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:06:18.429Z,Barbie,Barbie,
+Barbie,146507,132,Jeff Peterson,+15622337079,Distress,18443382,https://my.reiblackbook.com/contacts/18443382,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:09:06.044Z,Barbie,Barbie,
+Barbie,146507,133,Matt Winslow,+19096267961,Distress,18443386,https://my.reiblackbook.com/contacts/18443386,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:10:34.754Z,Barbie,Barbie,
+Barbie,146507,134,Blanca Euresti,+18312068782,Distress,18443388,https://my.reiblackbook.com/contacts/18443388,Called,2,0,0,0,2,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:14:36.651Z,Barbie,Barbie,
+Barbie,146507,135,Patricia Montalvo,+19167641491,Distress,18443394,https://my.reiblackbook.com/contacts/18443394,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:15:53.581Z,Barbie,Barbie,
+Barbie,146507,136,Shereen Peters,+19097702756,Distress,18443397,https://my.reiblackbook.com/contacts/18443397,Called,2,0,1,0,1,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:17:59.892Z,Barbie,Barbie,
+Barbie,146507,137,Marisa Limcaco,+14155858718,Distress,18443400,https://my.reiblackbook.com/contacts/18443400,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:19:20.951Z,Barbie,Barbie,
+Barbie,146507,138,Curissa Jones,+17076422496,Distress,18443402,https://my.reiblackbook.com/contacts/18443402,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:21:38.692Z,Barbie,Barbie,
+Barbie,146507,139,Joseph Lewis,+19163848903,Distress,18443406,https://my.reiblackbook.com/contacts/18443406,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:23:03.703Z,Barbie,Barbie,
+Barbie,146507,140,Baneza Ortiz,+19256654951,Distress,18443408,https://my.reiblackbook.com/contacts/18443408,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:24:57.366Z,Barbie,Barbie,
+Barbie,146507,141,Mark Lovequist,+18187101484,Distress,18443410,https://my.reiblackbook.com/contacts/18443410,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:27:20.083Z,Barbie,Barbie,
+Barbie,146507,142,Matthew Padak,+16149466646,Distress,18443413,https://my.reiblackbook.com/contacts/18443413,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:29:46.571Z,Barbie,Barbie,
+Barbie,146507,143,Rosa Estrada,+13234767907,Distress,18443416,https://my.reiblackbook.com/contacts/18443416,Do not call,1,1,0,0,,No,No,No,Do not call,,,2026-09-15,2026-09-15T22:19:55.016Z,Barbie,Barbie,
+Barbie,146507,144,Noelle Rohr,+16268584715,Distress,18443419,https://my.reiblackbook.com/contacts/18443419,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:32:11.817Z,Barbie,Barbie,
+Barbie,146507,145,Starla Heath,+19097671476,Distress,18443428,https://my.reiblackbook.com/contacts/18443428,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:34:11.472Z,Barbie,Barbie,
+Barbie,146507,146,Selma Smith,+17607178096,Distress,18443431,https://my.reiblackbook.com/contacts/18443431,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:37:05.587Z,Barbie,Barbie,
+Barbie,146507,147,Anthony Kelley,+18582827490,Distress,18443433,https://my.reiblackbook.com/contacts/18443433,Do not call,1,1,0,0,,No,No,No,Do not call,,,2026-09-15,2026-09-15T22:36:49.025Z,Barbie,Barbie,
+Barbie,146507,148,Kathryn Defiori,+18055295841,Distress,18443439,https://my.reiblackbook.com/contacts/18443439,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:39:00.420Z,Barbie,Barbie,
+Barbie,146507,149,John Alvarez,+13232139256,Distress,18443443,https://my.reiblackbook.com/contacts/18443443,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:40:21.755Z,Barbie,Barbie,
+Barbie,146507,150,Perlita Carrasco,+19166824123,Distress,18443445,https://my.reiblackbook.com/contacts/18443445,Skipped,0,0,0,0,,No,No,No,Skipped for now,property sold,,2026-09-15,2026-09-15T23:03:16.592Z,Barbie,Barbie,
+Barbie,146507,151,Juan Onate,+19166279882,Distress,18443448,https://my.reiblackbook.com/contacts/18443448,Called,2,0,1,0,1,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:45:15.695Z,Barbie,Barbie,
+Barbie,146507,152,Brian Mcinturf,+12098435944,Distress,18443453,https://my.reiblackbook.com/contacts/18443453,Called,2,0,0,2,0,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:47:30.062Z,Barbie,Barbie,
+Barbie,146507,153,Robert Guerrero,+14088483958,Distress,18443455,https://my.reiblackbook.com/contacts/18443455,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:49:29.520Z,Barbie,Barbie,
+Barbie,146507,154,Gurchain Singh,+18057607808,Distress,18443461,https://my.reiblackbook.com/contacts/18443461,Skipped,1,1,0,0,,No,No,No,Skipped for now,property sold,,2026-09-15,2026-09-15T23:16:27.654Z,Barbie,Barbie,
+Barbie,146507,155,Eva Guadarrama,+15102094275,Distress,18443463,https://my.reiblackbook.com/contacts/18443463,Called,2,0,1,0,1,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T16:52:58.239Z,Barbie,Barbie,
+Barbie,146507,156,Fredrick Steen,+13232512303,Distress,18443467,https://my.reiblackbook.com/contacts/18443467,Called,2,0,0,0,2,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T17:12:41.989Z,Barbie,Barbie,
+Barbie,146507,157,Denise Corvin,+18187958087,Distress,18443471,https://my.reiblackbook.com/contacts/18443471,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T17:16:38.655Z,Barbie,Barbie,
+Barbie,146507,158,Michael Pennock,+16618784604,Distress,18443473,https://my.reiblackbook.com/contacts/18443473,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T17:19:46.168Z,Barbie,Barbie,
+Barbie,146507,159,L Thompson,+15626344342,Distress,18443475,https://my.reiblackbook.com/contacts/18443475,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T17:21:56.217Z,Barbie,Barbie,
+Barbie,146507,160,Meoshae Myles,+14246750860,Distress,18443477,https://my.reiblackbook.com/contacts/18443477,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T17:23:58.247Z,Barbie,Barbie,
+Barbie,146507,161,Joseph Rowe,+13233650893,Distress,18443481,https://my.reiblackbook.com/contacts/18443481,Wrong number,1,1,0,0,,No,No,No,Wrong number,,,2026-09-15,2026-09-15T23:40:35.697Z,Barbie,Barbie,
+Barbie,146507,162,Gary Gipson,+13103466624,Distress,18443483,https://my.reiblackbook.com/contacts/18443483,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T17:25:05.303Z,Barbie,Barbie,
+Barbie,146507,163,Ernie Ramos,+15622024978,Distress,18443486,https://my.reiblackbook.com/contacts/18443486,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T17:27:55.643Z,Barbie,Barbie,
+Barbie,146507,164,Richard Su,+15103855242,Distress,18443488,https://my.reiblackbook.com/contacts/18443488,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T17:30:07.818Z,Barbie,Barbie,
+Barbie,146507,165,Salvador Navarro,+15108755163,Distress,18443490,https://my.reiblackbook.com/contacts/18443490,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T17:36:22.634Z,Barbie,Barbie,
+Barbie,146507,166,Hector Melendez,+15103050770,Distress,18443494,https://my.reiblackbook.com/contacts/18443494,Invalid / disconnected,2,0,0,0,2,Yes,Yes,No,Invalid / disconnected,,,2026-09-15,2026-09-19T17:41:45.402Z,Barbie,Barbie,
+Barbie,146507,167,Linnie Moses,+15109412147,Distress,18443496,https://my.reiblackbook.com/contacts/18443496,Do not call,1,1,0,0,,No,No,No,Do not call,,,2026-09-15,2026-09-16T00:03:27.547Z,Barbie,Barbie,
+Barbie,146507,168,Steven Ligtelyn,+15105414361,Distress,18443501,https://my.reiblackbook.com/contacts/18443501,Do not call,1,1,0,0,,No,No,No,Do not call,,said no several times,2026-09-15,2026-09-16T00:06:02.002Z,Barbie,Barbie,
+Barbie,146507,169,Paul Thompson,+19254491545,Distress,18443503,https://my.reiblackbook.com/contacts/18443503,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T18:06:44.212Z,Barbie,Barbie,
+Barbie,146507,170,Allison Lewenilovo,+14158475060,Distress,18443506,https://my.reiblackbook.com/contacts/18443506,Called,2,0,0,0,2,No,Yes,No,Working,,,2026-09-15,2026-09-19T22:04:25.242Z,Barbie,Barbie,
+Barbie,146507,171,Roshan Gravenberg,+19165249393,Distress,18443512,https://my.reiblackbook.com/contacts/18443512,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-19T22:06:33.385Z,Barbie,Barbie,
+Barbie,146507,172,Horacio Quiroz,+12093805807,Distress,18443518,https://my.reiblackbook.com/contacts/18443518,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T18:05:55.725Z,Barbie,Barbie,
+Barbie,146507,173,Donna Daggett,+18184580579,Distress,18443523,https://my.reiblackbook.com/contacts/18443523,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T18:05:54.453Z,Barbie,Barbie,
+Barbie,146507,174,Imee Sudaria,+12098140201,Distress,18443527,https://my.reiblackbook.com/contacts/18443527,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T18:05:54.101Z,Barbie,Barbie,
+Barbie,146507,175,William Klingemann,+17608467415,Distress,18443530,https://my.reiblackbook.com/contacts/18443530,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T18:05:53.741Z,Barbie,Barbie,
+Barbie,146507,176,Stephanie Salgado,+16615631331,Distress,18443533,https://my.reiblackbook.com/contacts/18443533,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T18:05:53.413Z,Barbie,Barbie,
+Barbie,146507,177,Diego Bello,+18185501409,Distress,18443537,https://my.reiblackbook.com/contacts/18443537,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T18:05:52.269Z,Barbie,Barbie,
+Barbie,146507,178,Jaewon Lee,+18183661394,Distress,18443539,https://my.reiblackbook.com/contacts/18443539,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T18:05:51.813Z,Barbie,Barbie,
+Barbie,146507,179,Brenda Garcia,+13235836902,Distress,18443541,https://my.reiblackbook.com/contacts/18443541,Called,2,0,0,2,,No,Yes,No,Working,,,2026-09-15,2026-09-21T18:10:43.826Z,Barbie,Barbie,
+Barbie,146507,180,Suzanne Berger,+15622613065,Distress,18443543,https://my.reiblackbook.com/contacts/18443543,Called,2,0,2,0,,No,Yes,No,Working,,,2026-09-15,2026-09-21T18:16:06.769Z,Barbie,Barbie,
+Barbie,146507,181,Howard Womble,+19093192362,Distress,18443546,https://my.reiblackbook.com/contacts/18443546,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T18:20:32.173Z,Barbie,Barbie,
+Barbie,146507,182,Kenneth Cox,+18178087079,Distress,18443548,https://my.reiblackbook.com/contacts/18443548,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T18:23:49.793Z,Barbie,Barbie,
+Barbie,146507,183,Joseph Bernardo,+18585649584,Distress,18443551,https://my.reiblackbook.com/contacts/18443551,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T18:26:40.684Z,Barbie,Barbie,
+Barbie,146507,184,Dale Caddell,+17078035328,Distress,18443554,https://my.reiblackbook.com/contacts/18443554,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T18:29:19.111Z,Barbie,Barbie,
+Barbie,146507,185,Louis Burgos,+18314422987,Distress,18443556,https://my.reiblackbook.com/contacts/18443556,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T18:32:32.331Z,Barbie,Barbie,
+Barbie,146507,186,Seamak Moaven,+15108139000,Distress,18443559,https://my.reiblackbook.com/contacts/18443559,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T18:36:43.167Z,Barbie,Barbie,
+Barbie,146507,187,Shontell Rogers,+15594970584,Distress,18443561,https://my.reiblackbook.com/contacts/18443561,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T18:40:41.092Z,Barbie,Barbie,
+Barbie,146507,188,Maryann Martinez,+16263772615,Distress,18443564,https://my.reiblackbook.com/contacts/18443564,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T18:44:02.263Z,Barbie,Barbie,
+Barbie,146507,189,Guillermo Villegas,+13109529004,Distress,18443566,https://my.reiblackbook.com/contacts/18443566,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T18:47:02.579Z,Barbie,Barbie,
+Barbie,146507,190,David Wheelock,+19096530026,Distress,18443569,https://my.reiblackbook.com/contacts/18443569,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T18:50:07.430Z,Barbie,Barbie,
+Barbie,146507,191,Thomas Sandoval,+19513330396,Distress,18443572,https://my.reiblackbook.com/contacts/18443572,Called,2,1,1,0,,Yes,Yes,No,Working,,Her said that the property was sold,2026-09-15,2026-09-21T18:54:58.276Z,Barbie,Barbie,
+Barbie,146507,192,Michael Cervantes,+19097984593,Distress,18443574,https://my.reiblackbook.com/contacts/18443574,Called,2,0,2,0,,No,Yes,No,Working,,,2026-09-15,2026-09-21T18:59:29.801Z,Barbie,Barbie,
+Barbie,146507,193,Kendra Nisbett,+15593920302,Distress,18443577,https://my.reiblackbook.com/contacts/18443577,Wrong number,1,1,0,0,,No,No,No,Wrong number,,,2026-09-15,2026-09-17T22:35:13.718Z,Barbie,Barbie,
+Barbie,146507,194,Veronica Munoz,+18186212732,Distress,18443584,https://my.reiblackbook.com/contacts/18443584,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T20:03:36.089Z,Barbie,Barbie,
+Barbie,146507,195,Maricela Contreras,+19094441569,Distress,18443588,https://my.reiblackbook.com/contacts/18443588,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T20:15:18.103Z,Barbie,Barbie,
+Barbie,146507,196,Margarete Helmbrecht,+17148562613,Distress,18443590,https://my.reiblackbook.com/contacts/18443590,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T20:21:19.429Z,Barbie,Barbie,
+Barbie,146507,197,Janet Cosgrove,+19497338321,Distress,18443592,https://my.reiblackbook.com/contacts/18443592,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T20:24:10.929Z,Barbie,Barbie,
+Barbie,146507,198,Bing Feng,+19493056073,Distress,18443594,https://my.reiblackbook.com/contacts/18443594,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T20:28:19.693Z,Barbie,Barbie,
+Barbie,146507,199,Lawrence Dike,+17147756993,Distress,18443596,https://my.reiblackbook.com/contacts/18443596,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T20:30:50.159Z,Barbie,Barbie,
+Barbie,146507,200,Gemma Palmer,+19513049151,Distress,18443600,https://my.reiblackbook.com/contacts/18443600,Do not call,2,1,0,0,1,No,Yes,No,Do not call,,"said ""No, thank you'"" Then, hung up after hearing what the call is about",2026-09-15,2026-09-21T20:35:30.900Z,Barbie,Barbie,
+Barbie,146507,201,Ofelia Cuevas,+19518338549,Distress,18443604,https://my.reiblackbook.com/contacts/18443604,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T20:49:53.285Z,Barbie,Barbie,
+Barbie,146507,202,Yolanda Clark,+13232533376,Distress,18443608,https://my.reiblackbook.com/contacts/18443608,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T20:54:17.953Z,Barbie,Barbie,
+Barbie,146507,203,Frank Polek,+16198075825,Distress,18443612,https://my.reiblackbook.com/contacts/18443612,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T20:57:48.549Z,Barbie,Barbie,
+Barbie,146507,204,Patrick Mcelhany,+12094774088,Distress,18443615,https://my.reiblackbook.com/contacts/18443615,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T21:00:26.015Z,Barbie,Barbie,
+Barbie,146507,205,Virginia Mata,+15109329708,Distress,18443619,https://my.reiblackbook.com/contacts/18443619,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T21:02:48.474Z,Barbie,Barbie,
+Barbie,146507,206,Jeet Alam,+17073195090,Distress,18443621,https://my.reiblackbook.com/contacts/18443621,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T21:07:26.712Z,Barbie,Barbie,
+Barbie,146507,207,Renee Beattie,+19253685066,Distress,18443626,https://my.reiblackbook.com/contacts/18443626,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T21:12:17.597Z,Barbie,Barbie,
+Barbie,146507,208,Nusrat Sheikh,+17142817070,Distress,18443629,https://my.reiblackbook.com/contacts/18443629,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T21:13:47.174Z,Barbie,Barbie,
+Barbie,146507,209,Terry Mayberry,+19513348319,Distress,18443633,https://my.reiblackbook.com/contacts/18443633,Called,2,0,0,0,2,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T21:15:25.312Z,Barbie,Barbie,
+Barbie,146507,210,Beatriz Atempa,+17605985897,Distress,18443635,https://my.reiblackbook.com/contacts/18443635,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T21:19:27.420Z,Barbie,Barbie,
+Barbie,146507,211,Tiaone Green,+14108319595,Distress,18443639,https://my.reiblackbook.com/contacts/18443639,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T21:23:30.513Z,Barbie,Barbie,
+Barbie,146507,212,Kevin Sousa,+19253393560,Distress,18443642,https://my.reiblackbook.com/contacts/18443642,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T21:25:55.731Z,Barbie,Barbie,
+Barbie,146507,213,Ivette Jauregui,+15593138760,Distress,18443648,https://my.reiblackbook.com/contacts/18443648,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T21:30:00.415Z,Barbie,Barbie,
+Barbie,146507,214,Tatiana Andrade,+18189885475,Distress,18443651,https://my.reiblackbook.com/contacts/18443651,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T22:15:16.338Z,Barbie,Barbie,
+Barbie,146507,215,Harutyun Klian,+18182443028,Distress,18443653,https://my.reiblackbook.com/contacts/18443653,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T22:18:29.293Z,Barbie,Barbie,
+Barbie,146507,216,Marrion Tryon,+16615852184,Distress,18443656,https://my.reiblackbook.com/contacts/18443656,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T22:21:21.984Z,Barbie,Barbie,
+Barbie,146507,217,Rodrigo Plata,+13104661893,Distress,18443658,https://my.reiblackbook.com/contacts/18443658,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-21T22:24:24.612Z,Barbie,Barbie,
+Barbie,146507,218,Peter Gomez,+16269658419,Distress,18443662,https://my.reiblackbook.com/contacts/18443662,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T17:03:57.758Z,Barbie,Barbie,
+Barbie,146507,219,Ferdinand Evaldez,+17146860671,Distress,18443665,https://my.reiblackbook.com/contacts/18443665,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T17:02:39.884Z,Barbie,Barbie,
+Barbie,146507,220,Edna Medina,+19519271347,Distress,18443668,https://my.reiblackbook.com/contacts/18443668,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T17:00:19.906Z,Barbie,Barbie,
+Barbie,146507,221,Julie Graves,+19517908268,Distress,18443671,https://my.reiblackbook.com/contacts/18443671,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T16:58:49.944Z,Barbie,Barbie,
+Barbie,146507,222,Crystal Felts,+17603389069,Distress,18443674,https://my.reiblackbook.com/contacts/18443674,Do not call,1,1,0,0,,No,No,No,Do not call,,"no considering selling her property. 
+",2026-09-15,2026-09-22T16:56:50.870Z,Barbie,Barbie,
+Barbie,146507,223,Josh Cross,+18054607178,Distress,18443679,https://my.reiblackbook.com/contacts/18443679,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T16:53:58.468Z,Barbie,Barbie,
+Barbie,146507,224,Kari Abbott,+15303455454,Distress,18443682,https://my.reiblackbook.com/contacts/18443682,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T16:51:41.049Z,Barbie,Barbie,
+Barbie,146507,225,Hussein Hodhod,+19257365036,Distress,18443685,https://my.reiblackbook.com/contacts/18443685,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T16:50:45.320Z,Barbie,Barbie,
+Barbie,146507,226,Christian Romero,+15595794983,Distress,18443687,https://my.reiblackbook.com/contacts/18443687,Do not call,2,0,2,0,,Yes,Yes,No,Do not call,,,2026-09-15,2026-09-22T16:54:28.916Z,Barbie,Barbie,
+Barbie,146507,227,Karla Saud Calero,+18184287788,Distress,18443690,https://my.reiblackbook.com/contacts/18443690,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T16:56:28.918Z,Barbie,Barbie,
+Barbie,146507,228,Arleen Wilder,+16618162176,Distress,18443692,https://my.reiblackbook.com/contacts/18443692,Do not call,1,0,1,0,,Yes,No,No,Do not call,,,2026-09-15,2026-09-22T16:54:48.820Z,Barbie,Barbie,
+Barbie,146507,229,Mahtab Mojab,+13109021080,Distress,18443695,https://my.reiblackbook.com/contacts/18443695,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-15,2026-09-22T16:42:34.759Z,Barbie,Barbie,
+Barbie,146507,230,Jeffrie Wheatly,+16619460585,Distress,18443698,https://my.reiblackbook.com/contacts/18443698,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-15,2026-09-22T16:40:52.117Z,Barbie,Barbie,
+Barbie,146507,231,Frances Thorsen,+16263558482,Distress,18443702,https://my.reiblackbook.com/contacts/18443702,Called,2,0,1,0,1,Yes,No,No,Working,,,2026-09-15,2026-09-22T16:37:48.835Z,Barbie,Barbie,
+Barbie,146507,232,Cameron Culton,+13237741023,Distress,18443705,https://my.reiblackbook.com/contacts/18443705,Called,2,1,1,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T16:36:51.466Z,Barbie,Barbie,
+Barbie,146507,233,Catrissa Seale,+13234181508,Distress,18443707,https://my.reiblackbook.com/contacts/18443707,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T16:30:02.819Z,Barbie,Barbie,
+Barbie,146507,234,Alejandro Biton,+15622988527,Distress,18443714,https://my.reiblackbook.com/contacts/18443714,Invalid / disconnected,1,1,0,0,,No,No,No,Invalid / disconnected,,NOT a seller - he doesn't own the property and he don't have any other property,2026-09-15,2026-09-18T17:08:38.543Z,Barbie,Barbie,
+Barbie,146507,235,Denise Mcgranahan,+19496617886,Distress,18443718,https://my.reiblackbook.com/contacts/18443718,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T16:28:40.041Z,Barbie,Barbie,
+Barbie,146507,236,Lourdes Martinez,+19514557543,Distress,18443723,https://my.reiblackbook.com/contacts/18443723,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T16:26:34.671Z,Barbie,Barbie,
+Barbie,146507,237,Christina Phillips,+19167088407,Distress,18443725,https://my.reiblackbook.com/contacts/18443725,Called,2,0,0,2,,Yes,No,No,Working,,,2026-09-15,2026-09-22T16:23:46.556Z,Barbie,Barbie,
+Barbie,146507,238,Linda Dichristina,+18147251766,Distress,18443727,https://my.reiblackbook.com/contacts/18443727,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T16:20:40.346Z,Barbie,Barbie,
+Barbie,146507,239,Makayla Arretche,+19093777206,Distress,18443730,https://my.reiblackbook.com/contacts/18443730,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T16:18:26.520Z,Barbie,Barbie,
+Barbie,146507,240,Ricardo Barragan,+12095131731,Distress,18443732,https://my.reiblackbook.com/contacts/18443732,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T16:15:44.837Z,Barbie,Barbie,
+Barbie,146507,241,Ryan Custodio,+15107508564,Distress,18443734,https://my.reiblackbook.com/contacts/18443734,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T16:14:04.075Z,Barbie,Barbie,
+Barbie,146507,242,Xuandao Ngo,+14087190418,Distress,18443736,https://my.reiblackbook.com/contacts/18443736,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T16:11:53.729Z,Barbie,Barbie,
+Barbie,146507,243,Chris Eggers,+15308464425,Distress,18443741,https://my.reiblackbook.com/contacts/18443741,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T16:09:10.359Z,Barbie,Barbie,
+Barbie,146507,244,Derek Rudd,+19175360457,Distress,18443743,https://my.reiblackbook.com/contacts/18443743,Invalid / disconnected,1,1,0,0,,No,No,No,Invalid / disconnected,,He hung up,2026-09-15,2026-09-18T20:23:15.061Z,Barbie,Barbie,
+Barbie,146507,245,Michael Green,+18054982091,Distress,18443745,https://my.reiblackbook.com/contacts/18443745,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T16:06:45.596Z,Barbie,Barbie,
+Barbie,146507,246,Robert Taylor,+16615999449,Distress,18443748,https://my.reiblackbook.com/contacts/18443748,Wrong number,1,1,0,0,,No,No,No,Wrong number,,,2026-09-15,2026-09-18T20:28:16.535Z,Barbie,Barbie,
+Barbie,146507,247,Fernando Lucero,+16192336967,Distress,18443753,https://my.reiblackbook.com/contacts/18443753,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T16:05:51.451Z,Barbie,Barbie,
+Barbie,146507,248,Eulalio Salve,+19253509782,Distress,18443761,https://my.reiblackbook.com/contacts/18443761,Called,2,0,0,2,,Yes,Yes,No,Working,,,2026-09-15,2026-09-22T16:04:21.546Z,Barbie,Barbie,
+Barbie,146507,249,Eddie Elloie,+13102793247,Distress,18443765,https://my.reiblackbook.com/contacts/18443765,Called,1,0,0,0,1,Yes,Yes,No,Working,,,2026-09-15,2026-09-18T20:36:52.564Z,Barbie,Barbie,
+Barbie,146507,250,Juan Alvarez,+13234270235,Distress,18443769,https://my.reiblackbook.com/contacts/18443769,Called,1,0,0,0,1,Yes,Yes,No,Working,,,2026-09-15,2026-09-18T20:41:18.917Z,Barbie,Barbie,
+Barbie,146507,251,Kyle Williams,+18185905808,Distress,18472022,https://my.reiblackbook.com/contacts/18472022,Called,1,0,1,0,,Yes,Yes,No,Working,,,2026-09-24,2026-09-25T17:14:14.811Z,Barbie,Barbie,
+Barbie,146507,252,Jack Young,+15105815256,Distress,18472024,https://my.reiblackbook.com/contacts/18472024,Called,1,0,0,1,,No,Yes,No,Working,,,2026-09-24,2026-09-25T17:17:52.887Z,Barbie,Barbie,
+Barbie,146507,253,Andrew Evans,+15103645522,Distress,18472027,https://my.reiblackbook.com/contacts/18472027,Called,1,0,0,1,,Yes,Yes,No,Working,,,2026-09-24,2026-09-25T17:31:16.471Z,Barbie,Barbie,
+Barbie,146507,254,Cheryl Walker,+15108395401,Distress,18472029,https://my.reiblackbook.com/contacts/18472029,Called,1,0,0,1,,Yes,Yes,No,Working,,,2026-09-24,2026-09-25T17:35:46.452Z,Barbie,Barbie,
+Barbie,146507,255,Christopher Cathcart,+12138408740,Distress,18472031,https://my.reiblackbook.com/contacts/18472031,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,256,Paul Zirngibl,+18185639454,Distress,18472034,https://my.reiblackbook.com/contacts/18472034,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,257,Carmella Belbeck,+16619460342,Distress,18472036,https://my.reiblackbook.com/contacts/18472036,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,258,William Walls,+13107227122,Distress,18472039,https://my.reiblackbook.com/contacts/18472039,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,259,Graciela Acosta,+13109466448,Distress,18472041,https://my.reiblackbook.com/contacts/18472041,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,260,Mistique Thivierge,+12098279775,Distress,18472043,https://my.reiblackbook.com/contacts/18472043,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,261,Tim Okelley,+17142221392,Distress,18472045,https://my.reiblackbook.com/contacts/18472045,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,262,Nadia Starner,+19493106113,Distress,18472048,https://my.reiblackbook.com/contacts/18472048,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,263,Fernando Gutierrez,+19516349546,Distress,18472051,https://my.reiblackbook.com/contacts/18472051,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,264,Niki Myers,+19512450387,Distress,18472054,https://my.reiblackbook.com/contacts/18472054,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,265,Christine Oh,+19093842576,Distress,18472056,https://my.reiblackbook.com/contacts/18472056,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,266,Beatrice Hazelton,+16616370362,Distress,18472060,https://my.reiblackbook.com/contacts/18472060,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,267,Valerie Garcia,+17608315195,Distress,18472063,https://my.reiblackbook.com/contacts/18472063,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,268,Jefferey Battles,+12132657612,Distress,18472066,https://my.reiblackbook.com/contacts/18472066,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,269,Hans Ullstrom,+14158882534,Distress,18472068,https://my.reiblackbook.com/contacts/18472068,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,270,Jason Kraft,+13107094046,Distress,18472071,https://my.reiblackbook.com/contacts/18472071,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,271,Darrell Slay,+17025244106,Distress,18472074,https://my.reiblackbook.com/contacts/18472074,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,272,Julie Seiders,+16034341737,Distress,18472077,https://my.reiblackbook.com/contacts/18472077,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,273,Daniel Trach,+19163961082,Distress,18472080,https://my.reiblackbook.com/contacts/18472080,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,274,Michaela Dotson,+16198136023,Distress,18472082,https://my.reiblackbook.com/contacts/18472082,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,275,Olivia Escobar,+16198529972,Distress,18472084,https://my.reiblackbook.com/contacts/18472084,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,276,Tony Weygandt,+16192065511,Distress,18472086,https://my.reiblackbook.com/contacts/18472086,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,277,Joyce Arceo,+18059629945,Distress,18472089,https://my.reiblackbook.com/contacts/18472089,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,278,Richard Johnson,+17079393523,Distress,18472091,https://my.reiblackbook.com/contacts/18472091,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,279,Roweena Macias,+12093457987,Distress,18472096,https://my.reiblackbook.com/contacts/18472096,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,280,David Hahnfeld,+18054864379,Distress,18472099,https://my.reiblackbook.com/contacts/18472099,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,281,Darrell Slay,+13102970304,Distress,18472101,https://my.reiblackbook.com/contacts/18472101,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,282,John Ransom,+15303395535,Distress,18472104,https://my.reiblackbook.com/contacts/18472104,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,283,Pacita Honorio,+15102459265,Distress,18472107,https://my.reiblackbook.com/contacts/18472107,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,284,Mary Lujan,+17574901878,Distress,18472109,https://my.reiblackbook.com/contacts/18472109,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,285,Sonja Tristan,+18184337518,Distress,18472111,https://my.reiblackbook.com/contacts/18472111,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,286,W Jeffers,+16267976987,Distress,18472113,https://my.reiblackbook.com/contacts/18472113,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,287,Letty Shedd,+17146124808,Distress,18472116,https://my.reiblackbook.com/contacts/18472116,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,288,Christopher Pryor,+17145149716,Distress,18472118,https://my.reiblackbook.com/contacts/18472118,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,289,Dwight Saxton,+19517966227,Distress,18472120,https://my.reiblackbook.com/contacts/18472120,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,290,Nathaniel Finney,+19513297768,Distress,18472122,https://my.reiblackbook.com/contacts/18472122,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,291,Lillian Jones,+17609274112,Distress,18472124,https://my.reiblackbook.com/contacts/18472124,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,292,Diane Arias,+19098270300,Distress,18472126,https://my.reiblackbook.com/contacts/18472126,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,293,Juan Magana,+18588484887,Distress,18472128,https://my.reiblackbook.com/contacts/18472128,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,294,Marion Lane,+17604154805,Distress,18472130,https://my.reiblackbook.com/contacts/18472130,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,295,Maria Luna,+17074378332,Distress,18472133,https://my.reiblackbook.com/contacts/18472133,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,296,Maureen Phaneuf,+16262826579,Distress,18472136,https://my.reiblackbook.com/contacts/18472136,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,297,Randi Jones,+13238778371,Distress,18472138,https://my.reiblackbook.com/contacts/18472138,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,298,Shirley Goldberg,+18187644343,Distress,18472140,https://my.reiblackbook.com/contacts/18472140,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,299,Lesly Rosa,+18185101779,Distress,18472142,https://my.reiblackbook.com/contacts/18472142,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,300,Monzell Corley,+13238557331,Distress,18472144,https://my.reiblackbook.com/contacts/18472144,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,301,Latasha Manley,+13235642962,Distress,18472146,https://my.reiblackbook.com/contacts/18472146,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,302,James Kruse,+12097424432,Distress,18472148,https://my.reiblackbook.com/contacts/18472148,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,303,John Gilmore,+19166667333,Distress,18472150,https://my.reiblackbook.com/contacts/18472150,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,304,Nicole Kelly,+19162246544,Distress,18472152,https://my.reiblackbook.com/contacts/18472152,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,305,Aram Manasarian,+19092184831,Distress,18472154,https://my.reiblackbook.com/contacts/18472154,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,306,Arnold Seko,+16199878127,Distress,18472157,https://my.reiblackbook.com/contacts/18472157,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,307,Theresa Mceachern,+17073266945,Distress,18472160,https://my.reiblackbook.com/contacts/18472160,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,308,,+14087358211,Distress,18472819,https://my.reiblackbook.com/contacts/18472819,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,309,No information provided,+16504185231,Distress,18483318,https://my.reiblackbook.com/contacts/18483318,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,310,,+15108603652,Distress,18490887,https://my.reiblackbook.com/contacts/18490887,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,311,Danny,+17604979964,Distress,18496874,https://my.reiblackbook.com/contacts/18496874,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,312,Ray Sanders,+16787359635,Distress,18501713,https://my.reiblackbook.com/contacts/18501713,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,313,Jose Santos Amador,+16615760481,Distress,18509051,https://my.reiblackbook.com/contacts/18509051,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,314,No name,+13413003890,Distress,18510486,https://my.reiblackbook.com/contacts/18510486,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,315,No name,+15305189391,Distress,18522165,https://my.reiblackbook.com/contacts/18522165,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,316,LEON R RODARTE,+19094615601,Distress,18530027,https://my.reiblackbook.com/contacts/18530027,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,317,No name,+19165874406,Distress,18535096,https://my.reiblackbook.com/contacts/18535096,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,318,Angelica Toledo,+17147210526,Distress,18540344,https://my.reiblackbook.com/contacts/18540344,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,319,Randy Green,+15622091097,Distress,18544287,https://my.reiblackbook.com/contacts/18544287,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,320,No name,+19098714959,Distress,18549277,https://my.reiblackbook.com/contacts/18549277,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,321,No information provided,+16127204443,Distress,18552102,https://my.reiblackbook.com/contacts/18552102,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,322,HELI MASHRIQUE,+15109356988,Distress,18557119,https://my.reiblackbook.com/contacts/18557119,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,323,No name,+19094993276,Distress,18561891,https://my.reiblackbook.com/contacts/18561891,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,324,Glen Ejan,+13233587623,Distress,18572789,https://my.reiblackbook.com/contacts/18572789,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,325,No name,+15596450137,Distress,18585043,https://my.reiblackbook.com/contacts/18585043,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,326,,+19543266417,Distress,18586221,https://my.reiblackbook.com/contacts/18586221,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,327,No name,+14085052263,Distress,18586751,https://my.reiblackbook.com/contacts/18586751,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,328,DAVID OREILLY,+19254379812,Distress,18589458,https://my.reiblackbook.com/contacts/18589458,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,329,,+15107174141,Distress,18590453,https://my.reiblackbook.com/contacts/18590453,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,330,No name,+17076307248,Distress,18595179,https://my.reiblackbook.com/contacts/18595179,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,331,Sarai,+15593092423,Distress,18610043,https://my.reiblackbook.com/contacts/18610043,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,332,,+17608981635,Distress,18616103,https://my.reiblackbook.com/contacts/18616103,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,333,,+19519023091,Distress,18619929,https://my.reiblackbook.com/contacts/18619929,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,334,No name,+15105907044,Distress,18624748,https://my.reiblackbook.com/contacts/18624748,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,335,No name,+17146059611,Distress,18630981,https://my.reiblackbook.com/contacts/18630981,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,336,No name,+13232335755,Distress,18634762,https://my.reiblackbook.com/contacts/18634762,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,337,Elijah,+14244268576,Distress,18651251,https://my.reiblackbook.com/contacts/18651251,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,338,Curtis Moore,+12098894188,Distress,18660681,https://my.reiblackbook.com/contacts/18660681,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,339,Homer White III,+13346489496,Distress,18677055,https://my.reiblackbook.com/contacts/18677055,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,340,,+19543488086,Distress,18691214,https://my.reiblackbook.com/contacts/18691214,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,341,Long Mikita,+18052203293,Distress,18697495,https://my.reiblackbook.com/contacts/18697495,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,342,,+18056250484,Distress,18717688,https://my.reiblackbook.com/contacts/18717688,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,343,,+13103845486,Distress,18751606,https://my.reiblackbook.com/contacts/18751606,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,344,,+19169751075,Distress,18763688,https://my.reiblackbook.com/contacts/18763688,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,345,,+13238070986,Distress,18766056,https://my.reiblackbook.com/contacts/18766056,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,346,,+13232439339,Distress,18783895,https://my.reiblackbook.com/contacts/18783895,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,347,,+19549377484,Distress,18784779,https://my.reiblackbook.com/contacts/18784779,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,348,,+15307431446,Distress,18784947,https://my.reiblackbook.com/contacts/18784947,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,349,Julie and Billy Evans,+14422350448,Distress,18791924,https://my.reiblackbook.com/contacts/18791924,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,350,Randall Whitmore,+19512892081,Distress,18796902,https://my.reiblackbook.com/contacts/18796902,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,351,Ron Kumar,+15107308257,Distress,18800913,https://my.reiblackbook.com/contacts/18800913,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,352,,+17606767956,Distress,18812553,https://my.reiblackbook.com/contacts/18812553,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,353,Anthony Myers,+17027882959,Distress,18814667,https://my.reiblackbook.com/contacts/18814667,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,354,Savannah Nunes,+17074505553,Distress,18817794,https://my.reiblackbook.com/contacts/18817794,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,355,No Caller Name,+15109196830,Distress,18818331,https://my.reiblackbook.com/contacts/18818331,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,356,Spanish Lead,+15104677068,Distress,18821796,https://my.reiblackbook.com/contacts/18821796,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,357,,+15103233627,Distress,18821998,https://my.reiblackbook.com/contacts/18821998,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,358,,+16192656197,Distress,18824170,https://my.reiblackbook.com/contacts/18824170,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,359,Kristopher Kaikkonen,+19494363757,Distress,18829576,https://my.reiblackbook.com/contacts/18829576,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,360,,+14156407003,Distress,18831816,https://my.reiblackbook.com/contacts/18831816,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,361,Spanish,+17076568142,Distress,18834153,https://my.reiblackbook.com/contacts/18834153,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,362,,+15103391310,Distress,18836091,https://my.reiblackbook.com/contacts/18836091,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,363,Bonnie  Vaughn,+17075333683,Distress,18841165,https://my.reiblackbook.com/contacts/18841165,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,364,Jorge Galvez,+19514972793,Distress,18845344,https://my.reiblackbook.com/contacts/18845344,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,365,,+17149788299,Distress,18855072,https://my.reiblackbook.com/contacts/18855072,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,366,Rogelio Vasquez,+18312266520,Distress,18861316,https://my.reiblackbook.com/contacts/18861316,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,367,Spencer  Bowen,+12069209144,Distress,18867186,https://my.reiblackbook.com/contacts/18867186,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,368,,+15592836436,Distress,18876619,https://my.reiblackbook.com/contacts/18876619,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,369,,+14156724229,Distress,18895675,https://my.reiblackbook.com/contacts/18895675,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,370,,+17197832071,Distress,18897129,https://my.reiblackbook.com/contacts/18897129,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,371,Kirk Wenzel,+12092710232,Distress,18900382,https://my.reiblackbook.com/contacts/18900382,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,372,Sarah  Patti,+17192013910,Distress,18901098,https://my.reiblackbook.com/contacts/18901098,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,373,,+19092327012,Distress,18902549,https://my.reiblackbook.com/contacts/18902549,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,374,,+15109104424,Distress,18903225,https://my.reiblackbook.com/contacts/18903225,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,375,Juan  Ledesma,+17603931053,Distress,18904413,https://my.reiblackbook.com/contacts/18904413,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,376,,+18102625741,Distress,18906379,https://my.reiblackbook.com/contacts/18906379,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,377,,+17753582617,Distress,18910742,https://my.reiblackbook.com/contacts/18910742,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,378,,+12098748092,Distress,18913597,https://my.reiblackbook.com/contacts/18913597,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,379,Robert Bordenaro,+15308592499,Distress,18920952,https://my.reiblackbook.com/contacts/18920952,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,380,Steven Young,+17024983194,Distress,18921718,https://my.reiblackbook.com/contacts/18921718,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,381,Girlie,+18054408431,Distress,18929561,https://my.reiblackbook.com/contacts/18929561,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,382,Joseph  Watkins,+19832083078,Distress,18934328,https://my.reiblackbook.com/contacts/18934328,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,383,,+15104757727,Distress,18934476,https://my.reiblackbook.com/contacts/18934476,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,384,,+13104970502,Distress,18935990,https://my.reiblackbook.com/contacts/18935990,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,385,Lina Catalan,+17075611231,Distress,18942075,https://my.reiblackbook.com/contacts/18942075,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,386,Darrell Taylor,+17196716868,Distress,18944484,https://my.reiblackbook.com/contacts/18944484,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,387,,+18609651421,Distress,18954042,https://my.reiblackbook.com/contacts/18954042,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,388,Javier Segura,+19513599598,Distress,18957499,https://my.reiblackbook.com/contacts/18957499,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,389,,+15108755353,Distress,18958451,https://my.reiblackbook.com/contacts/18958451,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,390,,+14243691504,Distress,18959884,https://my.reiblackbook.com/contacts/18959884,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,391,Bobby Swan,+17198278310,Distress,18960872,https://my.reiblackbook.com/contacts/18960872,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,392,,+13302933713,Distress,18965028,https://my.reiblackbook.com/contacts/18965028,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,393,Jason Woods,+19165987177,Distress,18978353,https://my.reiblackbook.com/contacts/18978353,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,394,,+14083848255,Distress,18981620,https://my.reiblackbook.com/contacts/18981620,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,395,Tony Wright,+15306824722,Distress,18995781,https://my.reiblackbook.com/contacts/18995781,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,396,,+16612641661,Distress,19002986,https://my.reiblackbook.com/contacts/19002986,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,397,,+15104708073,Distress,19003569,https://my.reiblackbook.com/contacts/19003569,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,398,,+15598308150,Distress,19011388,https://my.reiblackbook.com/contacts/19011388,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,399,,+15593341894,Distress,19018804,https://my.reiblackbook.com/contacts/19018804,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,400,,+15109481810,Distress,19019125,https://my.reiblackbook.com/contacts/19019125,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,401,,+15596717921,Distress,19021500,https://my.reiblackbook.com/contacts/19021500,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,402,Michael Foy,+15104276574,Distress,19029002,https://my.reiblackbook.com/contacts/19029002,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,403,,+18033094800,Distress,19032024,https://my.reiblackbook.com/contacts/19032024,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,404,,+19702108747,Distress,19034484,https://my.reiblackbook.com/contacts/19034484,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,405,,+15597860307,Distress,19036760,https://my.reiblackbook.com/contacts/19036760,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,406,,+12093028257,Distress,19037121,https://my.reiblackbook.com/contacts/19037121,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,407,,+12096891004,Distress,19039105,https://my.reiblackbook.com/contacts/19039105,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,408,,+15593638395,Distress,19047190,https://my.reiblackbook.com/contacts/19047190,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,409,Robert  Thompson,+19512756532,Distress,19049333,https://my.reiblackbook.com/contacts/19049333,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,410,,+15623352892,Distress,19049530,https://my.reiblackbook.com/contacts/19049530,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,411,Tobi,+14156857929,Distress,19054974,https://my.reiblackbook.com/contacts/19054974,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,412,,+19803650239,Distress,19055399,https://my.reiblackbook.com/contacts/19055399,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,413,Richard Litalien,+12793007225,Distress,19063497,https://my.reiblackbook.com/contacts/19063497,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,414,,+15109089414,Distress,19065452,https://my.reiblackbook.com/contacts/19065452,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,415,,+18183553703,Distress,19069615,https://my.reiblackbook.com/contacts/19069615,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,416,,+15182409119,Distress,19073855,https://my.reiblackbook.com/contacts/19073855,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,417,John Galovich,+19257873116,Distress,19075663,https://my.reiblackbook.com/contacts/19075663,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,418,,+12096048608,Distress,19076768,https://my.reiblackbook.com/contacts/19076768,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,419,,+16509182910,Distress,19080729,https://my.reiblackbook.com/contacts/19080729,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,420,,+17253357751,Distress,19080942,https://my.reiblackbook.com/contacts/19080942,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,421,,+15623311928,Distress,19084200,https://my.reiblackbook.com/contacts/19084200,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,422,,+15596127940,Distress,19084340,https://my.reiblackbook.com/contacts/19084340,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,423,SARAH KNOWLES,+15302636741,Distress,19084670,https://my.reiblackbook.com/contacts/19084670,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,424,,+19515287454,Distress,19086596,https://my.reiblackbook.com/contacts/19086596,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,425,,+13235722118,Distress,19086889,https://my.reiblackbook.com/contacts/19086889,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,426,Linda Pruitt,+12096204335,Distress,19087115,https://my.reiblackbook.com/contacts/19087115,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,427,LEILA ANN LEGARDA,+14153363249,Distress,19087598,https://my.reiblackbook.com/contacts/19087598,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,428,,+18585002058,Distress,19089730,https://my.reiblackbook.com/contacts/19089730,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,429,Al,+14152754709,Distress,19090959,https://my.reiblackbook.com/contacts/19090959,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,430,,+16615563012,Distress,19091437,https://my.reiblackbook.com/contacts/19091437,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,431,,+19096480510,Distress,19091500,https://my.reiblackbook.com/contacts/19091500,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,432,,+14086877021,Distress,19091622,https://my.reiblackbook.com/contacts/19091622,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,433,Moacir,+14155059035,Distress,19094505,https://my.reiblackbook.com/contacts/19094505,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,434,,+19099758253,Distress,19096979,https://my.reiblackbook.com/contacts/19096979,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,435,Steven  Freedman,+13233565100,Distress,19098036,https://my.reiblackbook.com/contacts/19098036,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,436,,+12097100226,Distress,19098972,https://my.reiblackbook.com/contacts/19098972,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,437,,+17609903486,Distress,19101989,https://my.reiblackbook.com/contacts/19101989,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,438,Robert Hintz,+18053686012,Distress,19102085,https://my.reiblackbook.com/contacts/19102085,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,439,,+12096637107,Distress,19102177,https://my.reiblackbook.com/contacts/19102177,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,440,,+16616099405,Distress,19103189,https://my.reiblackbook.com/contacts/19103189,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,441,Unknwon,+13102211876,Distress,19104410,https://my.reiblackbook.com/contacts/19104410,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,442,Luke Vaughn,+16613089078,Distress,19106043,https://my.reiblackbook.com/contacts/19106043,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,443,Jose  Medina,+18188267559,Distress,19108454,https://my.reiblackbook.com/contacts/19108454,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,444,,+16268630561,Distress,19108638,https://my.reiblackbook.com/contacts/19108638,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,445,,+17146167118,Distress,19108995,https://my.reiblackbook.com/contacts/19108995,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,446,Patricia Galley,+19252160177,Distress,19110072,https://my.reiblackbook.com/contacts/19110072,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,447,,+14089630360,Distress,19111472,https://my.reiblackbook.com/contacts/19111472,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,448,,+18184040975,Distress,19112266,https://my.reiblackbook.com/contacts/19112266,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,449,Hermilo Flores,+18057210019,Distress,19118256,https://my.reiblackbook.com/contacts/19118256,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,450,,+14086006707,Distress,19119818,https://my.reiblackbook.com/contacts/19119818,To call,0,0,0,0,,No,No,No,Working,,,2026-09-24,,,Barbie,
+Barbie,146507,451,AUBREY CLIFTON,+15103798109,HOT,17444053,https://my.reiblackbook.com/contacts/17444053,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-14T18:22:28.095Z,David,Barbie,David
+Barbie,146507,452,Mark Bulger,+19165194678,HOT,17686312,https://my.reiblackbook.com/contacts/17686312,Called,1,1,0,0,,No,No,No,Working,,"answered, After he heard what the call is about, he said nop, not at all. Then, he hung up",2026-09-11,2026-09-14T18:29:29.809Z,David,Barbie,David
+Barbie,146507,453,EUNELLA JAMES,+16503557938,HOT,17929588,https://my.reiblackbook.com/contacts/17929588,Called,2,0,1,1,,Yes,No,No,Working,,,2026-09-11,2026-09-22T17:07:06.417Z,Barbie,Barbie,David
+Barbie,146507,454,RAMON GOMEZ BARAJAS,+14152055613,HOT,18077652,https://my.reiblackbook.com/contacts/18077652,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-22T17:09:47.884Z,Barbie,Barbie,David
+Barbie,146507,455,Greg Lindsay,+14084317858,HOT,18142099,https://my.reiblackbook.com/contacts/18142099,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-22T17:12:13.463Z,Barbie,Barbie,David
+Barbie,146507,456,ALBERTO TORRES,+17074199397,HOT,18150956,https://my.reiblackbook.com/contacts/18150956,Responded,1,0,0,1,,Yes,No,Yes – call back,Working,,"TEXT UPDATE - Sep 14, 2026 [Lead disputes interest]
+
+Barbie texted Alberto following up on his ""interest in selling."" Alberto REPLIED: ""Hi, when did I show interest in selling?""",2026-09-11,2026-09-22T17:16:21.141Z,Barbie,Barbie,David
+Barbie,146507,457,Spanish Lead,+12097651856,HOT,18159755,https://my.reiblackbook.com/contacts/18159755,Touched,0,0,0,0,,Yes,No,No,Working,,,2026-09-11,2026-09-14T18:50:33.467Z,David,Barbie,David
+Barbie,146507,458,Spanish Lead,+16508880417,HOT,18170897,https://my.reiblackbook.com/contacts/18170897,Called,1,0,0,1,,Yes,No,No,Working,,,2026-09-11,2026-09-14T18:56:07.132Z,David,Barbie,David
+Barbie,146507,459,,+12095196319,HOT,18203657,https://my.reiblackbook.com/contacts/18203657,Called,2,0,0,2,,Yes,No,No,Working,,,2026-09-11,2026-09-22T17:18:00.941Z,Barbie,Barbie,David
+Barbie,146507,460,Veronica,+15598022363,HOT,18266323,https://my.reiblackbook.com/contacts/18266323,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-22T17:22:43.354Z,Barbie,Barbie,David
+Barbie,146507,461,W. Michael Simcoe,+19495841737,HOT,18303524,https://my.reiblackbook.com/contacts/18303524,Called,2,0,0,1,1,Yes,No,No,Working,,,2026-09-11,2026-09-22T17:23:30.595Z,Barbie,Barbie,David
+Barbie,146507,462,Jorge Alvarado,+16198449389,HOT,18399840,https://my.reiblackbook.com/contacts/18399840,Called,2,0,1,1,,Yes,No,No,Working,,,2026-09-11,2026-09-22T17:27:14.751Z,Barbie,Barbie,David
+Barbie,146507,463,Pernita Brown,+15105080389,HOT,18443498,https://my.reiblackbook.com/contacts/18443498,Called,2,0,2,0,,Yes,Yes,No,Working,,,2026-09-11,2026-09-22T17:30:28.866Z,Barbie,Barbie,David
+Barbie,146507,464,Ashley Gangi,+14084898494,HOT,18443740,https://my.reiblackbook.com/contacts/18443740,Skipped,0,0,0,0,,No,No,No,Skipped for now,already a dead lead,,2026-09-11,2026-09-14T20:15:49.909Z,David,Barbie,David
+Barbie,146507,465,Janaya,+19166287093,HOT,18451954,https://my.reiblackbook.com/contacts/18451954,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-22T18:53:47.808Z,Barbie,Barbie,David
+Barbie,146507,466,Adam Rimington,+12095983538,HOT,18473958,https://my.reiblackbook.com/contacts/18473958,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-22T20:30:57.234Z,Barbie,Barbie,David
+Barbie,146507,467,,+19167052333,HOT,18489847,https://my.reiblackbook.com/contacts/18489847,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-22T20:35:39.267Z,Barbie,Barbie,David
+Barbie,146507,468,No name,+16612087918,HOT,18523795,https://my.reiblackbook.com/contacts/18523795,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-22T20:39:07.088Z,Barbie,Barbie,David
+Barbie,146507,469,Philip Barber,+19254976915,HOT,18585100,https://my.reiblackbook.com/contacts/18585100,Skipped,0,0,0,0,,No,No,No,Skipped for now,"Juan completed an in-person property visit on March 12, 2025, and the property was evaluated. However, no clear inspecti",,2026-09-11,2026-09-14T20:31:21.706Z,David,Barbie,David
+Barbie,146507,470,Unknown,+16503081031,HOT,18650353,https://my.reiblackbook.com/contacts/18650353,Called,2,0,0,2,,No,No,No,Working,,can't sent text message. It says number is unreachable,2026-09-11,2026-09-22T20:50:47.765Z,Barbie,Barbie,David
+Barbie,146507,471,Unknown,+15108602868,HOT,18691262,https://my.reiblackbook.com/contacts/18691262,Do not call,1,1,0,0,,No,No,No,Do not call,,said he's not interested,2026-09-11,2026-09-22T20:51:02.821Z,Barbie,Barbie,David
+Barbie,146507,472,Unknown,+16503260458,HOT,18780596,https://my.reiblackbook.com/contacts/18780596,Called,2,0,0,2,,No,No,No,Working,,can't send message. It says it cannot be reached. landline,2026-09-11,2026-09-22T20:54:19.817Z,Barbie,Barbie,David
+Barbie,146507,473,,+13203810344,HOT,18793547,https://my.reiblackbook.com/contacts/18793547,Invalid / disconnected,1,0,0,1,,No,No,No,Invalid / disconnected,,can't send text; number no loinger in service,2026-09-11,2026-09-14T20:52:31.863Z,David,Barbie,David
+Barbie,146507,474,,+15418355045,HOT,18911314,https://my.reiblackbook.com/contacts/18911314,Invalid / disconnected,1,0,0,1,,No,No,No,Invalid / disconnected,,,2026-09-11,2026-09-14T20:55:12.814Z,David,Barbie,David
+Barbie,146507,475,,+15418604241,HOT,18942193,https://my.reiblackbook.com/contacts/18942193,Called,2,0,0,2,,No,No,No,Working,,can't text. it's a landline. ,2026-09-11,2026-09-22T21:05:13.438Z,Barbie,Barbie,David
+Barbie,146507,476,,+17076611282,HOT,18987884,https://my.reiblackbook.com/contacts/18987884,Called,2,0,0,2,,No,No,No,Working,,can't send message. It's a landline,2026-09-11,2026-09-22T21:09:52.531Z,Barbie,Barbie,David
+Barbie,146507,477,,+15189886157,HOT,19036029,https://my.reiblackbook.com/contacts/19036029,Invalid / disconnected,1,0,0,1,,No,No,No,Invalid / disconnected,,,2026-09-11,2026-09-14T21:03:28.507Z,David,Barbie,David
+Barbie,146507,478,Richard Vance,+15302190810,HOT,19118638,https://my.reiblackbook.com/contacts/19118638,Skipped,0,0,0,0,,No,No,No,Skipped for now,Offer sent,,2026-09-11,2026-09-14T21:05:14.487Z,David,Barbie,David
+Barbie,146507,479,Karen Sance,+19512017437,HOT,19211597,https://my.reiblackbook.com/contacts/19211597,Called,1,1,0,0,,No,No,No,Working,,"wrong number, she said she is not Karen",2026-09-11,2026-09-12T23:39:38.230Z,David,Barbie,David
+Barbie,146507,480,Robert Gomez,+17074460898,HOT,19377674,https://my.reiblackbook.com/contacts/19377674,Called,2,0,0,2,,No,No,No,Working,,"No text sent, number is opted out",2026-09-11,2026-09-22T21:18:48.133Z,Barbie,Barbie,David
+Barbie,146507,481,Jedi,+17073916284,HOT,20052737,https://my.reiblackbook.com/contacts/20052737,Called,2,0,2,0,,Yes,No,No,Working,,,2026-09-11,2026-09-22T21:26:13.389Z,Barbie,Barbie,David
+Barbie,146507,482,Cornelio Ruiz,+14158714501,HOT,20071588,https://my.reiblackbook.com/contacts/20071588,Called,2,1,0,1,,Yes,No,No,Working,,SPANISH LEAD,2026-09-11,2026-09-22T21:32:12.117Z,Barbie,Barbie,David
+Barbie,146507,483,Edwardo Veloz,+19722496003,HOT,20095945,https://my.reiblackbook.com/contacts/20095945,Called,1,0,0,1,,Yes,No,No,Working,,,2026-09-11,2026-09-22T21:31:07.379Z,Barbie,Barbie,David
+Barbie,146507,484,Angel Valderama,+14086870590,HOT,20132824,https://my.reiblackbook.com/contacts/20132824,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-12T22:27:07.139Z,David,Barbie,David
+Barbie,146507,485,Frank Sanders,+19252869475,HOT,20217567,https://my.reiblackbook.com/contacts/20217567,Called,2,1,1,0,,Yes,No,No,Working,,states he doesn't own any property,2026-09-11,2026-09-22T21:39:59.244Z,Barbie,Barbie,David
+Barbie,146507,486,No Caller Name,+14156090944,HOT,20247456,https://my.reiblackbook.com/contacts/20247456,Responded,2,1,1,0,,No,No,Yes – call back,Working,,,2026-09-11,2026-09-22T21:41:52.526Z,Barbie,Barbie,David
+Barbie,146507,487,Rajinder Dhillon,+14084435805,HOT,20270529,https://my.reiblackbook.com/contacts/20270529,Responded,1,0,1,0,,Yes,No,Yes – text,Working,,,2026-09-11,2026-09-12T21:47:44.177Z,David,Barbie,David
+Barbie,146507,488,No caller name (Interested),+19517307666,HOT,20345929,https://my.reiblackbook.com/contacts/20345929,Called,2,0,0,2,,No,No,No,Working,,,2026-09-11,2026-09-22T21:50:08.272Z,Barbie,Barbie,David
+Barbie,146507,489,Rose Phillips,+13419991895,HOT,20362682,https://my.reiblackbook.com/contacts/20362682,Skipped,0,0,0,0,,No,No,No,Skipped for now,wants to personally talk to Juan as per notes,,2026-09-11,2026-09-14T21:17:16.869Z,David,Barbie,David
+Barbie,146507,490,Jason Bowden,+15105413269,HOT,20385239,https://my.reiblackbook.com/contacts/20385239,Skipped,0,0,0,0,,No,No,No,Skipped for now,already a dead lead,"Lost deal, not interested. ",2026-09-11,2026-09-14T21:08:24.652Z,David,Barbie,David
+Barbie,146507,491,Rajesh Sharma,+15105841880,HOT,20391358,https://my.reiblackbook.com/contacts/20391358,Called,1,0,1,0,,Yes,Yes,No,Working,,,2026-09-11,2026-09-12T21:14:04.927Z,David,Barbie,David
+Barbie,146507,492,Michael,+17076093303,HOT,20396226,https://my.reiblackbook.com/contacts/20396226,Called,1,0,0,1,,Yes,No,No,Working,,,2026-09-11,2026-09-12T20:40:29.567Z,David,Barbie,David
+Barbie,146507,493,Remo Kumar,+19255801855,HOT,20425290,https://my.reiblackbook.com/contacts/20425290,Skipped,0,0,0,0,,No,No,No,Skipped for now,already a dead lead,Dead / Lost deal,2026-09-11,2026-09-14T21:09:19.617Z,David,Barbie,David
+Barbie,146507,494,Harry McGowan,+15309661251,HOT,20438743,https://my.reiblackbook.com/contacts/20438743,Skipped,0,0,0,0,,No,No,No,Skipped for now,offer sent,Offer Sent,2026-09-11,2026-09-14T21:09:57.098Z,David,Barbie,David
+Barbie,146507,495,Martha Reece,+15592518849,HOT,20456000,https://my.reiblackbook.com/contacts/20456000,Skipped,0,0,0,0,,No,No,No,Skipped for now,under contract,Under Contract,2026-09-11,2026-09-14T21:10:59.709Z,David,Barbie,David
+Barbie,146507,496,James White,+12092211240,HOT,20473754,https://my.reiblackbook.com/contacts/20473754,Called,2,0,1,0,1,Yes,Yes,No,Working,,,2026-09-11,2026-09-12T18:22:47.005Z,David,Barbie,David
+Barbie,146507,497,Peter Nordon,+16097070177,HOT,20489111,https://my.reiblackbook.com/contacts/20489111,Called,2,0,1,1,,Yes,No,No,Working,,,2026-09-11,2026-09-12T18:06:06.385Z,David,Barbie,David
+Barbie,146507,498,Kyle Flores,+14084548964,HOT,20525062,https://my.reiblackbook.com/contacts/20525062,Do not call,0,0,0,0,,No,No,No,Do not call,,"Spam
+",2026-09-11,2026-09-12T17:56:03.484Z,David,Barbie,David
+Barbie,146507,499,Beatrice Kopilenko,+14154075324,HOT,20534400,https://my.reiblackbook.com/contacts/20534400,Called,1,0,1,0,,Yes,Yes,No,Working,,Property was sold on August,2026-09-11,2026-09-12T20:54:30.974Z,David,Barbie,David
+Barbie,146507,500,Sheng Luo,+19254759184,HOT,20557743,https://my.reiblackbook.com/contacts/20557743,Skipped,0,0,0,0,,No,No,No,Skipped for now,under contract,,2026-09-11,2026-09-14T21:17:44.564Z,David,Barbie,David
+Barbie,146507,501,Lupe Martinez,+15592318611,HOT,20579026,https://my.reiblackbook.com/contacts/20579026,Called,1,0,1,0,,Yes,Yes,No,Working,,UNDER CONTRACT | This lead is being handled by Thea - was asked to be left alone. ,2026-09-11,2026-09-12T15:48:39.895Z,David,Barbie,David
+Barbie,146507,502,Rong Hu,+14242186886,HOT,20591230,https://my.reiblackbook.com/contacts/20591230,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-11T23:14:43.065Z,David,Barbie,David
+Barbie,146507,503,,+16505746145,HOT,20594078,https://my.reiblackbook.com/contacts/20594078,Called,1,0,1,0,,No,No,No,Working,,can't send text. It's a landline,2026-09-11,2026-09-14T21:32:09.867Z,David,Barbie,David
+Barbie,146507,504,William/Linda Pifer,+19257838506,HOT,20604919,https://my.reiblackbook.com/contacts/20604919,Responded,1,0,1,0,,Yes,No,Yes – text,Working,,,2026-09-11,2026-09-11T21:55:29.025Z,David,Barbie,David
+Barbie,146507,505,,+18059226055,Distress,17444688,https://my.reiblackbook.com/contacts/17444688,Called,1,0,0,1,,No,No,No,Working,,can't send message. It's a landline,2026-09-11,2026-09-14T21:34:15.723Z,David,Barbie,David
+Barbie,146507,506,Benito dela Cruz,+14088296707,Distress,17485870,https://my.reiblackbook.com/contacts/17485870,Do not call,0,0,0,0,,No,No,No,Do not call,,,2026-09-11,2026-09-14T21:39:27.630Z,David,Barbie,David
+Barbie,146507,507,Patrick K Young,+15598810376,Distress,17518177,https://my.reiblackbook.com/contacts/17518177,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-14T21:41:48.391Z,David,Barbie,David
+Barbie,146507,508,Dana Riddle,+16612042518,Distress,17542320,https://my.reiblackbook.com/contacts/17542320,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-14T21:45:05.098Z,David,Barbie,David
+Barbie,146507,509,Nicole,+16504837938,Distress,17665733,https://my.reiblackbook.com/contacts/17665733,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-14T21:47:54.106Z,David,Barbie,David
+Barbie,146507,510,Dolores,+15104729767,Distress,17672548,https://my.reiblackbook.com/contacts/17672548,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-14T21:51:50.353Z,David,Barbie,David
+Barbie,146507,511,Jaime Gaitan,+19254878914,Distress,17718029,https://my.reiblackbook.com/contacts/17718029,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-14T22:01:56.595Z,David,Barbie,David
+Barbie,146507,512,,+17137140684,Distress,17755226,https://my.reiblackbook.com/contacts/17755226,To call,0,0,0,0,,No,No,No,Working,,,2026-09-11,,,Barbie,David
+Barbie,146507,513,,+15104796955,Distress,17764047,https://my.reiblackbook.com/contacts/17764047,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-14T22:26:19.933Z,David,Barbie,David
+Barbie,146507,514,Kee Filomena,+17073192458,Distress,17775205,https://my.reiblackbook.com/contacts/17775205,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-14T22:35:56.918Z,David,Barbie,David
+Barbie,146507,515,Josefino Alcaraz,+15105025983,Distress,18042367,https://my.reiblackbook.com/contacts/18042367,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-14T22:57:00.935Z,David,Barbie,David
+Barbie,146507,516,,+17657261614,Distress,18069265,https://my.reiblackbook.com/contacts/18069265,Called,1,0,0,1,,No,No,No,Working,,can't text. Number unreachable,2026-09-11,2026-09-14T23:01:27.854Z,David,Barbie,David
+Barbie,146507,517,David Holder,+15104170557,Distress,18077735,https://my.reiblackbook.com/contacts/18077735,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-14T23:06:03.174Z,David,Barbie,David
+Barbie,146507,518,Steve Fleischer,+17603712257,Distress,18093498,https://my.reiblackbook.com/contacts/18093498,Called,1,0,0,0,1,Yes,Yes,No,Working,,,2026-09-11,2026-09-14T23:14:40.873Z,David,Barbie,David
+Barbie,146507,519,Thomas Meyke,+19519665207,Distress,18126773,https://my.reiblackbook.com/contacts/18126773,Called,1,1,0,0,,No,No,No,Working,,property has already been sold,2026-09-11,2026-09-14T23:22:12.843Z,David,Barbie,David
+Barbie,146507,520,Bob,+15072135144,Distress,18142727,https://my.reiblackbook.com/contacts/18142727,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-14T23:26:00.446Z,David,Barbie,David
+Barbie,146507,521,Reina Perez,+14155315609,Distress,18150032,https://my.reiblackbook.com/contacts/18150032,Called,1,1,0,0,,Yes,No,No,Working,,,2026-09-11,2026-09-14T23:31:07.987Z,David,Barbie,David
+Barbie,146507,522,,+15624999898,Distress,18160032,https://my.reiblackbook.com/contacts/18160032,Called,1,1,0,0,,No,No,No,Working,,"The lead answered but when she heard what the call is about, she hung up. Not interested",2026-09-11,2026-09-14T23:38:02.756Z,David,Barbie,David
+Barbie,146507,523,Thomas & Kelly Heller,+19096742070,Distress,18164111,https://my.reiblackbook.com/contacts/18164111,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-14T23:42:17.625Z,David,Barbie,David
+Barbie,146507,524,Michael & Janet Anderson,+17199644179,Distress,18175316,https://my.reiblackbook.com/contacts/18175316,Called,1,0,0,1,,No,No,No,Working,,message not sent - says number is unknown,2026-09-11,2026-09-14T23:48:41.946Z,David,Barbie,David
+Barbie,146507,525,Daly Jordan- Koch,+17073347313,Distress,18176267,https://my.reiblackbook.com/contacts/18176267,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-14T23:53:07.984Z,David,Barbie,David
+Barbie,146507,526,Edwin Oronos,+17072354762,Distress,18182027,https://my.reiblackbook.com/contacts/18182027,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-14T23:57:15.801Z,David,Barbie,David
+Barbie,146507,527,Gary Mortellaro,+17073440381,Distress,18190956,https://my.reiblackbook.com/contacts/18190956,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-15T00:00:55.610Z,David,Barbie,David
+Barbie,146507,528,Mark Leyva,+15109090491,Distress,18200685,https://my.reiblackbook.com/contacts/18200685,Invalid / disconnected,0,0,0,0,,No,No,No,Invalid / disconnected,,,2026-09-11,2026-09-15T00:02:14.215Z,David,Barbie,David
+Barbie,146507,529,Lee Henderson,+15102003528,Distress,18201448,https://my.reiblackbook.com/contacts/18201448,Wrong number,1,1,0,0,,No,No,No,Wrong number,,,2026-09-11,2026-09-15T00:04:51.817Z,David,Barbie,David
+Barbie,146507,530,Maria Gomez,+15107553627,Distress,18201515,https://my.reiblackbook.com/contacts/18201515,Do not call,1,1,0,0,,No,No,No,Do not call,,,2026-09-11,2026-09-15T00:07:40.424Z,David,Barbie,David
+Barbie,146507,531,Michelle Belding,+19258955827,Distress,18203496,https://my.reiblackbook.com/contacts/18203496,Called,1,0,0,1,,No,No,No,Working,,,2026-09-11,2026-09-15T15:07:08.881Z,David,Barbie,David
+Barbie,146507,532,Spanish Lead,+12095435902,Distress,18211969,https://my.reiblackbook.com/contacts/18211969,Called,1,1,0,0,,Yes,No,No,Working,,,2026-09-11,2026-09-15T15:17:02.369Z,David,Barbie,David
+Barbie,146507,533,No info provided,+15305595845,Distress,18234939,https://my.reiblackbook.com/contacts/18234939,Called,1,0,0,1,,No,No,No,Working,,,2026-09-11,2026-09-15T15:22:10.410Z,David,Barbie,David
+Barbie,146507,534,Husband of Judy Malavazos,+17869415950,Distress,18240107,https://my.reiblackbook.com/contacts/18240107,Called,1,0,0,1,,Yes,No,No,Working,,,2026-09-11,2026-09-15T15:28:10.154Z,David,Barbie,David
+Barbie,146507,535,Gerald Dugas,+13109220958,Distress,18257103,https://my.reiblackbook.com/contacts/18257103,Called,1,1,0,0,,No,No,No,Working,,said to just call him back,2026-09-11,2026-09-15T15:37:04.858Z,David,Barbie,David
+Barbie,146507,536,Lyssa Diaz,+14084835922,Distress,18284932,https://my.reiblackbook.com/contacts/18284932,Called,1,0,0,1,,Yes,No,No,Working,,,2026-09-11,2026-09-15T15:33:14.269Z,David,Barbie,David
+Barbie,146507,537,Christopher,+16505447316,Distress,18309896,https://my.reiblackbook.com/contacts/18309896,Skipped,0,0,0,0,,No,No,No,Skipped for now,its already a lost deal,,2026-09-11,2026-09-15T15:38:25.606Z,David,Barbie,David
+Barbie,146507,538,ADOLPHUS SALTER,+14049257935,Distress,18338024,https://my.reiblackbook.com/contacts/18338024,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-15T15:42:27.633Z,David,Barbie,David
+Barbie,146507,539,Not Provided,+14088029222,Distress,18358705,https://my.reiblackbook.com/contacts/18358705,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-15T15:45:22.786Z,David,Barbie,David
+Barbie,146507,540,Alberto Hernandez Sanchez,+16613198381,Distress,18380793,https://my.reiblackbook.com/contacts/18380793,Called,1,1,0,0,,No,No,No,Working,,spanish lead,2026-09-11,2026-09-15T15:48:57.672Z,David,Barbie,David
+Barbie,146507,541,No information provided,+15105020524,Distress,18411301,https://my.reiblackbook.com/contacts/18411301,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-15T15:51:39.059Z,David,Barbie,David
+Barbie,146507,542,,+15093864352,Distress,18433909,https://my.reiblackbook.com/contacts/18433909,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-15T15:53:24.696Z,David,Barbie,David
+Barbie,146507,543,Anthony Combs,+15105383656,Distress,18443209,https://my.reiblackbook.com/contacts/18443209,Called,1,0,0,1,,No,Yes,No,Working,,,2026-09-11,2026-09-15T16:02:17.983Z,David,Barbie,David
+Barbie,146507,544,Gohar Ghazaryan,+18187307977,Distress,18443218,https://my.reiblackbook.com/contacts/18443218,Do not call,1,1,0,0,,No,No,No,Do not call,,,2026-09-11,2026-09-15T16:02:26.419Z,David,Barbie,David
+Barbie,146507,545,Lisa Morris,+13107794753,Distress,18443224,https://my.reiblackbook.com/contacts/18443224,Called,1,0,1,0,,Yes,No,No,Working,,,2026-09-11,2026-09-15T16:05:31.928Z,David,Barbie,David
+Barbie,146507,546,Sevak Sarkissian,+18185459985,Distress,18443233,https://my.reiblackbook.com/contacts/18443233,Called,1,0,1,0,,No,Yes,No,Working,,,2026-09-11,2026-09-15T16:09:05.840Z,David,Barbie,David
+Barbie,146507,547,Juan Yvanez,+16263984380,Distress,18443237,https://my.reiblackbook.com/contacts/18443237,Called,1,0,0,1,,No,Yes,No,Working,,,2026-09-11,2026-09-15T16:14:05.855Z,David,Barbie,David
+Barbie,146507,548,Timothy Lynch,+13234823430,Distress,18443242,https://my.reiblackbook.com/contacts/18443242,Called,1,0,0,1,,Yes,Yes,No,Working,,,2026-09-11,2026-09-15T16:18:38.592Z,David,Barbie,David
+Barbie,146507,549,Brenda Colin,+13107564357,Distress,18443252,https://my.reiblackbook.com/contacts/18443252,Wrong number,1,1,0,0,,No,No,No,Wrong number,,,2026-09-11,2026-09-15T16:20:27.567Z,David,Barbie,David
+Barbie,146507,550,Jose Perales,+12097040446,Distress,18443256,https://my.reiblackbook.com/contacts/18443256,Called,1,0,0,1,,Yes,Yes,No,Working,,,2026-09-11,2026-09-15T16:25:30.087Z,David,Barbie,David
