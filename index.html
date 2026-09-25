@@ -404,7 +404,7 @@ dialog::backdrop{background:rgba(8,16,15,.5)}
 (function(){
 "use strict";
 
-var REP_ORDER = ["Era","Barbie","David","Diego"];
+var REP_ORDER = ["Era","Barbie"];
 var RESP = [["no","No"],["call","Yes – call back"],["text","Yes – text"],["email","Yes – email"],
             ["both","Yes – text & email"]];
 var RESP_LABEL = {no:"No", call:"Yes – call back", text:"Yes – text", email:"Yes – email",
@@ -710,6 +710,7 @@ function setSync(){
   el.className = "chip";
   if(localOnly){ el.classList.add("bad"); t.textContent = "On this device only"; return; }
   if(!dbReady){ t.textContent = "Connecting…"; return; }
+  if(!sawData){ el.classList.add("bad"); t.textContent = "Connected — no leads loaded"; return; }
   if(failures){ el.classList.add("bad"); t.textContent = "Retrying save"; return; }
   if(pending.size){ el.classList.add("busy"); t.textContent = "Saving…"; return; }
   el.classList.add("ok"); t.textContent = "Live";
@@ -763,7 +764,8 @@ function dailyRollup(){
   return days;
 }
 /* Days worked belongs to the person who did the work, not to whose list it
-   was — so covering David's list is a day worked for Barbie, not for David.
+   was — covering someone's list is a day worked for the cover, not the owner.
+   It lists people on the team; a leaver's stamps stay in the data untouched.
    Days before tracking began can only be counted from each lead's last touch,
    which is a floor, never the true figure. */
 function daysWorked(){
@@ -776,6 +778,7 @@ function daysWorked(){
   tracked.forEach(function(d){
     var day = daily[d];
     for(var k in day.who){
+      if(!onTeam[day.who[k].who]) continue;
       var c = day.who[k], w = slot(c.who);
       w.days[d] = true;
       w.calls += c.calls || 0;
@@ -788,11 +791,11 @@ function daysWorked(){
      older than the first tracked one?" — which silently dropped today. */
   leads.forEach(function(l){
     if(!hasWork(l) || !l.updatedAt || !l.updatedBy || l.updatedBy === "—") return;
+    if(!onTeam[l.updatedBy]) return;
     var d = bizDay(l.updatedAt), w = slot(l.updatedBy);
     if(w.days[d]) return;
     w.before[d] = true;
   });
-  Object.keys(who).forEach(function(p){ who[p].left = !onTeam[p]; });
   return {tracked: tracked,
           rows: Object.keys(who).map(function(p){ return who[p]; })
                   .sort(function(a,b){ return Object.keys(b.days).length - Object.keys(a.days).length
@@ -877,7 +880,9 @@ function fullTable(rows, all){
 function renderDash(){
   var host = document.getElementById("dashView");
   if(!leads.length){
-    host.innerHTML = '<div class="empty"><b>No leads loaded yet.</b><br>Open a rep tab and paste their list to get started.</div>';
+    host.innerHTML = '<div class="empty">'+(dbReady && !sawData && !localOnly
+      ? '<b>Connected, but no leads came back.</b><br>Nothing has been lost — this is the page failing to read them. Reload once; if it stays empty, tell Cherry.'
+      : '<b>No leads loaded yet.</b><br>Open a rep tab and paste their list to get started.')+'</div>';
     return;
   }
   // the 60s refresh must not yank the cursor out of the search box
@@ -1019,8 +1024,7 @@ function renderDash(){
       var total = all.length;
       return '<div class="dwrow'+(total?"":" idle")+'">'+
         '<span class="p">'+esc(r.person)+
-          (r.left ? ' <span class="st">left the team</span>'
-                  : coveredBy(r.person) ? ' <span class="st worked">away · '+esc(coveredBy(r.person))+' covering</span>' : '')+
+          (coveredBy(r.person) ? ' <span class="st worked">away · '+esc(coveredBy(r.person))+' covering</span>' : '')+
         '</span>'+
         '<span class="n">'+total+(total===1?" day":" days")+'</span>'+
         '<span class="chips">'+(total
@@ -1796,7 +1800,7 @@ if(window.claude && typeof window.claude.use === "function"){
       delete coverage.id;
       rebuild();
     }, function(){ /* coverage is optional; without it everyone just works their own list */ });
-    db.collection("leads").limit(5000).onSnapshot(function(snap){
+    db.collection("leads").onSnapshot(function(snap){
       dbReady = true; sawData = true;
       var next = new Map();
       snap.docs.forEach(function(d){ next.set(d.id, Object.assign({id:d.id}, d.data())); });

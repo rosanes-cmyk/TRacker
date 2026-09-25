@@ -22,9 +22,13 @@ shared by everyone who opens the page. 1,100 leads today, plus `meta/coverage`
 (who is covering whose list while they are away) and `meta/notice` (the
 maintenance strip: `{on, text, sub}`, raised and cleared by writing that one
 document, never by republishing — a republish reloads every rep mid-edit). The store holds 5,000
-and the page's `leads` subscription now reads up to the same 5,000, so neither
-binds before the other — a page that reads fewer than the store holds drops the
-overflow silently, with a full-looking board and no error.
+The `leads` subscription takes no `limit()` at all, so it reads the whole
+collection. Do not "raise" a limit here: `Query.limit(n)` accepts **1-1000**
+only, and a value outside that range is not a wider window but an invalid
+query that matches nothing — which is exactly how this page once served an
+empty board while its status chip still read "Live". Past a few thousand
+leads the query must be split (at most 64 live subscriptions per view, `in`
+filters take at most 30 values), not given a bigger number.
 
 | Field | Type | Notes |
 | --- | --- | --- |
